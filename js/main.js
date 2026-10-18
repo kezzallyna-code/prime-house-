@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function initNavbar() {
   highlightActiveNavLink();
   initHeaderScroll();
-  initUserDropdown();
   initMobileDrawer();
 }
 
@@ -67,8 +66,6 @@ function highlightActiveNavLink() {
     activeSection = 'deposer-une-annonce';
   } else if (pathname.endsWith('favoris.html')) {
     activeSection = 'favoris';
-  } else if (pathname.endsWith('mon-espace.html')) {
-    activeSection = 'mon-compte';
   }
 
   // Update desktop nav links
@@ -125,79 +122,11 @@ function initHeaderScroll() {
 }
 
 /**
- * Luxury User Avatar Dropdown
+ * User dropdown disabled: public users browse and interact without requiring user authentication.
+ * Administration is strictly managed via /admin/login.html.
  */
 function initUserDropdown() {
-  const profileLinks = document.querySelectorAll('a[data-path="mon-compte"]');
-  profileLinks.forEach(link => {
-    // Avoid double initialization
-    if (link.dataset.dropdownReady) return;
-    link.dataset.dropdownReady = 'true';
-
-    // Wrap in relative container
-    const wrapper = document.createElement('div');
-    wrapper.className = 'relative inline-block';
-    link.parentNode.insertBefore(wrapper, link);
-    wrapper.appendChild(link);
-
-    // Create luxury dropdown
-    const isInsideAdmin = window.location.pathname.includes('/admin/');
-    const prefix = isInsideAdmin ? '../' : '';
-
-    const dropdown = document.createElement('div');
-    dropdown.className = 'user-dropdown-menu absolute right-0 top-full mt-2 w-64 bg-surface-container-lowest rounded-xl shadow-2xl border border-surface-container py-2 z-50 text-on-surface';
-    dropdown.innerHTML = `
-      <div class="px-4 py-3 border-b border-surface-container-low">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
-          <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Membre Prestige</span>
-        </div>
-        <p class="font-title-md text-title-md font-semibold text-on-surface truncate mt-0.5">Espace Client Exclusif</p>
-      </div>
-      <div class="py-1">
-        <a href="${prefix}mon-espace.html" class="flex items-center gap-3 px-4 py-2.5 text-body-sm hover:bg-surface-container-low transition-colors font-medium">
-          <span class="material-symbols-outlined text-title-md text-secondary">dashboard</span>
-          <span>Mon Tableau de Bord</span>
-        </a>
-        <a href="${prefix}favoris.html" class="flex items-center justify-between px-4 py-2.5 text-body-sm hover:bg-surface-container-low transition-colors font-medium">
-          <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined text-title-md text-secondary">favorite</span>
-            <span>Mes Biens Favoris</span>
-          </div>
-          <span class="favorites-count-badge bg-secondary text-primary-container text-xs font-bold px-2 py-0.5 rounded-full">0</span>
-        </a>
-        <a href="${prefix}deposer-annonce.html" class="flex items-center gap-3 px-4 py-2.5 text-body-sm hover:bg-surface-container-low transition-colors font-medium">
-          <span class="material-symbols-outlined text-title-md text-secondary">add_business</span>
-          <span>Déposer une Annonce</span>
-        </a>
-        <div class="my-1 border-t border-surface-container-low"></div>
-        <a href="${prefix}admin/index.html" class="flex items-center gap-3 px-4 py-2.5 text-body-sm hover:bg-surface-container-low transition-colors font-medium text-secondary">
-          <span class="material-symbols-outlined text-title-md">admin_panel_settings</span>
-          <span>Console d'Administration</span>
-        </a>
-        <a href="${prefix}connexion.html" class="flex items-center gap-3 px-4 py-2.5 text-body-sm hover:bg-surface-container-low transition-colors text-on-surface-variant">
-          <span class="material-symbols-outlined text-title-md">lock</span>
-          <span>Connexion / Inscription</span>
-        </a>
-      </div>
-    `;
-
-    wrapper.appendChild(dropdown);
-
-    // Toggle dropdown on click
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      dropdown.classList.toggle('show');
-    });
-
-    // Close when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!wrapper.contains(e.target)) {
-        dropdown.classList.remove('show');
-      }
-    });
-  });
+  // Public profile dropdown removed per architecture specification
 }
 
 /**
@@ -262,10 +191,6 @@ function createMobileDrawer() {
       <a href="${prefix}deposer-annonce.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-secondary-container/20 text-secondary-fixed hover:bg-secondary-container/30 transition-colors font-semibold">
         <span class="material-symbols-outlined">add_business</span>
         <span>Déposer une annonce</span>
-      </a>
-      <a href="${prefix}mon-espace.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-container-lowest/10 transition-colors">
-        <span class="material-symbols-outlined text-secondary-fixed">person</span>
-        <span>Mon Espace Client</span>
       </a>
       <a href="${prefix}a-propos.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-container-lowest/10 transition-colors">
         <span class="material-symbols-outlined text-secondary-fixed">info</span>
