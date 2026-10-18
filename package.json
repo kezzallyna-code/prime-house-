@@ -1,0 +1,14 @@
+{
+  "name": "prime-house",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prime House - Immobilier de Prestige en Algérie",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node builder.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#5a4300","on-error-container":"#93000a","on-primary-container":"#78849b","on-tertiary":"#ffffff","secondary-fixed":"#ffdf9f","on-primary":"#ffffff","on-surface":"#111c2c","on-tertiary-fixed":"#251a00","surface":"#f9f9ff","inverse-surface":"#263142","tertiary-fixed-dim":"#eac161","tertiary-fixed":"#ffdf9a","primary-fixed":"#d7e3fc","on-background":"#111c2c","outline-variant":"#c5c6cd","tertiary":"#000000","on-secondary-fixed-variant":"#5c4300","secondary":"#795900","surface-container-highest":"#d8e3fa","on-primary-fixed":"#0f1c2e","on-surface-variant":"#44474c","outline":"#75777d","background":"#f9f9ff","inverse-primary":"#bbc7e0","primary":"#000000","secondary-container":"#fdce68","surface-container-high":"#dee8ff","error-container":"#ffdad6","secondary-fixed-dim":"#eec05c","tertiary-container":"#251a00","on-secondary-container":"#765600","surface-container":"#e7eeff","on-secondary-fixed":"#261a00","primary-fixed-dim":"#bbc7e0","on-tertiary-container":"#a27f25","surface-tint":"#535f74","surface-bright":"#f9f9ff","surface-container-lowest":"#ffffff","error":"#ba1a1a","inverse-on-surface":"#ebf1ff","surface-variant":"#d8e3fa","surface-container-low":"#f0f3ff","on-error":"#ffffff","surface-dim":"#cfdaf1","on-primary-fixed-variant":"#3b475c","on-secondary":"#ffffff","primary-container":"#0f1c2e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","margin-md":"3rem","gutter-lg":"2rem","gutter":"1.5rem","margin-lg":"5rem","space-md":"1rem","space-xs":"0.25rem","margin":"1.5rem","space-lg":"1.5rem","gutter-sm":"1rem","space-xl":"2.5rem"},"fontFamily":{"label-lg":["Outfit"],"body-sm":["Plus Jakarta Sans"],"label-sm":["Outfit"],"display-mobile":["Playfair Display"],"body-md":["Plus Jakarta Sans"],"headline-sm":["Playfair Display"],"body-lg":["Plus Jakarta Sans"],"label-md":["Outfit"],"headline-lg":["Playfair Display"],"display":["Playfair Display"],"currency-display":["Outfit"],"title-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Playfair Display"],"headline-xl":["Playfair Display"],"title-md":["Plus Jakarta Sans"],"headline-md":["Playfair Display"],"headline-xl-mobile":["Playfair Display"]},"fontSize":{"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.05em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"20px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.1em","fontWeight":"600"}],"display-mobile":["38px",{"lineHeight":"44px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"500"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"500"}],"display":["56px",{"lineHeight":"64px","letterSpacing":"-0.02em","fontWeight":"600"}],"currency-display":["26px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"title-lg":["18px",{"lineHeight":"24px","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"500"}],"headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.015em","fontWeight":"600"}],"title-md":["16px",{"lineHeight":"22px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"500"}],"headline-xl-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script>
+    <link rel="icon" type="image/png" href="../assets/favicon.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+  
+</head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-primary-container z-50 flex flex-col justify-between shadow-[0_4px_24px_rgba(7,20,38,0.25)]"><div class="flex flex-col flex-1 overflow-y-auto"><div class="h-20 px-6 flex items-center justify-between bg-primary-container"><div class="flex items-center gap-space-sm"><img alt="Prime House Logo" class="w-10 h-10 object-contain p-0.5 rounded bg-surface-container-lowest/10" src="../assets/logo-p-transparent.png" /><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-surface-container-lowest tracking-tight">PRIME HOUSE</span><span class="font-label-sm text-label-sm text-tertiary-fixed tracking-widest uppercase">Prestige Immobilier</span></div></div></div><div class="px-6 py-space-sm"><div class="bg-surface-container-lowest/5 rounded px-3 py-2 flex items-center justify-between"><span class="font-label-sm text-label-sm text-surface-container-highest tracking-wider uppercase">ESPACE ADMINISTRATION</span><span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span></div></div><div class="px-4 py-space-md flex flex-col gap-6"><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">VUE GLOBALE</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded transition-all text-on-surface-variant" data-path="dashboard" href="index.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">dashboard</span><span>Tableau de bord</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">GESTION DU PARC</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="tous-les-biens" href="biens.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">apartment</span><span>Tous les biens</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="ajouter-un-bien" href="ajouter-bien.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">add_circle</span><span>Ajouter un bien</span></div><span class="px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-label-sm">+</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="biens-en-moderation" href="moderation.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">pending_actions</span><span>Biens en modération</span></div><span class="px-2 py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm">5</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="biens-a-la-une" href="vitrine.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">grade</span><span>Biens à la Une</span></div><span class="material-symbols-outlined text-[16px] text-outline">tune</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">LEADS &amp; RELATIONS</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="demandes-et-visites" href="demandes.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">mark_email_unread</span><span>Demandes &amp; Visites</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">8</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">TAXONOMIE &amp; CONFIG</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="categories-et-wilayas" href="categories-wilayas.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">map</span><span>Catégories &amp; Wilayas</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="parametres-du-site" href="parametres.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">settings</span><span>Paramètres du site</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a></nav></div></div></div><div class="p-4 bg-primary-container"><div class="bg-surface-container-lowest/5 rounded p-3 flex flex-col gap-2 mb-3"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-tertiary-fixed">Rôle: Super-Admin</span><span class="material-symbols-outlined text-secondary text-[16px]">verified_user</span></div><div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span><span class="font-label-sm text-label-sm text-surface-variant">Supabase Cloud • Node DZ</span></div></div><a class="flex items-center justify-center gap-2 w-full py-2.5 rounded bg-surface-container-lowest/10 text-surface-container-highest hover:bg-error hover:text-on-error transition-all font-label-md text-label-md" data-path="deconnexion" href="login.html"><span class="material-symbols-outlined text-[18px]">logout</span><span>Déconnexion</span></a></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-20 bg-surface-container-lowest/95 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(7,20,38,0.04)] px-8 flex items-center justify-between"><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-on-surface"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm uppercase tracking-wider">Node Alger Connecté</span></div><span class="font-body-sm text-body-sm text-on-surface-variant">Plateforme d'Administration Immobilière de Luxe</span></div><div class="flex items-center gap-5"><a class="flex items-center gap-2 px-3.5 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm uppercase tracking-wide" href="../index.html" target="_blank"><span class="material-symbols-outlined text-[16px] text-secondary">open_in_new</span><span>Voir le site public</span></a><div class="relative flex items-center justify-center"><button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm flex items-center justify-center font-bold">12</span></div><div class="h-8 w-px bg-surface-variant"></div><div class="flex items-center gap-3 pl-1"><div class="flex flex-col text-right"><span class="font-title-md text-title-md text-on-surface leading-tight">Karim Benali</span><span class="font-label-sm text-label-sm text-secondary leading-tight uppercase">Directeur Exécutif</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-20 bg-surface flex-1 w-full px-8 pb-12"><div class="flex flex-col w-full">
+<!-- SCRIPT TO SET ACTIVE STATE IN SHELL SIDEBAR -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const links = document.querySelectorAll('aside nav a[data-path="biens-en-moderation"]');
+      links.forEach(el => {
+        el.className = "flex items-center justify-between px-3 py-2 rounded bg-surface-container-lowest/15 text-secondary-fixed font-bold shadow-sm transition-all font-body-sm text-body-sm";
+        const icon = el.querySelector(".material-symbols-outlined");
+        if (icon) icon.className = "material-symbols-outlined text-[20px] text-secondary-fixed";
+      });
+    });
+  </script>
+<!-- TOP BREADCRUMB & HEADER -->
+<div class="flex flex-col gap-2 mb-8">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<span>Administration</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Gestion du Parc</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-secondary font-bold">Biens en modération</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+          Biens en Modération &amp; Audit Foncier
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+          Contrôle de conformité notariale, authenticité des livrets fonciers, négativité hypothécaire et vérification cadastrale avant certification et diffusion sur l’écrin public Prime House.
+        </p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded bg-surface-container-highest hover:bg-surface-container-high text-on-surface font-label-md text-label-md uppercase tracking-wider transition-all" onclick="openBulkCertifyModal()">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified</span>
+<span>Protocole d'audit DZ</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded bg-primary text-on-primary hover:bg-inverse-surface font-label-md text-label-md uppercase tracking-wider transition-all shadow-md" onclick="refreshQueue()">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span>Actualiser le flux</span>
+</button>
+</div>
+</div>
+</div>
+<!-- STATS TILES -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+<!-- Stat 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex items-center justify-between relative overflow-hidden group">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">En attente d'arbitrage</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-currency-display text-currency-display text-on-surface">05</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Dossiers prioritaires</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">3 particuliers • 2 agences agréées</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[26px]">hourglass_top</span>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex items-center justify-between relative overflow-hidden group">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Approuvés (7 derniers jours)</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-currency-display text-currency-display text-on-surface">14</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">+18% vs S-1</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Valeur foncière : 1,42 Mrd DA</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-on-surface group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[26px]">task_alt</span>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex items-center justify-between relative overflow-hidden group">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Rejets pour non-conformité</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-currency-display text-currency-display text-error">01</span>
+<span class="font-label-sm text-label-sm text-error font-medium">Litige foncier avéré</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Motif : Défaut de certificat d'urbanisme</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-error-container/60 flex items-center justify-center text-error group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[26px]">gavel</span>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex items-center justify-between relative overflow-hidden group">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Délai moyen d'instruction</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-currency-display text-currency-display text-on-surface">14h</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Cible : &lt; 24h</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Algorithme d'OCR Cadastral activé</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[26px]">speed</span>
+</div>
+</div>
+</div>
+<!-- CONTROL RIBBON / FILTERS & TABS -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm mb-6 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+<!-- Tabs -->
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg self-start">
+<button class="px-4 py-2 rounded font-label-md text-label-md uppercase tracking-wider bg-surface-container-lowest text-on-surface shadow-xs transition-all" id="tab-all" onclick="filterTab('all')">
+        Tous en attente (5)
+      </button>
+<button class="px-4 py-2 rounded font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-all" id="tab-particulier" onclick="filterTab('particulier')">
+        Particuliers (3)
+      </button>
+<button class="px-4 py-2 rounded font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-all" id="tab-agence" onclick="filterTab('agence')">
+        Agences Partenaires (2)
+      </button>
+</div>
+<!-- Search & Quick Sort -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+<div class="relative min-w-[280px]">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-container-low rounded-lg pl-10 pr-4 py-2.5 font-body-sm text-body-sm text-on-surface placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary/20 transition-all" id="searchInput" onkeyup="searchCards()" placeholder="Référence, Wilaya, Mandant, Propriétaire..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative inline-block text-left">
+<select class="appearance-none bg-surface-container-low text-on-surface font-label-md text-label-md py-2.5 pl-3.5 pr-8 rounded-lg focus:outline-none focus:bg-surface-container-lowest cursor-pointer">
+<option>Tri : Date de soumission (Plus récent)</option>
+<option>Tri : Prix décroissant (DA)</option>
+<option>Tri : Score de complétude juridique</option>
+<option>Tri : Urgence de publication</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] text-outline">arrow_drop_down</span>
+</div>
+<button class="p-2.5 rounded bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors" title="Affichage compact">
+<span class="material-symbols-outlined text-[20px]">view_agenda</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MODERATION QUEUE CARDS CONTAINER -->
+<div class="flex flex-col gap-5" id="moderationList">
+<!-- DOSSIER 1 -->
+<div class="property-item bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row gap-6 relative" data-search="villa contemporaine bel air hydra alger salim khelifi 185000000 PRM-DZ-0418" data-type="particulier">
+<!-- Media Viewport with Badges -->
+<div class="w-full xl:w-80 h-56 xl:h-auto rounded-lg overflow-hidden relative shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Luxurious modern minimalist architectural villa in Hydra Algiers with serene Mediterranean reflection pool, manicured palm trees, travertine marble facade, bright midday golden sunlight, crisp architectural photography" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAf2SooycYthkLLutMdqGNaYxdSbUuCWQycfn0sg8pqlKlBCFjcKVkKW4F_mHoQFQc19bCVxupDTaFV6m87pJjtaEcEYuwhh4SuDWyndqRXpKDjrTJH31f_yvjn2V2MKUjmJBrQK8SAiZRrxH1tyDp-ThrosEJ0wZL3f2vUufCbVWrr7fzZf9UQL_bvkUgBJxnLLAc3r5rt7bFVIZMDl7t6F21mkzq9YYvOBIseI4ymRyj8kGsQ0tA')">
+</div>
+<div class="absolute top-3 left-3 flex flex-col gap-1.5">
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-md font-label-sm text-label-sm text-on-surface uppercase tracking-wider shadow-xs">
+            Vente Exclusive
+          </span>
+<span class="px-2 py-0.5 rounded bg-primary text-secondary font-label-sm text-label-sm tracking-wider uppercase font-semibold">
+            Réf: PRM-DZ-0418
+          </span>
+</div>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-primary/80 backdrop-blur-sm text-on-primary font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-container">photo_library</span>
+<span>14 clichés HD</span>
+</div>
+</div>
+<!-- Core Metadata & Legal Ledger -->
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<!-- Title & Location Row -->
+<div class="flex flex-col lg:flex-row lg:items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-bold">HYDRA • VAL D'HYDRA, ALGER (16)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Soumis il y a 4 heures</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+                Villa Contemporaine Bel Air &amp; Piscine à Débordement
+              </h2>
+</div>
+<div class="text-left lg:text-right">
+<span class="font-currency-display text-currency-display text-on-surface">185 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold align-top ml-0.5">DA</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Honoraires agence inclus (1%)</span>
+</div>
+</div>
+<!-- Specs pills -->
+<div class="flex flex-wrap items-center gap-3 mt-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">crop_free</span>
+<span>750 m² terrain (520 m² bâtis)</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">king_bed</span>
+<span>6 Suites royales</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">garage</span>
+<span>Garage sous-sol 4 V.</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm uppercase font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Score dossier : 95%</span>
+</span>
+</div>
+<!-- Mandant and Legal Status Inspection Box -->
+<div class="mt-4 p-3.5 rounded-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-bold text-sm">
+                SK
+              </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">M. Salim Khelifi</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Particulier propriétaire direct • +213 (0) 550 42 ** **</span>
+</div>
+</div>
+<!-- Documents checklist indicators -->
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">description</span>
+<span>Acte de propriété (Indivision levée)</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">menu_book</span>
+<span>Livret Foncier 2021</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-secondary-fixed/20 text-on-secondary-fixed-variant font-label-sm text-label-sm uppercase font-bold">
+<span class="material-symbols-outlined text-[16px]">assignment_turned_in</span>
+<span>Examen notarial : En cours</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Ribbon -->
+<div class="mt-5 pt-4 flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider transition-all" onclick="openDrawer('PRM-DZ-0418', 'Villa Contemporaine Bel Air', 'Salim Khelifi', 'Hydra, Alger (16)', '185 000 000 DA', '95%')">
+<span class="material-symbols-outlined text-[18px] text-secondary">visibility</span>
+<span>Inspecter le dossier</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md uppercase tracking-wider transition-all" onclick="requestCorrection('PRM-DZ-0418')">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Demander compléments</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-error-container text-error font-label-md text-label-md uppercase tracking-wider transition-all" onclick="rejectProperty('PRM-DZ-0418', 'Villa Contemporaine Bel Air')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Refuser</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded bg-secondary text-on-secondary hover:bg-secondary-fixed-dim transition-all font-label-md text-label-md uppercase tracking-wider shadow-sm" onclick="approveDirect('PRM-DZ-0418', 'Villa Contemporaine Bel Air')">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+<span>Approuver &amp; Publier</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- DOSSIER 2 -->
+<div class="property-item bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row gap-6 relative" data-search="duplex vue mer panoramique canastel oran oran prestige immo 78000000 PRM-DZ-0419" data-type="agence">
+<!-- Media Viewport -->
+<div class="w-full xl:w-80 h-56 xl:h-auto rounded-lg overflow-hidden relative shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="High-end duplex penthouse interior with floor to ceiling glass windows overlooking the Mediterranean bay in Canastel Oran, refined Italian furniture, warm wooden ceilings, sunset golden hour light, high luxury magazine finish" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCn9J75-eW0HGXTk8jzgNMRK0YVx1acxPz1s0J3dkmKCkSvaaMCxs7F3JDlCMtHsb29XbLkImamtxjqlJ5_qg5ZxMSTtIJplXVxnacF3FGuNxN9S6XebT87oFj0REeprORm98lAUdYm5qazb2xLcp3jrzfIxctSla87DfHlOXLtO4Yqa0aCXL_aZuvLhvyDdUw_Cho7dui3qNco6nsb0Knw17x73ySRgh9y1Lw4bphNlEDaiz6kObM')">
+</div>
+<div class="absolute top-3 left-3 flex flex-col gap-1.5">
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-md font-label-sm text-label-sm text-on-surface uppercase tracking-wider shadow-xs">
+            Vente Résidentielle
+          </span>
+<span class="px-2 py-0.5 rounded bg-primary text-secondary font-label-sm text-label-sm tracking-wider uppercase font-semibold">
+            Réf: PRM-DZ-0419
+          </span>
+</div>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-primary/80 backdrop-blur-sm text-on-primary font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-container">photo_library</span>
+<span>09 clichés HD</span>
+</div>
+</div>
+<!-- Core Metadata & Legal Ledger -->
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex flex-col lg:flex-row lg:items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-bold">CANASTEL • CORNICHE EST, ORAN (31)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Soumis il y a 8 heures</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+                Duplex Vue Mer Panoramique &amp; Terrasse Tropézienne
+              </h2>
+</div>
+<div class="text-left lg:text-right">
+<span class="font-currency-display text-currency-display text-on-surface">78 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold align-top ml-0.5">DA</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Mandat exclusif Agence Partenaire</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">crop_free</span>
+<span>320 m² en duplex (R+8 &amp; R+9)</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">king_bed</span>
+<span>4 Chambres dont 2 Masters</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">water</span>
+<span>Front de mer 1ère ligne</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error-container text-error font-label-sm text-label-sm uppercase font-semibold">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>Pièce manquante : Livret Foncier</span>
+</span>
+</div>
+<!-- Agency Bar & Missing Alert -->
+<div class="mt-4 p-3.5 rounded-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-sm">
+                OP
+              </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Agence Oran Prestige Immo</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Agrément Min. Habitat N°31/2019 • Agent Référent : M. Amine Dahmane</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Acte notarié numérisé</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-error-container text-error font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span>Livret Foncier manquant (Non fourni)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider transition-all" onclick="openDrawer('PRM-DZ-0419', 'Duplex Vue Mer Panoramique', 'Agence Oran Prestige Immo', 'Canastel, Oran (31)', '78 000 000 DA', '68%')">
+<span class="material-symbols-outlined text-[18px] text-secondary">visibility</span>
+<span>Inspecter le dossier</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed font-label-md text-label-md uppercase tracking-wider transition-all" onclick="requestCorrection('PRM-DZ-0419')">
+<span class="material-symbols-outlined text-[18px]">notification_important</span>
+<span>Relancer pour livret foncier</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-error-container text-error font-label-md text-label-md uppercase tracking-wider transition-all" onclick="rejectProperty('PRM-DZ-0419', 'Duplex Vue Mer Panoramique')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Refuser</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded bg-surface-container text-on-surface-variant opacity-60 cursor-not-allowed font-label-md text-label-md uppercase tracking-wider" disabled="" title="Document obligatoire manquant">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span>Validation Bloquée</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- DOSSIER 3 -->
+<div class="property-item bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row gap-6 relative" data-search="propriete de maitre verger blida atlas mezerreg foncier 120000000 PRM-DZ-0420" data-type="agence">
+<div class="w-full xl:w-80 h-56 xl:h-auto rounded-lg overflow-hidden relative shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Colonial style luxury master mansion with expansive citrus orchard estate at the foothills of Mount Chréa in Blida, majestic cedar trees, warm Algerian afternoon sun, cobblestone driveways and vintage fountain" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9bx5GJvI1baT6FqB2z6-Elmw6sn2lLZRE4rCcuMIPI-KYrZTd0ZrIBPGzp6NRJtoenhUg2zIDNhqsPzJPJqG_oiPYcCuz7KTSwzXji1NtOCCWO7LNBzK1O1ejsqkH5NyVTA7tZCRzxPLIdJH_EJATvzatkrJptJU6j4eg6Sikd69ntALZ9Ot0BpMSFCYVi-59h_MHUgOEyS8__WtXh0Q5tk9F-vaKNpHpucq6YDeeCHXctDe0YQ8')">
+</div>
+<div class="absolute top-3 left-3 flex flex-col gap-1.5">
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-md font-label-sm text-label-sm text-on-surface uppercase tracking-wider shadow-xs">
+            Domaine &amp; Verger
+          </span>
+<span class="px-2 py-0.5 rounded bg-primary text-secondary font-label-sm text-label-sm tracking-wider uppercase font-semibold">
+            Réf: PRM-DZ-0420
+          </span>
+</div>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-primary/80 backdrop-blur-sm text-on-primary font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-container">photo_library</span>
+<span>22 clichés HD</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex flex-col lg:flex-row lg:items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-bold">BLIDA ATLAS • CONTREFORTS DU CHRÉA (09)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Soumis il y a 12 heures</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+                Propriété de Maître avec Verger d'Agrumes &amp; Maison de Gardien
+              </h2>
+</div>
+<div class="text-left lg:text-right">
+<span class="font-currency-display text-currency-display text-on-surface">120 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold align-top ml-0.5">DA</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Mandat exclusif notarié</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">nature_people</span>
+<span>12 400 m² terrain arboré</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">house</span>
+<span>680 m² bâti habitable</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">water_drop</span>
+<span>Forage privé &amp; Bassin d'irrigation</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm uppercase font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Dossier 100% Conforme</span>
+</span>
+</div>
+<div class="mt-4 p-3.5 rounded-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm">
+                MF
+              </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Mezerreg Foncier &amp; Investissement</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Mandant Notarial : Étude Maître Boudiaf (Blida)</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Acte notarié individuel</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Livret foncier apuré</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Certificat de conformité urbanisme</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider transition-all" onclick="openDrawer('PRM-DZ-0420', 'Propriété de Maître avec Verger', 'Mezerreg Foncier', 'Blida Atlas (09)', '120 000 000 DA', '100%')">
+<span class="material-symbols-outlined text-[18px] text-secondary">visibility</span>
+<span>Inspecter le dossier</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md uppercase tracking-wider transition-all" onclick="requestCorrection('PRM-DZ-0420')">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Compléments</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-error-container text-error font-label-md text-label-md uppercase tracking-wider transition-all" onclick="rejectProperty('PRM-DZ-0420', 'Propriété de Maître avec Verger')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Refuser</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded bg-secondary text-on-secondary hover:bg-secondary-fixed-dim transition-all font-label-md text-label-md uppercase tracking-wider shadow-sm" onclick="approveDirect('PRM-DZ-0420', 'Propriété de Maître avec Verger')">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+<span>Approuver &amp; Publier</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- DOSSIER 4 -->
+<div class="property-item bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row gap-6 relative" data-search="penthouse front de mer chenoua tipaza particulier expatrie 380000 PRM-DZ-0421" data-type="particulier">
+<div class="w-full xl:w-80 h-56 xl:h-auto rounded-lg overflow-hidden relative shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Stunning oceanfront terrace of a luxury penthouse overlooking the turquoise sea and dramatic cliffs of Mont Chenoua in Tipaza Algeria, teak outdoor lounge furniture, bright Mediterranean summer noon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAorGDtbldFtxSlvEq2fIZf9frUspT-7EbPkyihP2-ZcuA4x5ixVfyJXo1yV2xekhiHc6-oYK0UXaonTUmpDVE9ni_reBs1zs980AjlG-1XhOwAkzmmr0Glmxj2y7GegMd6f7NdjvxBHqwKSTxEqD7Kq9i9HtlF_Gn35V8s1jw64j4UT-J7iHtj3CJ_I0GUYeZ-lJ8CVRYc8-GyGDE_0jcVHQU984_0mz6zAa8p0Lb6tzJXbuJPcSo')">
+</div>
+<div class="absolute top-3 left-3 flex flex-col gap-1.5">
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-md font-label-sm text-label-sm text-on-surface uppercase tracking-wider shadow-xs">
+            Location Prestige
+          </span>
+<span class="px-2 py-0.5 rounded bg-primary text-secondary font-label-sm text-label-sm tracking-wider uppercase font-semibold">
+            Réf: PRM-DZ-0421
+          </span>
+</div>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-primary/80 backdrop-blur-sm text-on-primary font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-container">photo_library</span>
+<span>11 clichés HD</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex flex-col lg:flex-row lg:items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-bold">MONT CHENOUA • CORNICHE, TIPAZA (42)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Soumis il y a 18 heures</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+                Penthouse Pieds dans l'Eau avec Solarium Privatif
+              </h2>
+</div>
+<div class="text-left lg:text-right">
+<span class="font-currency-display text-currency-display text-on-surface">380 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold align-top ml-0.5">DA / mois</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Bail diplomatique / Corporate</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">crop_free</span>
+<span>240 m² + 80 m² terrasse panoramique</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">deck</span>
+<span>Accès crique privée</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">security</span>
+<span>Résidence sécurisée 24/7</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm uppercase font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Score dossier : 90%</span>
+</span>
+</div>
+<div class="mt-4 p-3.5 rounded-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-bold text-sm">
+                YM
+              </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">M. Yassine Mansouri</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Particulier (Cadre Expatrié - Mandat de gestion familiale) • Dossier Paris/Alger</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Procuration notariée valide</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Titre de propriété conforme</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider transition-all" onclick="openDrawer('PRM-DZ-0421', 'Penthouse Front de Mer Chenoua', 'Yassine Mansouri', 'Chenoua, Tipaza (42)', '380 000 DA/m', '90%')">
+<span class="material-symbols-outlined text-[18px] text-secondary">visibility</span>
+<span>Inspecter le dossier</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md uppercase tracking-wider transition-all" onclick="requestCorrection('PRM-DZ-0421')">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Compléments</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-error-container text-error font-label-md text-label-md uppercase tracking-wider transition-all" onclick="rejectProperty('PRM-DZ-0421', 'Penthouse Front de Mer Chenoua')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Refuser</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded bg-secondary text-on-secondary hover:bg-secondary-fixed-dim transition-all font-label-md text-label-md uppercase tracking-wider shadow-sm" onclick="approveDirect('PRM-DZ-0421', 'Penthouse Front de Mer Chenoua')">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+<span>Approuver &amp; Publier</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- DOSSIER 5 -->
+<div class="property-item bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row gap-6 relative" data-search="terrain exception viabilise r+2 poirson el biar alger cherif boussaid 95000000 PRM-DZ-0422" data-type="particulier">
+<div class="w-full xl:w-80 h-56 xl:h-auto rounded-lg overflow-hidden relative shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Prime urban building parcel plot in prestigious residential neighborhood Poirson El Biar Algiers, lush surroundings with mature umbrella pines, clear blue sky, surveyed boundary markers" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCDZs5eDWFzRsrdnRLaolRN4qTM4Lp3vzjkAPAGguHt8Q8B678pOe5lrnjADAhu3SbC55gsAZA00GozRY20bRN8ZKHdmp3INpN_qpOTVA6oo68oppsWfPwaxFGjf2PyBBjgGfEsoH-i9o7Hx6b39S2QHlufmimpm6s_vZ0fDntGtMX1ffoBQbd9tzEPuohZpB0A4YMhKEqkqIZI_Z-PfRpkQSn5rulxSiS51ocvGnUWKFsJAfSVikI')">
+</div>
+<div class="absolute top-3 left-3 flex flex-col gap-1.5">
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-md font-label-sm text-label-sm text-on-surface uppercase tracking-wider shadow-xs">
+            Foncier Urbain R+2
+          </span>
+<span class="px-2 py-0.5 rounded bg-primary text-secondary font-label-sm text-label-sm tracking-wider uppercase font-semibold">
+            Réf: PRM-DZ-0422
+          </span>
+</div>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-primary/80 backdrop-blur-sm text-on-primary font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-container">photo_library</span>
+<span>06 plans &amp; relevés</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex flex-col lg:flex-row lg:items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-bold">POIRSON • EL BIAR, ALGER (16)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Soumis il y a 22 heures</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+                Terrain Résidentiel Viabilisé avec Vue Baie d'Alger
+              </h2>
+</div>
+<div class="text-left lg:text-right">
+<span class="font-currency-display text-currency-display text-on-surface">95 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold align-top ml-0.5">DA</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">158 333 DA / m²</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">square_foot</span>
+<span>600 m² viabilisé (Eau, Gaz, Élec, Fibre)</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">architecture</span>
+<span>Façade de 22 mètres linéaires</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">approval</span>
+<span>Certificat d'urbanisme R+2 délivré</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm uppercase font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Score dossier : 100%</span>
+</span>
+</div>
+<div class="mt-4 p-3.5 rounded-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-bold text-sm">
+                CB
+              </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Dr. Chérif Boussaïd</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Propriétaire indivis unique • Mandataire notarié</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Acte notarié individuel apuré</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Livret Foncier N° 16/482/EL</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>Plan de bornage géomètre expert</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider transition-all" onclick="openDrawer('PRM-DZ-0422', 'Terrain d\'Exception Viabilisé R+2', 'Dr. Chérif Boussaïd', 'Poirson, El Biar (16)', '95 000 000 DA', '100%')">
+<span class="material-symbols-outlined text-[18px] text-secondary">visibility</span>
+<span>Inspecter le dossier</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md uppercase tracking-wider transition-all" onclick="requestCorrection('PRM-DZ-0422')">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Compléments</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-error-container text-error font-label-md text-label-md uppercase tracking-wider transition-all" onclick="rejectProperty('PRM-DZ-0422', 'Terrain d\'Exception Viabilisé R+2')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Refuser</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded bg-secondary text-on-secondary hover:bg-secondary-fixed-dim transition-all font-label-md text-label-md uppercase tracking-wider shadow-sm" onclick="approveDirect('PRM-DZ-0422', 'Terrain d\'Exception Viabilisé R+2')">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+<span>Approuver &amp; Publier</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SLIDE-OVER AUDIT DRAWER (VOLET DE CONTRÔLE NOTARIAL DZ) -->
+<div class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-300" id="auditDrawer">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-primary/40 backdrop-blur-sm pointer-events-auto" onclick="closeDrawer()"></div>
+<!-- Side Panel -->
+<div class="absolute right-0 top-0 bottom-0 w-full max-w-2xl bg-surface-container-lowest shadow-2xl p-8 flex flex-col justify-between overflow-y-auto pointer-events-auto transform translate-x-full transition-transform duration-300" id="drawerContent">
+<div class="flex flex-col">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">FEUILLE D'AUDIT JURIDIQUE &amp; FONCIER</span>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" onclick="closeDrawer()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="mt-2">
+<span class="font-label-md text-label-md text-secondary font-bold tracking-wider" id="drawerRef">PRM-DZ-0418</span>
+<h3 class="font-headline-md text-headline-md text-on-surface" id="drawerTitle">Villa Contemporaine Bel Air</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="drawerSubtitle">Hydra, Alger • Mandant : Salim Khelifi</p>
+</div>
+<!-- Compliance Gauge Bar -->
+<div class="mt-6 p-4 rounded-xl bg-surface-container-low flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Score d'intégrité du titre</span>
+<span class="font-currency-display text-currency-display text-on-surface" id="drawerScore">95%</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+<span class="font-label-md text-label-md font-semibold">Titre Apuré Pré-validé</span>
+</div>
+</div>
+<!-- Verification Checklist Algerian Law -->
+<div class="mt-6 flex flex-col gap-4">
+<h4 class="font-title-md text-title-md text-on-surface">Vérifications Réglementaires Algériennes</h4>
+<!-- Item 1: Acte Notarié -->
+<div class="p-4 rounded-xl bg-surface flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px]">history_edu</span>
+<div>
+<span class="font-title-md text-title-md text-on-surface block">Acte Notarié Publié (Conservation Foncière)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Volume 142 • Numéro 89 • Alger-Centre</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-bold">VÉRIFIÉ</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant pt-2">
+<span>Étude Notariale : Me. A. Taleb (Hydra)</span>
+<a class="text-secondary font-semibold hover:underline flex items-center gap-1 font-label-sm text-label-sm" href="#" onclick="showDocPreview('Acte Notarié')">
+<span class="material-symbols-outlined text-[16px]">file_open</span> Ouvrir la pièce (PDF)
+              </a>
+</div>
+</div>
+<!-- Item 2: Livret Foncier -->
+<div class="p-4 rounded-xl bg-surface flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px]">menu_book</span>
+<div>
+<span class="font-title-md text-title-md text-on-surface block">Livret Foncier (Daftar al-Iqari)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Matricule Cadastral Section 12 Îlot 04</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-bold">CONFORME</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant pt-2">
+<span>Date d'établissement : 14/09/2021</span>
+<a class="text-secondary font-semibold hover:underline flex items-center gap-1 font-label-sm text-label-sm" href="#" onclick="showDocPreview('Livret Foncier')">
+<span class="material-symbols-outlined text-[16px]">file_open</span> Ouvrir le livret (PDF)
+              </a>
+</div>
+</div>
+<!-- Item 3: Certificat Négatif -->
+<div class="p-4 rounded-xl bg-surface flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px]">search_check</span>
+<div>
+<span class="font-title-md text-title-md text-on-surface block">Certificat Négatif d'Hypothèque (Chahada Salbiya)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Vierge de toute charge, hypothèque ou saisie conservatoire</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-bold">APURÉ</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant pt-2">
+<span>Délivré par Conservation Foncière il y a &lt; 30j</span>
+<a class="text-secondary font-semibold hover:underline flex items-center gap-1 font-label-sm text-label-sm" href="#" onclick="showDocPreview('Certificat Négatif')">
+<span class="material-symbols-outlined text-[16px]">file_open</span> Vérifier la mention
+              </a>
+</div>
+</div>
+<!-- Item 4: Photographies et Qualité Image -->
+<div class="p-4 rounded-xl bg-surface flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px]">photo_camera</span>
+<div>
+<span class="font-title-md text-title-md text-on-surface block">Audit Visuel &amp; Standards Photographiques</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Résolution minimum 4K • Pas de filigrane tiers</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-bold">VALIDÉ (14/14)</span>
+</div>
+</div>
+</div>
+<!-- Note to Administrator -->
+<div class="mt-6 flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-semibold">Note interne d'audit notarial :</label>
+<textarea class="w-full bg-surface-container-low rounded-lg p-3 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-secondary" id="drawerAuditNotes" placeholder="Ajouter une observation pour le collège d'arbitrage..." rows="2">Dossier rigoureusement ordonné. Indivision familiale résolue par acte de partage authentique du 12 Janvier 2023. Prêt pour publication de prestige.</textarea>
+</div>
+<!-- Confirmation Checkbox -->
+<div class="mt-4 p-4 rounded-xl bg-secondary-container/20 flex items-start gap-3">
+<input checked="" class="mt-1 w-5 h-5 accent-secondary rounded cursor-pointer" id="legalCertificationCheck" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface cursor-pointer" for="legalCertificationCheck">
+<strong class="font-title-md text-title-md block text-secondary">Certification de pleine conformité juridique</strong>
+            J'atteste avoir procédé à la vérification dématérialisée des pièces d'identité, du titre foncier algérien et ordonne la publication immédiate avec badge "Mandat Audité".
+          </label>
+</div>
+</div>
+<!-- Drawer Actions Footer -->
+<div class="pt-6 mt-6 flex items-center justify-between gap-3">
+<button class="px-4 py-2.5 rounded bg-surface-container text-on-surface font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container-high transition-colors" onclick="closeDrawer()">
+          Fermer l'examen
+        </button>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2.5 rounded hover:bg-error-container text-error font-label-md text-label-md uppercase tracking-wider transition-colors" onclick="rejectFromDrawer()">
+            Rejeter le titre
+          </button>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded bg-secondary text-on-secondary hover:bg-secondary-fixed-dim font-label-md text-label-md uppercase tracking-wider transition-all shadow-md" onclick="approveFromDrawer()">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Valider &amp; Publier</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- REJECTION REASON MODAL DIALOGUE -->
+<div class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-200 flex items-center justify-center p-4" id="rejectionModal">
+<div class="absolute inset-0 bg-primary/40 backdrop-blur-sm pointer-events-auto" onclick="closeRejectionModal()"></div>
+<div class="relative w-full max-w-lg bg-surface-container-lowest rounded-xl shadow-2xl p-6 pointer-events-auto flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5 text-error">
+<span class="material-symbols-outlined text-[24px]">gavel</span>
+<span class="font-title-lg text-title-lg text-on-surface">Motif de Rejet &amp; Refus Foncier</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high" onclick="closeRejectionModal()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Sélectionnez le fondement légal du refus. Cette notification formelle sera notifiée avec cachet numérique au déposant.
+      </p>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container cursor-pointer font-body-sm text-body-sm text-on-surface">
+<input checked="" class="accent-secondary" name="refusal_reason" type="radio" value="livret_manquant"/>
+<span>Absence du Livret Foncier apuré ou document périmé</span>
+</label>
+<label class="flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container cursor-pointer font-body-sm text-body-sm text-on-surface">
+<input class="accent-secondary" name="refusal_reason" type="radio" value="indivision"/>
+<span>Bien en indivision sans procuration notariée globale</span>
+</label>
+<label class="flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container cursor-pointer font-body-sm text-body-sm text-on-surface">
+<input class="accent-secondary" name="refusal_reason" type="radio" value="urbanisme"/>
+<span>Non-conformité de construction / Dépassement permis R+2</span>
+</label>
+<label class="flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container cursor-pointer font-body-sm text-body-sm text-on-surface">
+<input class="accent-secondary" name="refusal_reason" type="radio" value="photos"/>
+<span>Visuels de qualité insuffisante ou non conformes au standard de luxe</span>
+</label>
+</div>
+<textarea class="w-full bg-surface-container-low rounded-lg p-3 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-error" id="rejectionCustomText" placeholder="Observations juridiques complémentaires obligatoires..." rows="2"></textarea>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="px-4 py-2 rounded bg-surface-container text-on-surface font-label-md text-label-md uppercase tracking-wider" onclick="closeRejectionModal()">
+          Annuler
+        </button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded bg-error text-on-error hover:bg-on-error-container font-label-md text-label-md uppercase tracking-wider transition-all" onclick="confirmRejectionAction()">
+<span class="material-symbols-outlined text-[18px]">report</span>
+<span>Confirmer le Rejet Définitif</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TOAST NOTIFICATION COMPONENT -->
+<div class="fixed bottom-8 right-8 z-50 pointer-events-none opacity-0 translate-y-4 transition-all duration-300" id="toastMessage">
+<div class="px-5 py-3.5 rounded-xl bg-primary text-on-primary shadow-2xl flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px]" id="toastIcon">check_circle</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-primary" id="toastTitle">Dossier Approuvé</span>
+<span class="font-body-sm text-body-sm text-surface-variant" id="toastText">Le bien a été publié sur le portail public Prime House.</span>
+</div>
+</div>
+</div>
+<!-- JAVASCRIPT CONTROLLERS -->
+<script>
+    let currentSelectedRef = '';
+
+    // Filter by Tabs
+    function filterTab(category) {
+      const items = document.querySelectorAll('.property-item');
+      const tabs = ['all', 'particulier', 'agence'];
+      
+      tabs.forEach(t => {
+        const btn = document.getElementById('tab-' + t);
+        if (t === category) {
+          btn.className = "px-4 py-2 rounded font-label-md text-label-md uppercase tracking-wider bg-surface-container-lowest text-on-surface shadow-xs transition-all";
+        } else {
+          btn.className = "px-4 py-2 rounded font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-all";
+        }
+      });
+
+      items.forEach(item => {
+        if (category === 'all') {
+          item.style.display = 'flex';
+        } else if (item.getAttribute('data-type') === category) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Instant Search
+    function searchCards() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.property-item');
+      items.forEach(item => {
+        const text = (item.getAttribute('data-search') || '').toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Slide-over Drawer
+    function openDrawer(ref, title, mandant, location, price, score) {
+      currentSelectedRef = ref;
+      document.getElementById('drawerRef').innerText = ref;
+      document.getElementById('drawerTitle').innerText = title;
+      document.getElementById('drawerSubtitle').innerText = location + ' • Mandant : ' + mandant;
+      document.getElementById('drawerScore').innerText = score;
+
+      const drawer = document.getElementById('auditDrawer');
+      const content = document.getElementById('drawerContent');
+      drawer.classList.remove('pointer-events-none', 'opacity-0');
+      content.classList.remove('translate-x-full');
+    }
+
+    function closeDrawer() {
+      const drawer = document.getElementById('auditDrawer');
+      const content = document.getElementById('drawerContent');
+      content.classList.add('translate-x-full');
+      setTimeout(() => {
+        drawer.classList.add('pointer-events-none', 'opacity-0');
+      }, 200);
+    }
+
+    // Direct Quick Actions
+    function approveDirect(ref, title) {
+      showToast("Approbation Immédiate", title + " est maintenant certifié et en ligne sur le portail public.", "verified");
+      removeDossierItem(ref);
+    }
+
+    function approveFromDrawer() {
+      const check = document.getElementById('legalCertificationCheck');
+      if (!check.checked) {
+        alert("Veuillez cocher la case d'attestation de pleine conformité juridique.");
+        return;
+      }
+      closeDrawer();
+      showToast("Titre Foncier Validé", "Le dossier a été audité et le bien est publié avec le badge 'Mandat Audité'.", "check_circle");
+      removeDossierItem(currentSelectedRef);
+    }
+
+    function rejectProperty(ref, title) {
+      currentSelectedRef = ref;
+      const modal = document.getElementById('rejectionModal');
+      modal.classList.remove('pointer-events-none', 'opacity-0');
+    }
+
+    function rejectFromDrawer() {
+      closeDrawer();
+      rejectProperty(currentSelectedRef, '');
+    }
+
+    function closeRejectionModal() {
+      const modal = document.getElementById('rejectionModal');
+      modal.classList.add('pointer-events-none', 'opacity-0');
+    }
+
+    function confirmRejectionAction() {
+      closeRejectionModal();
+      showToast("Dossier Rejeté", "Notification notariée envoyée au mandant avec le motif officiel.", "gavel", true);
+      removeDossierItem(currentSelectedRef);
+    }
+
+    function requestCorrection(ref) {
+      showToast("Demande de Pièces Transmise", "Notification SMS & Email envoyée au mandant pour actualisation des documents.", "send");
+    }
+
+    function removeDossierItem(ref) {
+      const items = document.querySelectorAll('.property-item');
+      items.forEach(el => {
+        if ((el.getAttribute('data-search') || '').includes(ref)) {
+          el.style.opacity = '0.3';
+          el.style.transform = 'scale(0.98)';
+          setTimeout(() => {
+            el.remove();
+          }, 350);
+        }
+      });
+    }
+
+    function showDocPreview(docName) {
+      alert("Consultation sécurisée dématérialisée : " + docName + "\nCertifié par l'Ordre Régional des Notaires d'Alger.");
+    }
+
+    function openBulkCertifyModal() {
+      alert("Protocole d'Audit DZ actif : Contrôle automatisé du Livre Foncier, vérification des servitudes du cadastre, et contrôle de non-inscription au registre des hypothèques judiciaires.");
+    }
+
+    function refreshQueue() {
+      showToast("Flux Actualisé", "Synchronisation terminée avec le serveur cadastral et Supabase.", "sync");
+    }
+
+    // Toast Utility
+    function showToast(title, text, icon = "check_circle", isError = false) {
+      const toast = document.getElementById('toastMessage');
+      const tTitle = document.getElementById('toastTitle');
+      const tText = document.getElementById('toastText');
+      const tIcon = document.getElementById('toastIcon');
+
+      tTitle.innerText = title;
+      tText.innerText = text;
+      tIcon.innerText = icon;
+      tIcon.className = "material-symbols-outlined text-[24px] " + (isError ? "text-error" : "text-secondary");
+
+      toast.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-4');
+      setTimeout(() => {
+        toast.classList.add('pointer-events-none', 'opacity-0', 'translate-y-4');
+      }, 4000);
+    }
+  </script>
+</div></main></div>
+    <script src="../js/data.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/admin.js"></script>
+  
+</body></html>

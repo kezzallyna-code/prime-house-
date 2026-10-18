@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#5a4300","on-error-container":"#93000a","on-primary-container":"#78849b","on-tertiary":"#ffffff","secondary-fixed":"#ffdf9f","on-primary":"#ffffff","on-surface":"#111c2c","on-tertiary-fixed":"#251a00","surface":"#f9f9ff","inverse-surface":"#263142","tertiary-fixed-dim":"#eac161","tertiary-fixed":"#ffdf9a","primary-fixed":"#d7e3fc","on-background":"#111c2c","outline-variant":"#c5c6cd","tertiary":"#000000","on-secondary-fixed-variant":"#5c4300","secondary":"#795900","surface-container-highest":"#d8e3fa","on-primary-fixed":"#0f1c2e","on-surface-variant":"#44474c","outline":"#75777d","background":"#f9f9ff","inverse-primary":"#bbc7e0","primary":"#000000","secondary-container":"#fdce68","surface-container-high":"#dee8ff","error-container":"#ffdad6","secondary-fixed-dim":"#eec05c","tertiary-container":"#251a00","on-secondary-container":"#765600","surface-container":"#e7eeff","on-secondary-fixed":"#261a00","primary-fixed-dim":"#bbc7e0","on-tertiary-container":"#a27f25","surface-tint":"#535f74","surface-bright":"#f9f9ff","surface-container-lowest":"#ffffff","error":"#ba1a1a","inverse-on-surface":"#ebf1ff","surface-variant":"#d8e3fa","surface-container-low":"#f0f3ff","on-error":"#ffffff","surface-dim":"#cfdaf1","on-primary-fixed-variant":"#3b475c","on-secondary":"#ffffff","primary-container":"#0f1c2e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","margin-md":"3rem","gutter-lg":"2rem","gutter":"1.5rem","margin-lg":"5rem","space-md":"1rem","space-xs":"0.25rem","margin":"1.5rem","space-lg":"1.5rem","gutter-sm":"1rem","space-xl":"2.5rem"},"fontFamily":{"label-lg":["Outfit"],"body-sm":["Plus Jakarta Sans"],"label-sm":["Outfit"],"display-mobile":["Playfair Display"],"body-md":["Plus Jakarta Sans"],"headline-sm":["Playfair Display"],"body-lg":["Plus Jakarta Sans"],"label-md":["Outfit"],"headline-lg":["Playfair Display"],"display":["Playfair Display"],"currency-display":["Outfit"],"title-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Playfair Display"],"headline-xl":["Playfair Display"],"title-md":["Plus Jakarta Sans"],"headline-md":["Playfair Display"],"headline-xl-mobile":["Playfair Display"]},"fontSize":{"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.05em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"20px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.1em","fontWeight":"600"}],"display-mobile":["38px",{"lineHeight":"44px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"500"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"500"}],"display":["56px",{"lineHeight":"64px","letterSpacing":"-0.02em","fontWeight":"600"}],"currency-display":["26px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"title-lg":["18px",{"lineHeight":"24px","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"500"}],"headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.015em","fontWeight":"600"}],"title-md":["16px",{"lineHeight":"22px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"500"}],"headline-xl-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-primary-container z-50 flex flex-col justify-between shadow-[0_4px_24px_rgba(7,20,38,0.25)]"><div class="flex flex-col flex-1 overflow-y-auto"><div class="h-20 px-6 flex items-center justify-between bg-primary-container"><div class="flex items-center gap-space-sm"><div class="w-10 h-10 rounded bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-secondary text-[22px]">domain</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-surface-container-lowest tracking-tight">PRIME HOUSE</span><span class="font-label-sm text-label-sm text-tertiary-fixed tracking-widest uppercase">Prestige Immobilier</span></div></div></div><div class="px-6 py-space-sm"><div class="bg-surface-container-lowest/5 rounded px-3 py-2 flex items-center justify-between"><span class="font-label-sm text-label-sm text-surface-container-highest tracking-wider uppercase">ESPACE ADMINISTRATION</span><span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span></div></div><div class="px-4 py-space-md flex flex-col gap-6"><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">VUE GLOBALE</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded transition-all text-on-surface-variant" data-path="dashboard" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">dashboard</span><span>Tableau de bord</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">GESTION DU PARC</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="tous-les-biens" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">apartment</span><span>Tous les biens</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="ajouter-un-bien" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">add_circle</span><span>Ajouter un bien</span></div><span class="px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-label-sm">+</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="biens-en-moderation" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">pending_actions</span><span>Biens en modération</span></div><span class="px-2 py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm">5</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="biens-a-la-une" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">grade</span><span>Biens à la Une</span></div><span class="material-symbols-outlined text-[16px] text-outline">tune</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">LEADS &amp; RELATIONS</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="demandes-et-visites" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">mark_email_unread</span><span>Demandes &amp; Visites</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">8</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">TAXONOMIE &amp; CONFIG</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="categories-et-wilayas" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">map</span><span>Catégories &amp; Wilayas</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="parametres-du-site" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">settings</span><span>Paramètres du site</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a></nav></div></div></div><div class="p-4 bg-primary-container"><div class="bg-surface-container-lowest/5 rounded p-3 flex flex-col gap-2 mb-3"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-tertiary-fixed">Rôle: Super-Admin</span><span class="material-symbols-outlined text-secondary text-[16px]">verified_user</span></div><div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span><span class="font-label-sm text-label-sm text-surface-variant">Supabase Cloud • Node DZ</span></div></div><a class="flex items-center justify-center gap-2 w-full py-2.5 rounded bg-surface-container-lowest/10 text-surface-container-highest hover:bg-error hover:text-on-error transition-all font-label-md text-label-md" data-path="deconnexion" href="#"><span class="material-symbols-outlined text-[18px]">logout</span><span>Déconnexion</span></a></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-20 bg-surface-container-lowest/95 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(7,20,38,0.04)] px-8 flex items-center justify-between"><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-on-surface"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm uppercase tracking-wider">Node Alger Connecté</span></div><span class="font-body-sm text-body-sm text-on-surface-variant">Plateforme d'Administration Immobilière de Luxe</span></div><div class="flex items-center gap-5"><a class="flex items-center gap-2 px-3.5 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm uppercase tracking-wide" href="#" target="_blank"><span class="material-symbols-outlined text-[16px] text-secondary">open_in_new</span><span>Voir le site public</span></a><div class="relative flex items-center justify-center"><button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm flex items-center justify-center font-bold">12</span></div><div class="h-8 w-px bg-surface-variant"></div><div class="flex items-center gap-3 pl-1"><div class="flex flex-col text-right"><span class="font-title-md text-title-md text-on-surface leading-tight">Karim Benali</span><span class="font-label-sm text-label-sm text-secondary leading-tight uppercase">Directeur Exécutif</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-20 bg-surface flex-1 w-full px-8 pb-12"><div class="flex flex-col w-full">
+<!-- Subtle ambient decorative glow for modern tactile luxury -->
+<div class="relative w-full">
+<div class="absolute -top-10 right-24 w-96 h-96 bg-secondary-fixed/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-48 left-12 w-80 h-80 bg-primary-fixed/20 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- En-tête de page & Contextual Bar -->
+<section class="flex flex-col gap-6 mb-8">
+<!-- Breadcrumb & Top Utility Row -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant">
+<span class="hover:text-primary transition-colors">Administration</span>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<span class="hover:text-primary transition-colors">Leads &amp; Relations</span>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<span class="text-secondary font-semibold">Demandes &amp; Visites</span>
+</nav>
+<div class="flex items-center gap-3">
+<!-- Sélecteur de période -->
+<div class="flex items-center bg-surface-container-lowest px-3 py-2 rounded shadow-sm text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-secondary mr-2">calendar_today</span>
+<select class="bg-transparent font-label-md text-label-md text-on-surface focus:outline-none cursor-pointer pr-2">
+<option value="month">Ce mois-ci (Octobre)</option>
+<option selected="" value="week">7 derniers jours</option>
+<option value="quarter">Trimestre en cours</option>
+</select>
+</div>
+<!-- Bouton Actualiser en temps réel -->
+<button class="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-4 py-2 rounded shadow-sm hover:bg-surface-container transition-all group font-label-md text-label-md" id="refreshBtn" onclick="toggleRefreshAnimation()">
+<span class="material-symbols-outlined text-[18px] text-secondary group-hover:rotate-180 transition-transform duration-500" id="refreshIcon">sync</span>
+<span>Actualiser</span>
+</button>
+<!-- Bouton Export CSV / Excel -->
+<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded shadow-md hover:bg-surface-container-highest hover:text-on-surface transition-all font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed">file_download</span>
+<span>Exporter Leads (CSV)</span>
+</button>
+</div>
+</div>
+<!-- Page Title & Operational Subtitle -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2.5 mb-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-fixed-dim ring-4 ring-secondary-fixed/20 animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">Flux Direct • Conciergerie Privée</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Gestion des Demandes &amp; Visites</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+            Suivi centralisé des prises de contact, demandes de visites privées sécurisées et requêtes conciergerie issues du portail public et des canaux directs.
+          </p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container px-3.5 py-2 rounded-full self-start md:self-auto">
+<span class="material-symbols-outlined text-[16px] text-secondary">database</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wide">Sync Supabase : <strong class="text-on-surface font-bold">inquiries (DZ-Node)</strong></span>
+</div>
+</div>
+</section>
+<!-- Métriques / KPIs Bar -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+<!-- KPI 1 : Total Demandes -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-6 rounded shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Total Enregistré</span>
+<span class="font-currency-display text-currency-display text-on-surface mt-2 font-bold tracking-tight">38</span>
+</div>
+<div class="w-11 h-11 rounded bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">inbox</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-4 pt-3 bg-surface-container-low px-3 py-1.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-secondary">trending_up</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant"><strong class="text-on-surface font-semibold">+14%</strong> vs mois précédent</span>
+</div>
+</div>
+<!-- KPI 2 : Non traitées (Alerte Dorée) -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-6 rounded shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="absolute top-0 left-0 right-0 h-1 bg-secondary"></div>
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Nouvelles Requêtes</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-currency-display text-currency-display text-on-surface font-bold">8</span>
+<span class="px-2 py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm font-semibold animate-pulse">Action requise</span>
+</div>
+</div>
+<div class="w-11 h-11 rounded bg-secondary-fixed/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">notifications_active</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-4 pt-3 bg-secondary-fixed/10 px-3 py-1.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Délai moyen de prise en charge : <strong class="text-on-surface font-semibold">22 min</strong></span>
+</div>
+</div>
+<!-- KPI 3 : Visites Planifiées -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-6 rounded shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Visites Programmées</span>
+<span class="font-currency-display text-currency-display text-on-surface mt-2 font-bold tracking-tight">12</span>
+</div>
+<div class="w-11 h-11 rounded bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">event_available</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-4 pt-3 bg-surface-container-low px-3 py-1.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Protocole d'escorte &amp; identités validés</span>
+</div>
+</div>
+<!-- KPI 4 : Taux de Conversion -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-6 rounded shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Conversion Lead / Visite</span>
+<div class="flex items-baseline gap-1 mt-2">
+<span class="font-currency-display text-currency-display text-on-surface font-bold">64</span>
+<span class="font-title-lg text-title-lg text-secondary font-bold">%</span>
+</div>
+</div>
+<div class="w-11 h-11 rounded bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">auto_graph</span>
+</div>
+</div>
+<!-- Micro sparkline visualization -->
+<div class="flex items-center justify-between gap-3 mt-4 pt-2">
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 64%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold whitespace-nowrap">Haut panier</span>
+</div>
+</div>
+</section>
+<!-- Barre d'outils et de Filtrage -->
+<section class="bg-surface-container-lowest p-5 rounded shadow-sm mb-6 flex flex-col gap-4">
+<!-- Search and Secondary Filters -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+<!-- Recherche textuelle -->
+<div class="md:col-span-5 relative flex items-center">
+<span class="material-symbols-outlined text-[20px] text-outline absolute left-3.5 pointer-events-none">search</span>
+<input class="w-full bg-surface pl-10 pr-4 py-2.5 rounded font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-colors" id="searchInput" onkeyup="filterTableSearch()" placeholder="Rechercher par nom, tél (+213), email, réf bien (PH-ALG)..." type="text"/>
+</div>
+<!-- Filtre Type de Requête -->
+<div class="md:col-span-2">
+<div class="relative bg-surface rounded">
+<select class="w-full bg-transparent px-3 py-2.5 font-label-md text-label-md text-on-surface focus:outline-none appearance-none cursor-pointer">
+<option value="">Type : Tous</option>
+<option value="visite">Visite Privée</option>
+<option value="tarif">Renseignement Tarifaire</option>
+<option value="offre">Offre d'Achat</option>
+<option value="location">Dossier Location</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-outline absolute right-2.5 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Filtre Bien Associé -->
+<div class="md:col-span-3">
+<div class="relative bg-surface rounded">
+<select class="w-full bg-transparent px-3 py-2.5 font-label-md text-label-md text-on-surface focus:outline-none appearance-none cursor-pointer truncate">
+<option value="">Propriété : Toutes</option>
+<option value="104">Villa Contemporaine — Hydra (PH-ALG-104)</option>
+<option value="208">Penthouse Belvédère — El Biar (PH-ALG-208)</option>
+<option value="315">Domaine Panoramique — Tipaza (PH-TIP-315)</option>
+<option value="412">Manoir Colonial Rénové — Poirson (PH-ALG-412)</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-outline absolute right-2.5 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Filtre Source -->
+<div class="md:col-span-2">
+<div class="relative bg-surface rounded">
+<select class="w-full bg-transparent px-3 py-2.5 font-label-md text-label-md text-on-surface focus:outline-none appearance-none cursor-pointer">
+<option value="">Canal : Tous</option>
+<option value="web">Formulaire Fiche Bien</option>
+<option value="concierge">Conciergerie Directe</option>
+<option value="whatsapp">WhatsApp Business</option>
+<option value="private">Club Diaspora VIP</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-outline absolute right-2.5 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Quick Status Tabs avec Compteurs -->
+<div class="flex items-center gap-2 overflow-x-auto pt-2">
+<button class="status-tab flex items-center gap-2 px-4 py-2 rounded font-label-md text-label-md bg-primary text-on-primary font-bold shadow-sm transition-all whitespace-nowrap" onclick="setStatusTab('all', this)">
+<span>Tous</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest/20 text-on-primary text-[11px]">38</span>
+</button>
+<button class="status-tab flex items-center gap-2 px-4 py-2 rounded font-label-md text-label-md bg-surface text-on-surface hover:bg-surface-container transition-all whitespace-nowrap" onclick="setStatusTab('nouveau', this)">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Nouveau</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold">8</span>
+</button>
+<button class="status-tab flex items-center gap-2 px-4 py-2 rounded font-label-md text-label-md bg-surface text-on-surface hover:bg-surface-container transition-all whitespace-nowrap" onclick="setStatusTab('contacte', this)">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>Contacté</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[11px]">18</span>
+</button>
+<button class="status-tab flex items-center gap-2 px-4 py-2 rounded font-label-md text-label-md bg-surface text-on-surface hover:bg-surface-container transition-all whitespace-nowrap" onclick="setStatusTab('visite', this)">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span>Visite Programmée</span>
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[11px]">7</span>
+</button>
+<button class="status-tab flex items-center gap-2 px-4 py-2 rounded font-label-md text-label-md bg-surface text-on-surface hover:bg-surface-container transition-all whitespace-nowrap" onclick="setStatusTab('cloture', this)">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span>Clôturé / Traité</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[11px]">5</span>
+</button>
+</div>
+</section>
+<!-- Tableau / Vue Détaillée Interactive -->
+<div class="relative bg-surface-container-lowest rounded shadow-sm overflow-hidden mb-12">
+<!-- Table Top Utility info -->
+<div class="px-6 py-4 bg-surface-container-low flex items-center justify-between text-on-surface">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Dossiers actifs :</span>
+<span class="font-label-md text-label-md text-secondary font-bold" id="activeCountLabel">38 pistes identifiées</span>
+</div>
+<div class="flex items-center gap-4 text-outline font-label-sm text-label-sm">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary"></span> Ordre chrono descendant</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">lock</span> Chiffrement RGPD / DZ Law</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left" id="leadsTable">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<th class="py-3.5 px-6 font-semibold" scope="col">Demandeur &amp; Profil</th>
+<th class="py-3.5 px-6 font-semibold" scope="col">Bien Rattaché</th>
+<th class="py-3.5 px-6 font-semibold" scope="col">Message &amp; Attentes</th>
+<th class="py-3.5 px-6 font-semibold" scope="col">Statut Dossier</th>
+<th class="py-3.5 px-6 text-right font-semibold" scope="col">Actions Immédiates</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent font-body-sm text-body-sm text-on-surface">
+<!-- Lead 1 : Nouveau & Urgent (Diaspora Investisseur) -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="openLeadDrawer('lead-1')">
+<!-- Demandeur -->
+<td class="py-5 px-6 align-top">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Malek Ziani</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold tracking-wide">Investisseur Diaspora (UK)</span>
+</div>
+<div class="flex flex-col text-on-surface-variant gap-0.5">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px] text-secondary">phone</span>
+<span>+213 550 49 82 11</span>
+</div>
+<span class="text-on-surface-variant text-[12px]">m.ziani.holdings@london.co.uk</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">verified</span> Pièce d'identité reçue
+                  </span>
+</div>
+</td>
+<!-- Bien -->
+<td class="py-5 px-6 align-top max-w-[260px]">
+<div class="flex gap-3">
+<div class="w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-surface-container">
+<img alt="Villa Hydra" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Architecture contemporaine haut de gamme d'une somptueuse villa à Hydra Alger, grandes baies vitrées donnant sur une piscine privée à débordement, lumière méditerranéenne dorée naturelle, luxe minimaliste discret." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoKIDmKuPF_FWI1cdOAybvpwYgcSm8X3a3RW1HAiFaFnJgH05AboKERZKWRcnT_yEmOcjN3QC3NRR6TEZV1wkcHCF9v0YCNxA0ITbLlXA7WUPOpj8s-wCo51RjWXPAyLEmSmjUjelr4yzD7WvVEP5xo-DCeVZRQx8jTy-yAq7kHix13VyL4eZHaC-u7AvrYXoQp_bdlpxP7uXkmQFQTPCw5iltzArrc9gSZk1TPUxLxtJ4Ug51QoU"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">PH-ALG-104</span>
+<span class="font-title-md text-title-md text-on-surface leading-tight line-clamp-1">Villa Contemporaine d'Exception</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Hydra • Ambassades</span>
+<span class="font-currency-display text-[15px] font-bold text-on-surface mt-1">165 000 000 <span class="text-secondary font-label-sm">DA</span></span>
+</div>
+</div>
+</td>
+<!-- Message -->
+<td class="py-5 px-6 align-top max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-secondary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Aujourd'hui à 11:24</span>
+<span class="text-outline">• Source Fiche Web</span>
+</div>
+<p class="text-on-surface-variant line-clamp-2 italic">
+                    « Souhaite visiter ce samedi matin avec mon architecte conseil. Acquisition pour installation familiale directe. Financement comptant disponible sans crédit bancaire. »
+                  </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded bg-surface text-on-surface-variant text-[11px] font-medium">Samedi 10:30 souhaité</span>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed/30 text-on-secondary-fixed text-[11px] font-bold">Comptant</span>
+</div>
+</div>
+</td>
+<!-- Statut -->
+<td class="py-5 px-6 align-top" onclick="event.stopPropagation()">
+<div class="relative inline-block w-44">
+<select class="w-full bg-secondary-fixed/40 text-on-secondary-fixed font-label-md text-label-md px-3 py-2 rounded appearance-none font-bold cursor-pointer focus:outline-none" onchange="updateLeadStatusColor(this)">
+<option selected="" value="new">★ Nouveau [Action]</option>
+<option value="contacted">Contacté</option>
+<option value="scheduled">Visite Programmée</option>
+<option value="closed">Clôturé / Traité</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-on-secondary-fixed absolute right-2.5 top-2.5 pointer-events-none">arrow_drop_down</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline mt-1.5">Assigné : Karim Benali</div>
+</td>
+<!-- Actions -->
+<td class="py-5 px-6 align-top text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1.5">
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-secondary hover:bg-secondary hover:text-on-secondary transition-colors" href="https://wa.me/213550498211" target="_blank" title="Contacter par WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-colors" href="tel:+213550498211" title="Appeler le client">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-highest transition-colors" onclick="openLeadDrawer('lead-1')" title="Ouvrir dossier complet">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="Plus d'actions">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Lead 2 : Visite Programmée (Diplomate Corporate) -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="openLeadDrawer('lead-2')">
+<!-- Demandeur -->
+<td class="py-5 px-6 align-top">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Dr. Yacine Khellaf</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-primary-container font-label-sm text-label-sm font-semibold">Corporate &amp; Institutionnel</span>
+</div>
+<div class="flex flex-col text-on-surface-variant gap-0.5">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px] text-secondary">phone</span>
+<span>+213 661 14 02 88</span>
+</div>
+<span class="text-on-surface-variant text-[12px]">y.khellaf@consortium-med.dz</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary mt-1 flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[13px]">verified_user</span> Client VIP Reconduit
+                  </span>
+</div>
+</td>
+<!-- Bien -->
+<td class="py-5 px-6 align-top max-w-[260px]">
+<div class="flex gap-3">
+<div class="w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-surface-container">
+<img alt="Penthouse Belvédère" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Intérieur raffiné d'un duplex penthouse sur les hauteurs d'El Biar à Alger, vue panoramique sur la baie, terrasse avec solarium, finitions en marbre blanc et boiseries nobles italiennes, ambiance crépusculaire douce." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbvXnXhW33KxuzASeABTR_qj2DvX6KhbwBOZjZ8oTuwF0GCQeEdBIJaCTnQI44YxLshbWID1xLGk5bDG5se4fvCMSjSfOCt-HWBcSqYIBc_EQ_DFGGb295ZIVXQJVl3SceR2mbHV_ao1fP4LmnQbttGBwh-mHdHIGmvCkbc92MRl6kxLEy3tfp0fZUUETkzDwggc9e1qRJW4_1ow2xX_AaTJnKB1EEDq8KPLOInFB-ap2R8RcHH10"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">PH-ALG-208</span>
+<span class="font-title-md text-title-md text-on-surface leading-tight line-clamp-1">Penthouse Belvédère &amp; Terrasse</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">El Biar • Hauteurs</span>
+<span class="font-currency-display text-[15px] font-bold text-on-surface mt-1">450 000 <span class="text-secondary font-label-sm">DA/mois</span></span>
+</div>
+</div>
+</td>
+<!-- Message -->
+<td class="py-5 px-6 align-top max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">event</span>
+<span>Hier à 16:40</span>
+<span class="text-outline">• Conciergerie</span>
+</div>
+<p class="text-on-surface-variant line-clamp-2 italic">
+                    « Recherche bail 36 mois pour délégation commerciale. Besoin impératif de 3 places sécurisées en sous-sol et groupe électrogène de secours silencieux. »
+                  </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed text-[11px] font-bold">Visite Vendredi 15h00</span>
+<span class="px-2 py-0.5 rounded bg-surface text-on-surface-variant text-[11px]">Bail diplomatique</span>
+</div>
+</div>
+</td>
+<!-- Statut -->
+<td class="py-5 px-6 align-top" onclick="event.stopPropagation()">
+<div class="relative inline-block w-44">
+<select class="w-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md px-3 py-2 rounded appearance-none font-bold cursor-pointer focus:outline-none" onchange="updateLeadStatusColor(this)">
+<option value="new">Nouveau</option>
+<option value="contacted">Contacté</option>
+<option selected="" value="scheduled">Visite Programmée</option>
+<option value="closed">Clôturé / Traité</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-on-primary-fixed absolute right-2.5 top-2.5 pointer-events-none">arrow_drop_down</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline mt-1.5">Assigné : Sarah Haddad</div>
+</td>
+<!-- Actions -->
+<td class="py-5 px-6 align-top text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1.5">
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-secondary hover:bg-secondary hover:text-on-secondary transition-colors" href="https://wa.me/213661140288" target="_blank" title="Contacter par WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-colors" href="tel:+213661140288" title="Appeler le client">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-highest transition-colors" onclick="openLeadDrawer('lead-2')" title="Ouvrir dossier complet">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="Plus d'actions">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Lead 3 : Contacté / Échange en cours -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="openLeadDrawer('lead-3')">
+<!-- Demandeur -->
+<td class="py-5 px-6 align-top">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Amina Cherif</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Particulier Vérifié</span>
+</div>
+<div class="flex flex-col text-on-surface-variant gap-0.5">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px] text-secondary">phone</span>
+<span>+213 770 91 33 05</span>
+</div>
+<span class="text-on-surface-variant text-[12px]">amina.cherif.dz@gmail.com</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">Oran Centre / En déplacement Alger</span>
+</div>
+</td>
+<!-- Bien -->
+<td class="py-5 px-6 align-top max-w-[260px]">
+<div class="flex gap-3">
+<div class="w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-surface-container">
+<img alt="Manoir Rénové" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Manoir et villa de maître néo-mauresque rénovée à Poirson El Biar, jardin d'oliviers centenaires, arcades en pierre taillée, éclairage de façade tamisé et solennel sous le ciel nocturne." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKIE3hlwioTe8-UA4uhIzq-HPLQ7dzL5LJRNyajmH-USsRGd8qprAYjwdT2uQ4prmWR-_xVtm6KGCRIl4FehGtdw2dzoD9xfmd9JeAMfd9QIUCvC-Kp0gdIvLvT1EbxMBRot2uQ3T8MAj6TT1bfx3NCnExEa8QZPZ4uUpdyovX5qYuiqMV2kXdhV60QEi2_BCmkFUYW_wE95DKZnhwvBgQZoC1hePSw5RoA0MJWdmxBQo6n40AbGA"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">PH-ALG-412</span>
+<span class="font-title-md text-title-md text-on-surface leading-tight line-clamp-1">Manoir Néomauresque Rénové</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Poirson • Clos Privé</span>
+<span class="font-currency-display text-[15px] font-bold text-on-surface mt-1">210 000 000 <span class="text-secondary font-label-sm">DA</span></span>
+</div>
+</div>
+</td>
+<!-- Message -->
+<td class="py-5 px-6 align-top max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">chat</span>
+<span>14 Octobre à 09:15</span>
+<span class="text-outline">• WhatsApp Lead</span>
+</div>
+<p class="text-on-surface-variant line-clamp-2 italic">
+                    « Souhaite connaitre l'acte de propriété (Livret Foncier et Certificat de Conformité à jour ?). Prise de contact effectuée par WhatsApp ce matin. »
+                  </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded bg-surface text-on-surface-variant text-[11px]">Dossier juridique transmis</span>
+</div>
+</div>
+</td>
+<!-- Statut -->
+<td class="py-5 px-6 align-top" onclick="event.stopPropagation()">
+<div class="relative inline-block w-44">
+<select class="w-full bg-surface-container text-on-surface font-label-md text-label-md px-3 py-2 rounded appearance-none font-bold cursor-pointer focus:outline-none" onchange="updateLeadStatusColor(this)">
+<option value="new">Nouveau</option>
+<option selected="" value="contacted">Contacté</option>
+<option value="scheduled">Visite Programmée</option>
+<option value="closed">Clôturé / Traité</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-on-surface absolute right-2.5 top-2.5 pointer-events-none">arrow_drop_down</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline mt-1.5">Assigné : Karim Benali</div>
+</td>
+<!-- Actions -->
+<td class="py-5 px-6 align-top text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1.5">
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-secondary hover:bg-secondary hover:text-on-secondary transition-colors" href="https://wa.me/213770913305" target="_blank" title="Contacter par WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-colors" href="tel:+213770913305" title="Appeler le client">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-highest transition-colors" onclick="openLeadDrawer('lead-3')" title="Ouvrir dossier complet">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="Plus d'actions">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Lead 4 : Clôturé / Traité -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer opacity-75 hover:opacity-100" onclick="openLeadDrawer('lead-4')">
+<!-- Demandeur -->
+<td class="py-5 px-6 align-top">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Sofiane Brahimi</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Promoteur Partenaire</span>
+</div>
+<div class="flex flex-col text-on-surface-variant gap-0.5">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px] text-secondary">phone</span>
+<span>+213 560 22 71 90</span>
+</div>
+<span class="text-on-surface-variant text-[12px]">s.brahimi@algeria-invest.net</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">Dossier finalisé chez Maître Meziani</span>
+</div>
+</td>
+<!-- Bien -->
+<td class="py-5 px-6 align-top max-w-[260px]">
+<div class="flex gap-3">
+<div class="w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-surface-container">
+<img alt="Domaine Tipaza" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Domaine résidentiel prestigieux face à la mer à Tipaza Chenoua, grand parc boisé de pins maritimes, architecture blanche épurée, piscine miroir et terrasse en tek." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvVySz9HA-gI6u0UfDKdD6zTIuOZgZVjtrY25_VS_AaycXpqtMNdL0k4Xn4b8b7qTQ8J_P87vfZBj1WzV06K5TEU0JgXqXpBnMKBRm7rHQyb9dzU1YMtmu0X_cX7eQPwmRM0UaKm8mL4pd88uXQ9dvRykz62Yj2vZumMWPhdXeTdbKVFg2NmdT7wAGsfwuIjziRGg4FPL2JIhl09gB1R2QjaIx-Fc_Llco03QwfYibp0ND2qTgeLk"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">PH-TIP-315</span>
+<span class="font-title-md text-title-md text-on-surface leading-tight line-clamp-1">Domaine Maritime Panoramique</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Tipaza • Corniche Chenoua</span>
+<span class="font-currency-display text-[15px] font-bold text-on-surface mt-1">340 000 000 <span class="text-secondary font-label-sm">DA</span></span>
+</div>
+</div>
+</td>
+<!-- Message -->
+<td class="py-5 px-6 align-top max-w-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">done_all</span>
+<span>11 Octobre</span>
+<span class="text-outline">• Offre Acceptée</span>
+</div>
+<p class="text-on-surface-variant line-clamp-2 italic">
+                    « Confirmation de transmission d'offre d'achat ferme au propriétaire. Compromis validé en séance notariale. »
+                  </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-primary-container text-[11px] font-semibold">Mandat d'Exclusivité Clôturé</span>
+</div>
+</div>
+</td>
+<!-- Statut -->
+<td class="py-5 px-6 align-top" onclick="event.stopPropagation()">
+<div class="relative inline-block w-44">
+<select class="w-full bg-surface-container-high text-on-surface font-label-md text-label-md px-3 py-2 rounded appearance-none font-bold cursor-pointer focus:outline-none" onchange="updateLeadStatusColor(this)">
+<option value="new">Nouveau</option>
+<option value="contacted">Contacté</option>
+<option value="scheduled">Visite Programmée</option>
+<option selected="" value="closed">✓ Clôturé / Traité</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-on-surface absolute right-2.5 top-2.5 pointer-events-none">arrow_drop_down</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline mt-1.5">Assigné : Karim Benali</div>
+</td>
+<!-- Actions -->
+<td class="py-5 px-6 align-top text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1.5">
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-secondary hover:bg-secondary hover:text-on-secondary transition-colors" href="https://wa.me/213560227190" target="_blank" title="Contacter par WhatsApp">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</a>
+<a class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-colors" href="tel:+213560227190" title="Appeler le client">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-highest transition-colors" onclick="openLeadDrawer('lead-4')" title="Ouvrir dossier complet">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="Plus d'actions">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Status bar -->
+<div class="p-4 bg-surface flex flex-col sm:flex-row items-center justify-between gap-4">
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+          Affichage des demandes <strong class="text-on-surface">1 - 4</strong> sur <strong class="text-on-surface">38</strong> enregistrées
+        </span>
+<div class="flex items-center gap-1.5">
+<button class="px-3 py-1.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm disabled:opacity-40" disabled="">Précédent</button>
+<button class="px-3 py-1.5 rounded bg-primary text-on-primary font-label-sm text-label-sm font-bold">1</button>
+<button class="px-3 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm">2</button>
+<button class="px-3 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm">3</button>
+<button class="px-3 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm">Suivant</button>
+</div>
+</div>
+</div>
+</div>
+<!-- PANNEAU TIROIR LATÉRAL (Off-canvas Drawer Lead Detail) -->
+<aside class="fixed inset-y-0 right-0 w-full max-w-2xl bg-surface-container-lowest shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between" id="leadDrawer">
+<!-- Drawer Header -->
+<div class="p-6 bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary flex items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined text-[20px]">person_pin</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold" id="drawerLeadRef">LEAD-DZ-0038</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold" id="drawerBadge">Prioritaire</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface" id="drawerClientName">Malek Ziani</h2>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-highest transition-colors" onclick="closeLeadDrawer()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Content Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+<!-- Property Card Summary in Drawer -->
+<div class="bg-surface p-4 rounded flex gap-4 items-center">
+<div class="w-20 h-20 rounded overflow-hidden flex-shrink-0 bg-surface-container">
+<img alt="Bien" class="w-full h-full object-cover" data-alt="Détail architectural épuré d'une villa de prestige à Alger Hydra, finitions luxueuses, perspectives géométriques et reflets de soleil sur surfaces nobles." id="drawerPropertyImg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0V3pAu-WT2l25hbUMRZFUjHmOfju2SRsNsiVXKcDMVq9T29c1lsApqeZOcPR-bTEb3kU_3r5PG4lWQO4tZkXAXELtaQgMsvQlxUa2zled7CRpXEbkUsskcOvI0yTZbxNwjZpwWZtX3Q4oPRN0NKhs4DKD14NBLsyBEVo9sVnQSBWyKpwGsOaKz4RfUX0QKSEvHSIAl1B58_mrQcD5e8w4VvfS1DhU87cRNhrKDzh9bLKaUi5hMso"/>
+</div>
+<div class="flex flex-col flex-1">
+<span class="font-label-sm text-label-sm text-secondary font-bold" id="drawerPropertyRef">PH-ALG-104 • Vente Exclusive</span>
+<span class="font-title-md text-title-md text-on-surface" id="drawerPropertyTitle">Villa Contemporaine d'Exception — Hydra</span>
+<span class="font-currency-display text-[16px] text-on-surface font-bold mt-1" id="drawerPropertyPrice">165 000 000 DA</span>
+</div>
+<button class="px-3 py-1.5 rounded bg-surface-container text-on-surface hover:bg-primary hover:text-on-primary transition-colors font-label-sm text-label-sm">
+          Voir fiche
+        </button>
+</div>
+<!-- Quick Action Contact Strip -->
+<div class="grid grid-cols-2 gap-3">
+<a class="flex items-center justify-center gap-2 py-3 px-4 rounded bg-secondary text-on-secondary hover:bg-secondary-fixed-dim transition-all font-label-md text-label-md font-bold" href="https://wa.me/213550498211" id="drawerWhatsAppLink" target="_blank">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>WhatsApp Client</span>
+</a>
+<a class="flex items-center justify-center gap-2 py-3 px-4 rounded bg-primary text-on-primary hover:bg-primary-container transition-all font-label-md text-label-md font-bold" href="tel:+213550498211" id="drawerPhoneLink">
+<span class="material-symbols-outlined text-[18px]">phone</span>
+<span>Appeler (+213)</span>
+</a>
+</div>
+<!-- Message Original & Client Context -->
+<div class="flex flex-col gap-2">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Message &amp; Requête Initiale</span>
+<div class="bg-surface p-4 rounded text-on-surface italic font-body-md text-body-md" id="drawerOriginalMessage">
+          « Souhaite visiter ce samedi matin avec mon architecte conseil. Acquisition pour installation familiale directe. Financement comptant disponible sans crédit bancaire. »
+        </div>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm px-1">
+<span>Reçu le 16 Octobre 2024 à 11:24</span>
+<span>Adresse IP : 105.101.42.18 (Alger Telecom Fibre)</span>
+</div>
+</div>
+<!-- Planification de Visite Sécurisée -->
+<div class="bg-surface-container-low p-5 rounded flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">calendar_month</span>
+<span class="font-title-md text-title-md text-on-surface">Planifier la Visite Propriété</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Accord Propriétaire Requis</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Date</label>
+<input class="w-full bg-surface-container-lowest p-2 rounded font-body-sm text-body-sm text-on-surface focus:outline-none" type="date" value="2024-10-19"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Heure</label>
+<input class="w-full bg-surface-container-lowest p-2 rounded font-body-sm text-body-sm text-on-surface focus:outline-none" type="time" value="10:30"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Agent accompagnateur mandaté</label>
+<select class="w-full bg-surface-container-lowest p-2 rounded font-label-md text-label-md text-on-surface focus:outline-none">
+<option>Karim Benali (Directeur Exécutif)</option>
+<option>Sarah Haddad (Spécialiste Ambassades)</option>
+<option>Lyes Mansouri (Expert Villas Poirson / Hydra)</option>
+</select>
+</div>
+<button class="w-full py-2.5 rounded bg-primary text-on-primary hover:bg-secondary hover:text-on-secondary transition-all font-label-md text-label-md font-bold flex items-center justify-center gap-2" onclick="confirmVisitAlert()">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Confirmer le créneau &amp; Notifier le propriétaire</span>
+</button>
+</div>
+<!-- Notes internes & Historique de communication -->
+<div class="flex flex-col gap-3">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Notes Internes d'Administration</span>
+<!-- Add new note input -->
+<div class="flex gap-2">
+<input class="flex-1 bg-surface px-3 py-2 rounded font-body-sm text-body-sm text-on-surface focus:outline-none" id="newNoteInput" placeholder="Ajouter une note confidentielle..." type="text"/>
+<button class="px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-primary hover:text-on-primary transition-all font-label-md text-label-md font-bold" onclick="addInternalNote()">
+            Ajouter
+          </button>
+</div>
+<div class="flex flex-col gap-2" id="notesContainer">
+<div class="p-3 bg-surface rounded flex flex-col gap-1">
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span class="font-bold text-on-surface">Karim Benali</span>
+<span>Aujourd'hui à 11:35</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Client joint par téléphone. Très courtois, diaspora basée à Mayfair Londres. Recherche d'achat net pour résidence principale. Visite confirmée informellement.</p>
+</div>
+<div class="p-3 bg-surface rounded flex flex-col gap-1">
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span class="font-bold text-on-surface">Système Prime House</span>
+<span>Aujourd'hui à 11:24</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Lead auto-généré via formulaire d'inspection Villa Contemporaine — Hydra (ID: PH-ALG-104).</p>
+</div>
+</div>
+</div>
+<!-- Encart technique de liaison Supabase -->
+<div class="bg-surface-container p-4 rounded flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm font-bold uppercase text-on-surface">Structure Table Supabase</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">table : public.inquiries</span>
+</div>
+<div class="bg-primary-container text-surface-container-highest p-3 rounded font-mono text-[11px] leading-relaxed overflow-x-auto">
+<code>{ "id": "inq_9482f3a", "property_id": "prop_hydra_104", "client_name": "Malek Ziani", "phone": "+213550498211", "status": "new", "created_at": "2024-10-16T10:24:00Z" }</code>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-4 bg-surface-container-low flex items-center justify-between gap-3">
+<button class="px-4 py-2 rounded bg-surface text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md font-semibold" onclick="closeLeadDrawer()">
+        Fermer
+      </button>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded bg-surface-container text-error hover:bg-error-container hover:text-on-error-container transition-colors font-label-md text-label-md font-semibold">
+          Classer Spam
+        </button>
+<button class="px-5 py-2 rounded bg-primary text-on-primary hover:bg-secondary hover:text-on-secondary transition-colors font-label-md text-label-md font-bold" onclick="closeLeadDrawer()">
+          Enregistrer le statut
+        </button>
+</div>
+</div>
+</aside>
+<!-- Overlay Backing for Drawer -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden transition-opacity" id="drawerOverlay" onclick="closeLeadDrawer()"></div>
+</div>
+<script>
+  // Drawer interaction logic
+  function openLeadDrawer(leadId) {
+    const drawer = document.getElementById('leadDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+
+    if (leadId === 'lead-1') {
+      document.getElementById('drawerLeadRef').innerText = 'LEAD-DZ-0038';
+      document.getElementById('drawerBadge').innerText = 'Nouveau / Prioritaire';
+      document.getElementById('drawerClientName').innerText = 'Malek Ziani';
+      document.getElementById('drawerPropertyRef').innerText = 'PH-ALG-104 • Vente Exclusive';
+      document.getElementById('drawerPropertyTitle').innerText = 'Villa Contemporaine d\'Exception — Hydra';
+      document.getElementById('drawerPropertyPrice').innerText = '165 000 000 DA';
+      document.getElementById('drawerWhatsAppLink').href = 'https://wa.me/213550498211';
+      document.getElementById('drawerPhoneLink').href = 'tel:+213550498211';
+      document.getElementById('drawerOriginalMessage').innerText = '« Souhaite visiter ce samedi matin avec mon architecte conseil. Acquisition pour installation familiale directe. Financement comptant disponible sans crédit bancaire. »';
+    } else if (leadId === 'lead-2') {
+      document.getElementById('drawerLeadRef').innerText = 'LEAD-DZ-0037';
+      document.getElementById('drawerBadge').innerText = 'Visite Programmée';
+      document.getElementById('drawerClientName').innerText = 'Dr. Yacine Khellaf';
+      document.getElementById('drawerPropertyRef').innerText = 'PH-ALG-208 • Location Prestige';
+      document.getElementById('drawerPropertyTitle').innerText = 'Penthouse Belvédère & Terrasse — El Biar';
+      document.getElementById('drawerPropertyPrice').innerText = '450 000 DA/mois';
+      document.getElementById('drawerWhatsAppLink').href = 'https://wa.me/213661140288';
+      document.getElementById('drawerPhoneLink').href = 'tel:+213661140288';
+      document.getElementById('drawerOriginalMessage').innerText = '« Recherche bail 36 mois pour délégation commerciale. Besoin impératif de 3 places sécurisées en sous-sol et groupe électrogène de secours silencieux. »';
+    } else {
+      document.getElementById('drawerLeadRef').innerText = 'LEAD-DZ-0036';
+      document.getElementById('drawerBadge').innerText = 'En cours';
+      document.getElementById('drawerClientName').innerText = 'Dossier Client Prime';
+    }
+
+    overlay.classList.remove('hidden');
+    setTimeout(() => {
+      drawer.classList.remove('translate-x-full');
+    }, 10);
+  }
+
+  function closeLeadDrawer() {
+    const drawer = document.getElementById('leadDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+
+    drawer.classList.add('translate-x-full');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+    }, 300);
+  }
+
+  // Quick Filter Tabs State
+  function setStatusTab(status, element) {
+    const tabs = document.querySelectorAll('.status-tab');
+    tabs.forEach(tab => {
+      tab.classList.remove('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+      tab.classList.add('bg-surface', 'text-on-surface');
+    });
+
+    element.classList.remove('bg-surface', 'text-on-surface');
+    element.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+
+    // Simulate simple table filtering
+    const rows = document.querySelectorAll('#leadsTable tbody tr');
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      if (status === 'all') {
+        row.style.display = '';
+        visibleCount++;
+      } else if (status === 'nouveau' && row.innerHTML.includes('Nouveau')) {
+        row.style.display = '';
+        visibleCount++;
+      } else if (status === 'contacte' && row.innerHTML.includes('Contacté')) {
+        row.style.display = '';
+        visibleCount++;
+      } else if (status === 'visite' && row.innerHTML.includes('Visite Programmée')) {
+        row.style.display = '';
+        visibleCount++;
+      } else if (status === 'cloture' && row.innerHTML.includes('Clôturé')) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    document.getElementById('activeCountLabel').innerText = `${visibleCount} piste${visibleCount > 1 ? 's' : ''} filtrée${visibleCount > 1 ? 's' : ''}`;
+  }
+
+  // Search input filter
+  function filterTableSearch() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('#leadsTable tbody tr');
+    let count = 0;
+
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      if (text.includes(input)) {
+        row.style.display = '';
+        count++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    document.getElementById('activeCountLabel').innerText = `${count} résultat${count > 1 ? 's' : ''}`;
+  }
+
+  // Refresh feedback animation
+  function toggleRefreshAnimation() {
+    const icon = document.getElementById('refreshIcon');
+    icon.classList.add('rotate-180');
+    setTimeout(() => {
+      icon.classList.remove('rotate-180');
+    }, 600);
+  }
+
+  // Add internal note in drawer
+  function addInternalNote() {
+    const input = document.getElementById('newNoteInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const container = document.getElementById('notesContainer');
+    const newNote = document.createElement('div');
+    newNote.className = 'p-3 bg-surface rounded flex flex-col gap-1';
+    newNote.innerHTML = `
+      <div class="flex items-center justify-between text-outline font-label-sm text-label-sm">
+        <span class="font-bold text-on-surface">Karim Benali (Moi)</span>
+        <span>À l'instant</span>
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface">${text}</p>
+    `;
+    container.prepend(newNote);
+    input.value = '';
+  }
+
+  // Confirm visit action
+  function confirmVisitAlert() {
+    alert('Créneau de visite validé. Notification SMS & WhatsApp sécurisée envoyée au client et au propriétaire mandant.');
+  }
+
+  // Status color updater in table row
+  function updateLeadStatusColor(select) {
+    const val = select.value;
+    select.className = "w-full font-label-md text-label-md px-3 py-2 rounded appearance-none font-bold cursor-pointer focus:outline-none ";
+    if (val === 'new') {
+      select.className += "bg-secondary-fixed/40 text-on-secondary-fixed";
+    } else if (val === 'contacted') {
+      select.className += "bg-surface-container text-on-surface";
+    } else if (val === 'scheduled') {
+      select.className += "bg-primary-fixed text-on-primary-fixed";
+    } else {
+      select.className += "bg-surface-container-high text-on-surface";
+    }
+  }
+</script></main></div></body></html>

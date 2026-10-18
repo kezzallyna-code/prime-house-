@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Prime House | Espace Privé &amp; Administration</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"tertiary-fixed-dim":"#eac161","on-primary":"#ffffff","surface-container-highest":"#d8e3fa","tertiary-container":"#251a00","on-secondary-fixed-variant":"#5c4300","surface-container-lowest":"#ffffff","on-tertiary-container":"#a27f25","on-surface-variant":"#44474c","on-primary-container":"#78849b","secondary-fixed":"#ffdf9f","tertiary":"#000000","surface-container-high":"#dee8ff","on-background":"#111c2c","on-surface":"#111c2c","primary-fixed-dim":"#bbc7e0","inverse-primary":"#bbc7e0","on-secondary-container":"#765600","surface-tint":"#535f74","surface-bright":"#f9f9ff","tertiary-fixed":"#ffdf9a","outline-variant":"#c5c6cd","error":"#ba1a1a","inverse-surface":"#263142","surface":"#f9f9ff","outline":"#75777d","on-secondary-fixed":"#261a00","inverse-on-surface":"#ebf1ff","surface-container":"#e7eeff","surface-container-low":"#f0f3ff","on-error":"#ffffff","on-secondary":"#ffffff","surface-dim":"#cfdaf1","primary-container":"#0f1c2e","primary":"#000000","on-error-container":"#93000a","secondary-fixed-dim":"#eec05c","on-tertiary-fixed-variant":"#5a4300","background":"#f9f9ff","on-tertiary-fixed":"#251a00","on-primary-fixed-variant":"#3b475c","secondary":"#795900","on-primary-fixed":"#0f1c2e","primary-fixed":"#d7e3fc","surface-variant":"#d8e3fa","error-container":"#ffdad6","secondary-container":"#fdce68","on-tertiary":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xl":"2.5rem","margin-md":"3rem","space-xs":"0.25rem","margin":"1.5rem","gutter-lg":"2rem","space-sm":"0.5rem","margin-lg":"5rem","space-md":"1rem","gutter-sm":"1rem","gutter":"1.5rem","space-lg":"1.5rem"},"fontFamily":{"title-md":["Plus Jakarta Sans"],"display":["Playfair Display"],"headline-lg":["Playfair Display"],"headline-xl-mobile":["Playfair Display"],"title-lg":["Plus Jakarta Sans"],"headline-sm":["Playfair Display"],"body-md":["Plus Jakarta Sans"],"display-mobile":["Playfair Display"],"label-sm":["Outfit"],"headline-lg-mobile":["Playfair Display"],"label-lg":["Outfit"],"body-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-xl":["Playfair Display"],"label-md":["Outfit"],"headline-md":["Playfair Display"],"currency-display":["Outfit"]},"fontSize":{"title-md":["16px",{"lineHeight":"22px","fontWeight":"600"}],"display":["56px",{"lineHeight":"64px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"500"}],"headline-xl-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"600"}],"title-lg":["18px",{"lineHeight":"24px","fontWeight":"600"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"500"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"display-mobile":["38px",{"lineHeight":"44px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.1em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"500"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.05em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"20px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.015em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"500"}],"currency-display":["26px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-primary-container text-surface-container-lowest shadow-[0_4px_24px_rgba(7,20,38,0.2)]"><div class="h-16 px-space-md lg:px-space-lg flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm group" data-path="accueil" href="#"><img alt="Prime House Logo" class="h-7 w-auto object-contain brightness-0 invert" src="https://lh3.googleusercontent.com/aida/AEtjO1Ufhv0LQAlxHB-l00RQB8oi8zBmc60WIhyB0IDQ6vdLNPJNAn3L_nUtKuY31nfKx7hD4OQAzflGxXXC7kOwSzeyMLtfiJ1Pb5Qg7tx9cCOialZIOP90uXBfxcv2nwwZjFfSGxHvd5daZ3gb3CGi5pyOHX7DHtJRK1R2ZIpAT6FS_WbH6gDHKpmiR93aG-pKsm-2C2bySLFkPqfI_2Q6vZlVZWBoHdz2j6DXgNBeOZu-ugj2v6662DlX1w"/><div class="flex flex-col"><span class="font-headline-sm text-[17px] tracking-wider text-surface uppercase font-bold leading-none">PRIME HOUSE</span><span class="font-label-sm text-[9px] text-secondary-container tracking-widest uppercase mt-0.5 font-semibold">Portail Privé &amp; Gestion</span></div></a></div><div class="flex items-center gap-space-md"><a class="hidden md:inline-flex items-center gap-space-xs font-label-sm text-label-sm text-primary-fixed-dim hover:text-surface transition-colors" data-path="accueil" href="#"><span class="material-symbols-outlined text-title-md">visibility</span><span>Retour au site public</span></a><a class="relative p-space-xs text-primary-fixed-dim hover:text-secondary-container transition-colors" data-path="mes-favoris" href="#" title="Mes favoris"><span class="material-symbols-outlined text-title-md">favorite</span><span class="absolute top-0 right-0 w-4 h-4 bg-secondary-container text-on-secondary-container font-label-sm text-[10px] leading-4 text-center rounded-full font-bold">3</span></a><div class="h-6 w-[1px] bg-outline-variant/20 hidden sm:block"></div><div class="flex items-center gap-space-sm"><img alt="Avatar Utilisateur" class="w-8 h-8 rounded-full object-cover ring-2 ring-secondary-container/60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZqGMJ6u46ZFtKnqOYhF8zKewNKEkbWBAVIpOvuSh9Hd3I1Qc7Mruf55eX82b_90qhCIE-s_uZN3t26KsurdlGAkzm5RX96dH4piGvSR4XExzqevawTZm6YMhfRiObdFGNMDEsCApL4MYSnNavRK9ta21sRFRvo7IDWMfxfTd7gmZjXG4LNs5xQy0X8wa2w9gJqEbcACCY7hM3X8mmyxdLYcyLT0QoQ0nP6rL6Mvd4VnBO0V_4Dk0"/><div class="hidden lg:flex flex-col text-left"><span class="font-label-md text-label-md text-surface font-semibold leading-tight">Karim Benali</span><span class="font-label-sm text-[10px] text-secondary-container uppercase tracking-wider font-semibold">Client Privilège &amp; Bailleur</span></div></div><a class="flex items-center text-primary-fixed-dim hover:text-error-container p-space-xs rounded transition-colors ml-space-xs" data-path="se-connecter" href="#" title="Déconnexion"><span class="material-symbols-outlined text-title-md">logout</span></a></div></div></header><aside class="fixed top-16 left-0 bottom-0 w-64 z-40 bg-surface-container-lowest border-r border-surface-container-high/60 flex flex-col justify-between p-space-md shadow-[4px_0_24px_rgba(17,28,44,0.02)]"><div class="flex flex-col gap-space-md"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">Espace Personnel</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-surface font-semibold rounded shadow-[0_2px_8px_rgba(15,28,46,0.15)]"><a aria-current="page" class="px-space-md py-space-sm transition-all bg-primary-container text-surface font-semibold rounded shadow-[0_2px_8px_rgba(15,28,46,0.15)]" data-path="tableau-de-bord" href="#">Tableau de bord</a><a class="px-space-md py-space-sm font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded transition-all" data-path="mes-annonces" href="#">Mes annonces</a><a class="px-space-md py-space-sm font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded transition-all" data-path="mes-favoris" href="#">Mes favoris</a><a class="px-space-md py-space-sm font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded transition-all" data-path="mon-compte" href="#">Mon compte</a></nav><div class="pt-space-md px-space-sm py-space-xs"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">Administration</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-surface font-semibold rounded shadow-[0_2px_8px_rgba(15,28,46,0.15)]"><a class="px-space-md py-space-sm font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded transition-all" data-path="gestion-des-biens" href="#">Gestion des biens</a><a class="px-space-md py-space-sm font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded transition-all" data-path="gestion-des-utilisateurs" href="#">Gestion utilisateurs</a></nav></div><div class="flex flex-col gap-space-sm"><a class="flex items-center justify-center gap-space-sm w-full py-space-sm px-space-md bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-label-lg text-label-lg font-semibold rounded shadow-[0_2px_8px_rgba(121,89,0,0.16)] transition-all" data-path="deposer-une-annonce" href="#"><span class="material-symbols-outlined text-title-md">add_business</span><span>Déposer une annonce</span></a><div class="p-space-sm bg-surface-container-low rounded text-center"><span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider block font-semibold">Conciergerie Dédiée</span><span class="font-body-sm text-[12px] text-secondary font-semibold">+213 (0) 23 45 67 90</span></div></div></aside><main class="w-full pl-64 pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="px-space-md lg:px-space-xl py-space-lg flex flex-col gap-space-xl max-w-[1440px] mx-auto w-full">
+<!-- Top Banner: Elite Proprietor Welcome -->
+<section class="relative overflow-hidden bg-primary-container text-surface-container-lowest rounded-xl p-space-lg lg:p-space-xl shadow-xl">
+<div class="absolute -right-24 -top-24 w-96 h-96 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-2xl">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-secondary-container/20 text-secondary-fixed text-label-sm font-label-sm tracking-wider uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">verified</span>
+              Propriétaire Particulier Vérifié (Wilaya d'Alger)
+            </span>
+<span class="text-primary-fixed-dim text-label-sm font-label-sm tracking-wide">ID Mandat: DZ-88429</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg lg:text-headline-xl text-surface tracking-tight mt-1">
+            Bienvenue, Karim Hadj-Ahmed
+          </h1>
+<p class="font-body-md text-body-md text-primary-fixed-dim leading-relaxed">
+            Supervisez vos mandats exclusifs, examinez les flux de visites qualifiées et validez vos correspondances notariales en temps réel.
+          </p>
+</div>
+<div class="flex items-center gap-space-md flex-shrink-0">
+<button class="inline-flex items-center justify-center gap-space-sm px-space-lg py-space-md bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container rounded font-label-lg text-label-lg transition-transform hover:-translate-y-0.5 shadow-md group" onclick="toggleModal(true)">
+<span class="material-symbols-outlined text-title-md transition-transform group-hover:rotate-90">add</span>
+<span>Déposer une nouvelle annonce</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Key Metric Counters (4 Grid Cards) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-semibold">Annonces Actives</span>
+<span class="font-currency-display text-currency-display text-on-surface mt-1">3 <span class="text-body-sm font-body-sm text-on-surface-variant font-normal">/ 4 dépôts</span></span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">real_estate_agent</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="inline-flex items-center gap-1 text-on-surface font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> 1 en validation notariée
+          </span>
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Portfolio 75%</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-semibold">Vues Totales (Mois)</span>
+<span class="font-currency-display text-currency-display text-on-surface mt-1">14 820</span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">visibility</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant">
+<span class="inline-flex items-center text-on-surface font-semibold text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">arrow_upward</span> +24.8%
+          </span>
+<span>vs mois précédent</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-semibold">Demandes de Visite</span>
+<span class="font-currency-display text-currency-display text-on-surface mt-1">28</span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="text-on-surface font-semibold">7 non traitées</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Taux rép. 92%</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-semibold">Favoris &amp; Alertes</span>
+<span class="font-currency-display text-currency-display text-on-surface mt-1">12</span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">bookmark_heart</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">3 alertes actives</span>
+<span>Alger &amp; Hydra</span>
+</div>
+</div>
+</section>
+<!-- Main Section: Properties Table with Status Filter -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Patrimoine Déposé</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mt-0.5">Mes Annonces Déposées</h2>
+</div>
+<!-- Filter Pill Tabs -->
+<div class="flex items-center gap-1.5 p-1 bg-surface-container-low rounded-lg overflow-x-auto">
+<button class="property-filter-tab px-space-md py-1.5 rounded font-label-md text-label-md font-semibold transition-all bg-primary-container text-surface shadow-sm" onclick="filterProperties('all', this)">
+            Toutes (4)
+          </button>
+<button class="property-filter-tab px-space-md py-1.5 rounded font-label-md text-label-md font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" onclick="filterProperties('published', this)">
+            En Ligne (3)
+          </button>
+<button class="property-filter-tab px-space-md py-1.5 rounded font-label-md text-label-md font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" onclick="filterProperties('pending', this)">
+            En Validation (1)
+          </button>
+<button class="property-filter-tab px-space-md py-1.5 rounded font-label-md text-label-md font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" onclick="filterProperties('rejected', this)">
+            Archivées (0)
+          </button>
+</div>
+</div>
+<!-- Properties Grid Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md" id="propertiesList">
+<!-- Property Card 1: Villa Chéraga -->
+<article class="property-card bg-surface-container-low rounded-xl overflow-hidden flex flex-col justify-between shadow-sm hover:shadow-md transition-all group" data-status="published">
+<div class="flex flex-col">
+<div class="relative w-full h-52 overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Luxurious modern villa facade in Cheraga Algiers with private swimming pool, palm trees, architectural limestone walls, clear Mediterranean sky, high dynamic range editorial photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl3eMst8Wsl-VwN7YPPr08qY0yZ_mcaSJwtJwsXSGRcxaDRpVoy4tTR_pusfCz47I8_kbrBhKzwy0MNn5HLHwHqztI3rXrEYBF5WgvoLhjTIOEcfs6IKCTSBbMSRLGg2LwjWoyJTn1c6v_EYU9hMHtv0jIvSJ2wQT4Wtl5fn0joofy5uKkOA8gU1-Vr7ZircdJ2nx79aQU8PCTc4T94ah4RadEyzjwWAjKA7Io9vSTq0THJdtKq48"/>
+<div class="absolute top-3 left-3 flex items-center gap-2">
+<span class="px-2.5 py-1 rounded bg-primary-container text-surface text-label-sm font-label-sm uppercase font-bold tracking-wider">Vente Exclusif</span>
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest text-secondary text-label-sm font-label-sm uppercase font-bold tracking-wider flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> En Ligne
+                </span>
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-primary-container/80 backdrop-blur-sm text-surface text-label-sm font-label-sm">
+                Réf: DZ-CH-409
+              </div>
+</div>
+<div class="p-space-lg flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Chéraga • Alger Ouest</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors line-clamp-1">
+                Villa Moderne Piscine &amp; Jardin
+              </h3>
+<div class="flex items-center gap-space-md text-body-sm font-body-sm text-on-surface-variant my-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">square_foot</span> 480 m²</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">king_bed</span> 6 suites</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">garage</span> 3 places</span>
+</div>
+<div class="pt-space-xs flex items-baseline gap-1.5">
+<span class="font-currency-display text-currency-display text-on-surface font-bold">145 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase">DA</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant ml-auto">Déposé le 12 Fév 2025</span>
+</div>
+</div>
+</div>
+<div class="p-space-md bg-surface-container flex items-center justify-between gap-space-sm">
+<button class="flex items-center gap-1 px-space-sm py-1.5 rounded hover:bg-surface-container-lowest text-on-surface font-label-md text-label-md transition-colors" title="Statistiques">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+<span>5 420 vues</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container-lowest text-on-surface transition-colors" title="Éditer le dossier">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container-lowest text-error transition-colors" title="Mettre en pause">
+<span class="material-symbols-outlined text-[18px]">pause_circle</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Property Card 2: Duplex Hydra -->
+<article class="property-card bg-surface-container-low rounded-xl overflow-hidden flex flex-col justify-between shadow-sm hover:shadow-md transition-all group" data-status="published">
+<div class="flex flex-col">
+<div class="relative w-full h-52 overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Interior of an ultra luxury penthouse living room in Hydra Algiers with floor-to-ceiling panoramic glass windows overlooking green hills, contemporary marble fireplace and bespoke Italian furnishings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0MsXTkwmsEtg1HR2zR6aoR_9tWH_hvoDQMzU8rbT2d78AgsIcLaFcG91c7afxar3Y3iRhBFoJSeXP8tq4uUeZ66BDeb9Mm9yXKJHYKzcE2zmmVkx0Qs1XL-cn4k9ely-EHOTATnAuTLfCWWUwi-_ns92n13bhOKd3LYguOPxuJQSO4pbUMoJFkRnCm1_R_qycc4C7reMWV-r8racqjdfFytbPsEjXlKdrbqpnc8rHU-qzEFSm3LI"/>
+<div class="absolute top-3 left-3 flex items-center gap-2">
+<span class="px-2.5 py-1 rounded bg-primary-container text-surface text-label-sm font-label-sm uppercase font-bold tracking-wider">Location Diplomatique</span>
+<span class="px-2.5 py-1 rounded bg-surface-container-lowest text-secondary text-label-sm font-label-sm uppercase font-bold tracking-wider flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> En Ligne
+                </span>
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-primary-container/80 backdrop-blur-sm text-surface text-label-sm font-label-sm">
+                Réf: DZ-HY-112
+              </div>
+</div>
+<div class="p-space-lg flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Hydra • Ambassades</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors line-clamp-1">
+                Duplex Haut Standing F5
+              </h3>
+<div class="flex items-center gap-space-md text-body-sm font-body-sm text-on-surface-variant my-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">square_foot</span> 290 m²</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">bathtub</span> 3 SDB</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">balcony</span> Terrasse 45m²</span>
+</div>
+<div class="pt-space-xs flex items-baseline gap-1.5">
+<span class="font-currency-display text-currency-display text-on-surface font-bold">550 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase">DA / mois</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant ml-auto">Déposé le 01 Fév 2025</span>
+</div>
+</div>
+</div>
+<div class="p-space-md bg-surface-container flex items-center justify-between gap-space-sm">
+<button class="flex items-center gap-1 px-space-sm py-1.5 rounded hover:bg-surface-container-lowest text-on-surface font-label-md text-label-md transition-colors" title="Statistiques">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+<span>7 190 vues</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container-lowest text-on-surface transition-colors" title="Éditer le dossier">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container-lowest text-error transition-colors" title="Mettre en pause">
+<span class="material-symbols-outlined text-[18px]">pause_circle</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Property Card 3: Terrain Boumerdès (Pending Notarial) -->
+<article class="property-card bg-surface-container-low rounded-xl overflow-hidden flex flex-col justify-between shadow-sm hover:shadow-md transition-all group" data-status="pending">
+<div class="flex flex-col">
+<div class="relative w-full h-52 overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90" data-alt="Expansive private seaside residential land plot in Boumerdes with Mediterranean coastline views, natural topography, perimeter surveying markers in elegant daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeS6MudxZs12VeS6qqh8eL3qT7_0DVMM0fi3gDs8beckXSrqcN2DdcH-wkK57BaZS6lMKDiF3O1WEtBJVxfed_xvJWxv7BQrAu42vRjo8RGGyVgfIze6uuayWUhDr3HcIJ8jyfADAh09iW-YtFuOvogXoDxCsSkz4PkV1Mj2alQqBcwEjO58KIZMNm0R6lMtIA5kZAlh2y2aQn_x79dJPcbelGf5qmkd301x4HNp6mMhXlOP8kgH8"/>
+<div class="absolute top-3 left-3 flex items-center gap-2">
+<span class="px-2.5 py-1 rounded bg-primary-container text-surface text-label-sm font-label-sm uppercase font-bold tracking-wider">Vente Foncier</span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container text-label-sm font-label-sm uppercase font-bold tracking-wider flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[13px]">gavel</span> Audit Notarié
+                </span>
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-primary-container/80 backdrop-blur-sm text-surface text-label-sm font-label-sm">
+                Réf: DZ-BM-704
+              </div>
+</div>
+<div class="p-space-lg flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Boumerdès • Front de Mer</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors line-clamp-1">
+                Terrain constructible viabilisé
+              </h3>
+<div class="flex items-center gap-space-md text-body-sm font-body-sm text-on-surface-variant my-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">terrain</span> 1 200 m²</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">description</span> Acte &amp; Livret Foncier</span>
+</div>
+<div class="pt-space-xs flex items-baseline gap-1.5">
+<span class="font-currency-display text-currency-display text-on-surface font-bold">82 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase">DA</span>
+<span class="font-body-sm text-body-sm text-secondary ml-auto font-semibold">Examen juriste (24h)</span>
+</div>
+</div>
+</div>
+<div class="p-space-md bg-surface-container flex items-center justify-between gap-space-sm">
+<span class="text-body-sm font-body-sm text-on-surface-variant italic">Pièces en cours de revue</span>
+<div class="flex items-center gap-1">
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" title="Compléter documents">
+                Compléter dossier
+              </button>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Two-Column Section: Leads & Inquiries + Watchlist/Favorites -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Column Left: Recent Inquiries & Visit Requests (7 cols) -->
+<section class="lg:col-span-7 bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Flux Acheteurs &amp; Locataires</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Demandes &amp; Contacts Récents</h2>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm font-bold">
+            7 En Attente
+          </span>
+</div>
+<div class="flex flex-col gap-space-sm mt-space-xs">
+<!-- Lead Row 1 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-full bg-primary-container text-surface flex items-center justify-center font-bold text-label-lg font-label-lg flex-shrink-0">
+                SM
+              </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface">Dr. Sofiane Mansouri</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[11px] font-label-sm text-on-surface-variant font-semibold">Acheteur Qualifié</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Intérêt: <strong class="text-on-surface font-medium">Villa Piscine, Chéraga</strong></span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold mt-0.5">Demande de visite: Samedi 1er Mars à 14h30</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-end sm:self-center">
+<a class="p-2 rounded bg-surface-container-lowest hover:bg-surface text-secondary shadow-sm transition-all" href="https://wa.me/213555234567" rel="noopener noreferrer" target="_blank" title="Répondre sur WhatsApp">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-space-md py-2 rounded bg-primary-container text-surface hover:bg-primary transition-all font-label-md text-label-md" href="tel:+213555234567">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span>+213 555 23 45 67</span>
+</a>
+</div>
+</div>
+<!-- Lead Row 2 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-label-lg font-label-lg flex-shrink-0">
+                CL
+              </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface">Cabinet Legrand &amp; Associés</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[11px] font-label-sm text-on-surface-variant font-semibold">Bail Corporatif</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Intérêt: <strong class="text-on-surface font-medium">Duplex F5, Hydra</strong></span>
+<span class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">Visite sollicitée pour diplomate arrivant mi-mars</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-end sm:self-center">
+<a class="p-2 rounded bg-surface-container-lowest hover:bg-surface text-secondary shadow-sm transition-all" href="https://wa.me/213661899012" rel="noopener noreferrer" target="_blank" title="Répondre sur WhatsApp">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-space-md py-2 rounded bg-primary-container text-surface hover:bg-primary transition-all font-label-md text-label-md" href="tel:+213661899012">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span>+213 661 89 90 12</span>
+</a>
+</div>
+</div>
+<!-- Lead Row 3 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary text-surface flex items-center justify-center font-bold text-label-lg font-label-lg flex-shrink-0">
+                AB
+              </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface">Amine Belkacem</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[11px] font-label-sm text-on-surface-variant font-semibold">Diaspora (Canada)</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Intérêt: <strong class="text-on-surface font-medium">Terrain Boumerdès</strong></span>
+<span class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">Demande de visioconférence et copie du certificat d'urbanisme</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-end sm:self-center">
+<a class="p-2 rounded bg-surface-container-lowest hover:bg-surface text-secondary shadow-sm transition-all" href="https://wa.me/213770451122" rel="noopener noreferrer" target="_blank" title="Répondre sur WhatsApp">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-space-md py-2 rounded bg-primary-container text-surface hover:bg-primary transition-all font-label-md text-label-md" href="tel:+213770451122">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span>+213 770 45 11 22</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Column Right: Derniers Biens Favoris & Alertes (5 cols) -->
+<section class="lg:col-span-5 bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Sélection Personnelle</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Derniers Favoris</h2>
+</div>
+<a class="font-label-md text-label-md text-secondary hover:underline font-semibold" href="#">Voir les 12</a>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Mini Favorite Card 1 -->
+<div class="flex gap-space-md p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-all group">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-dim">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Prestigious apartment in El Biar Algiers panoramic terrace overlooking the bay of Algiers warm golden hour sun" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_6Yq7y1PTNEy-5TPJv05XDJyxZJZtlP4EsfKCXHNiwxn7iICMkDtqnwLiOnWFcvYbeSaiDVkaM08poimsFn6a2gcx_4F3-pmT7fwlfaKiQqgjB63k0xjLVLpgpMWHrQaQSJZrFpSUHYOdb07bzMx7KAMCyxwIidAixc86MXPoIkriOnBZ_zoAn7BgKKZKiCkPMNBEe5i3Ncc1lJUludXcEX0UkL-PEwiarRMcQIxuD60uxttYDVg"/>
+</div>
+<div class="flex flex-col justify-between flex-grow min-w-0">
+<div class="flex flex-col">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[11px] text-on-surface-variant uppercase font-semibold">El Biar • Alger</span>
+<button class="text-secondary hover:text-on-surface" title="Retirer des favoris">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface truncate">Penthouse Vue Baie d'Alger</h4>
+<span class="font-currency-display text-[18px] text-on-surface font-bold mt-1">98 000 000 DA</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-sm text-[12px] text-secondary font-medium">Baisse de 5% notée</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant">320 m²</span>
+</div>
+</div>
+</div>
+<!-- Mini Favorite Card 2 -->
+<div class="flex gap-space-md p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-all group">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-dim">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Colonial style luxury residence in Poirson El Mouradia Algiers with private green garden and colonnade arcade" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVO_UuKoPO9cKdHgzOEgqcjfoF3ha8ZVnqqw9q1fNwxkJgeNqAd7gTUVcTvOlJoxEdJN7ArOIvJ_k8NMuXp8ZMk4t2kFlbkbm4fDmlG5Wy4BDOamLL0wzlMAFWoDiuwIUJAo3JFZvDgX0BDx8n479NzqnFrGT0huMysr8ikk3C-OYaTk3Z8t2h9P6GFVb9pkJGpPOn7yew0YiRPqJSInMwJp2mF5eFS6NdvD6TQ84_iMec1d5SjW4"/>
+</div>
+<div class="flex flex-col justify-between flex-grow min-w-0">
+<div class="flex flex-col">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[11px] text-on-surface-variant uppercase font-semibold">Poirson • El Mouradia</span>
+<button class="text-secondary hover:text-on-surface" title="Retirer des favoris">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface truncate">Demeure Néo-Mauresque R+2</h4>
+<span class="font-currency-display text-[18px] text-on-surface font-bold mt-1">210 000 000 DA</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-sm text-[12px] text-on-surface-variant">Prix stable</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant">750 m²</span>
+</div>
+</div>
+</div>
+<!-- Price Alert Manager Component -->
+<div class="p-space-md rounded-lg bg-surface-container flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary-container/40 text-on-secondary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-[14px] text-on-surface">Alerte de Prix Directe</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Recevoir par SMS &amp; Email sur Alger</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Concierge Assistance Banner -->
+<section class="bg-surface-container-low rounded-xl p-space-lg flex flex-col md:flex-row items-center justify-between gap-space-lg">
+<div class="flex items-center gap-space-lg">
+<div class="w-16 h-16 rounded-full bg-primary-container text-surface flex items-center justify-center flex-shrink-0 shadow-md">
+<span class="material-symbols-outlined text-[32px] text-secondary-container">shield_with_house</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Assistance Notariale &amp; Conseil Patrimonial</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Besoin d'un contrôle de conformité foncière à Alger ?</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Nos experts juridiques partenaires vérifient vos actes de propriété, livrets fonciers et permis de lotir en 48h.</p>
+</div>
+</div>
+<button class="inline-flex items-center gap-2 px-space-lg py-space-sm rounded bg-primary-container text-surface hover:bg-primary transition-all font-label-md text-label-md flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+<span>Contacter la Conciergerie</span>
+</button>
+</section>
+</div>
+<!-- Interactive Slide-over / Modal: Déposer une nouvelle annonce -->
+<div class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm hidden items-center justify-center p-space-md overflow-y-auto" id="depositModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-3xl w-full max-h-[921px] overflow-y-auto shadow-2xl flex flex-col my-auto">
+<!-- Modal Header -->
+<div class="p-space-lg bg-primary-container text-surface flex items-center justify-between sticky top-0 z-20">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary-container uppercase tracking-wider font-semibold">Prime House Mandat Exclusif</span>
+<h3 class="font-headline-md text-headline-md text-surface">Dépôt d'une Nouvelle Annonce</h3>
+</div>
+<button class="p-1 rounded-full text-primary-fixed-dim hover:text-surface hover:bg-surface/10 transition-colors" onclick="toggleModal(false)">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+</div>
+<!-- Modal Form Body -->
+<form class="p-space-lg lg:p-space-xl flex flex-col gap-space-lg" onsubmit="handleFormSubmit(event)">
+<!-- Field Group: Title & Transaction Type -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-xs md:col-span-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Titre de l'Annonce</label>
+<input class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Ex: Splendide Villa d'Architecte avec Vue Mer" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Type de Transaction</label>
+<select class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary">
+<option value="vente">Vente Définitive</option>
+<option value="location">Location Résidentielle</option>
+<option value="location_corp">Location Diplomatique &amp; Entreprise</option>
+</select>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Typologie du Bien</label>
+<select class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary">
+<option value="villa">Villa Individuelle</option>
+<option value="duplex">Duplex / Penthouse</option>
+<option value="appartement">Appartement Haut Standing</option>
+<option value="terrain">Terrain Constructible</option>
+</select>
+</div>
+</div>
+<!-- Field Group: Location (Wilaya & Commune) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Wilaya</label>
+<select class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary">
+<option value="16">16 - Alger</option>
+<option value="31">31 - Oran</option>
+<option value="25">25 - Constantine</option>
+<option value="35">35 - Boumerdès</option>
+<option value="42">42 - Tipaza</option>
+</select>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Commune / Quartier</label>
+<input class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Ex: Hydra, Chéraga, El Biar..." required="" type="text"/>
+</div>
+</div>
+<!-- Field Group: Specs & Pricing -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Prix demandé (DA)</label>
+<input class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Ex: 85000000" required="" type="number"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Superficie (m²)</label>
+<input class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Ex: 350" required="" type="number"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Nombre de Pièces</label>
+<input class="p-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Ex: 6" type="number"/>
+</div>
+</div>
+<!-- Photos Dropzone Placeholder -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Photographies Architecturales (Min. 3 clichés)</label>
+<div class="p-space-lg rounded-lg bg-surface-container-low flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[36px] text-secondary">add_photo_alternate</span>
+<span class="font-title-md text-title-md text-on-surface mt-2">Glissez vos photographies haute définition</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Formats JPG, PNG ou WEBP acceptés (Max 15MB par fichier)</span>
+</div>
+</div>
+<!-- Legal & Notarial Conformity Declarations -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-space-sm">
+<label class="flex items-start gap-space-sm cursor-pointer">
+<input class="mt-1 h-4 w-4 rounded text-secondary focus:ring-secondary" required="" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">
+              Je certifie disposer de <strong>l'Acte Notarié</strong> et du <strong>Livret Foncier</strong> en règle pour ce bien immobilier.
+            </span>
+</label>
+<label class="flex items-start gap-space-sm cursor-pointer">
+<input class="mt-1 h-4 w-4 rounded text-secondary focus:ring-secondary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">
+              Le bien dispose d'un <strong>Certificat de Conformité (Loi 08-15)</strong> validé par les services de l'urbanisme.
+            </span>
+</label>
+</div>
+<!-- Submit CTA -->
+<div class="flex items-center justify-end gap-space-md pt-space-xs">
+<button class="px-space-lg py-space-sm rounded hover:bg-surface-container-low text-on-surface font-label-md text-label-md transition-colors" onclick="toggleModal(false)" type="button">
+            Annuler
+          </button>
+<button class="px-space-xl py-space-sm rounded bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-label-lg text-label-lg transition-transform hover:-translate-y-0.5 shadow-md" type="submit">
+            Soumettre pour validation notariée
+          </button>
+</div>
+</form>
+</div>
+</div>
+<script>
+    function toggleModal(open) {
+      const modal = document.getElementById('depositModal');
+      if (modal) {
+        if (open) {
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+          document.body.classList.add('overflow-hidden');
+        } else {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+          document.body.classList.remove('overflow-hidden');
+        }
+      }
+    }
+
+    function filterProperties(status, btnElement) {
+      const tabs = document.querySelectorAll('.property-filter-tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('bg-primary-container', 'text-surface', 'shadow-sm');
+        tab.classList.add('text-on-surface-variant');
+      });
+      btnElement.classList.add('bg-primary-container', 'text-surface', 'shadow-sm');
+      btnElement.classList.remove('text-on-surface-variant');
+
+      const cards = document.querySelectorAll('.property-card');
+      cards.forEach(card => {
+        if (status === 'all' || card.getAttribute('data-status') === status) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('Votre annonce a été soumise avec succès. Notre équipe juridique effectue la revue notariée sous 24h ouvrées.');
+      toggleModal(false);
+    }
+  </script>
+</div></main></body></html>

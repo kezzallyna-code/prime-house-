@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#5a4300","on-error-container":"#93000a","on-primary-container":"#78849b","on-tertiary":"#ffffff","secondary-fixed":"#ffdf9f","on-primary":"#ffffff","on-surface":"#111c2c","on-tertiary-fixed":"#251a00","surface":"#f9f9ff","inverse-surface":"#263142","tertiary-fixed-dim":"#eac161","tertiary-fixed":"#ffdf9a","primary-fixed":"#d7e3fc","on-background":"#111c2c","outline-variant":"#c5c6cd","tertiary":"#000000","on-secondary-fixed-variant":"#5c4300","secondary":"#795900","surface-container-highest":"#d8e3fa","on-primary-fixed":"#0f1c2e","on-surface-variant":"#44474c","outline":"#75777d","background":"#f9f9ff","inverse-primary":"#bbc7e0","primary":"#000000","secondary-container":"#fdce68","surface-container-high":"#dee8ff","error-container":"#ffdad6","secondary-fixed-dim":"#eec05c","tertiary-container":"#251a00","on-secondary-container":"#765600","surface-container":"#e7eeff","on-secondary-fixed":"#261a00","primary-fixed-dim":"#bbc7e0","on-tertiary-container":"#a27f25","surface-tint":"#535f74","surface-bright":"#f9f9ff","surface-container-lowest":"#ffffff","error":"#ba1a1a","inverse-on-surface":"#ebf1ff","surface-variant":"#d8e3fa","surface-container-low":"#f0f3ff","on-error":"#ffffff","surface-dim":"#cfdaf1","on-primary-fixed-variant":"#3b475c","on-secondary":"#ffffff","primary-container":"#0f1c2e"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","margin-md":"3rem","gutter-lg":"2rem","gutter":"1.5rem","margin-lg":"5rem","space-md":"1rem","space-xs":"0.25rem","margin":"1.5rem","space-lg":"1.5rem","gutter-sm":"1rem","space-xl":"2.5rem"},"fontFamily":{"label-lg":["Outfit"],"body-sm":["Plus Jakarta Sans"],"label-sm":["Outfit"],"display-mobile":["Playfair Display"],"body-md":["Plus Jakarta Sans"],"headline-sm":["Playfair Display"],"body-lg":["Plus Jakarta Sans"],"label-md":["Outfit"],"headline-lg":["Playfair Display"],"display":["Playfair Display"],"currency-display":["Outfit"],"title-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Playfair Display"],"headline-xl":["Playfair Display"],"title-md":["Plus Jakarta Sans"],"headline-md":["Playfair Display"],"headline-xl-mobile":["Playfair Display"]},"fontSize":{"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.05em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"20px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.1em","fontWeight":"600"}],"display-mobile":["38px",{"lineHeight":"44px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"500"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"500"}],"display":["56px",{"lineHeight":"64px","letterSpacing":"-0.02em","fontWeight":"600"}],"currency-display":["26px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"title-lg":["18px",{"lineHeight":"24px","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"500"}],"headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.015em","fontWeight":"600"}],"title-md":["16px",{"lineHeight":"22px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"500"}],"headline-xl-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script>
+    <link rel="icon" type="image/png" href="../assets/favicon.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+  
+</head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-primary-container z-50 flex flex-col justify-between shadow-[0_4px_24px_rgba(7,20,38,0.25)]"><div class="flex flex-col flex-1 overflow-y-auto"><div class="h-20 px-6 flex items-center justify-between bg-primary-container"><div class="flex items-center gap-space-sm"><img alt="Prime House Logo" class="w-10 h-10 object-contain p-0.5 rounded bg-surface-container-lowest/10" src="../assets/logo-p-transparent.png" /><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-surface-container-lowest tracking-tight">PRIME HOUSE</span><span class="font-label-sm text-label-sm text-tertiary-fixed tracking-widest uppercase">Prestige Immobilier</span></div></div></div><div class="px-6 py-space-sm"><div class="bg-surface-container-lowest/5 rounded px-3 py-2 flex items-center justify-between"><span class="font-label-sm text-label-sm text-surface-container-highest tracking-wider uppercase">ESPACE ADMINISTRATION</span><span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span></div></div><div class="px-4 py-space-md flex flex-col gap-6"><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">VUE GLOBALE</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a aria-current="page" class="flex items-center justify-between px-3 py-2 rounded transition-all bg-surface-container-lowest/10 text-secondary-fixed font-bold" data-path="dashboard" href="index.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">dashboard</span><span>Tableau de bord</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">GESTION DU PARC</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="tous-les-biens" href="biens.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">apartment</span><span>Tous les biens</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="ajouter-un-bien" href="ajouter-bien.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">add_circle</span><span>Ajouter un bien</span></div><span class="px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-label-sm">+</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="biens-en-moderation" href="moderation.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">pending_actions</span><span>Biens en modération</span></div><span class="px-2 py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm">5</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="biens-a-la-une" href="vitrine.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">grade</span><span>Biens à la Une</span></div><span class="material-symbols-outlined text-[16px] text-outline">tune</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">LEADS &amp; RELATIONS</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="demandes-et-visites" href="demandes.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">mark_email_unread</span><span>Demandes &amp; Visites</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">8</span></a></nav></div><div class="flex flex-col gap-1"><div class="px-3 pb-1"><span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">TAXONOMIE &amp; CONFIG</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-lowest/10 text-secondary-fixed font-bold"><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="categories-et-wilayas" href="categories-wilayas.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">map</span><span>Catégories &amp; Wilayas</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a><a class="flex items-center justify-between px-3 py-2 rounded text-surface-container-highest hover:bg-surface-container-lowest/10 hover:text-on-surface-variant transition-all font-body-sm text-body-sm" data-path="parametres-du-site" href="parametres.html"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-secondary">settings</span><span>Paramètres du site</span></div><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span></a></nav></div></div></div><div class="p-4 bg-primary-container"><div class="bg-surface-container-lowest/5 rounded p-3 flex flex-col gap-2 mb-3"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-tertiary-fixed">Rôle: Super-Admin</span><span class="material-symbols-outlined text-secondary text-[16px]">verified_user</span></div><div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span><span class="font-label-sm text-label-sm text-surface-variant">Supabase Cloud • Node DZ</span></div></div><a class="flex items-center justify-center gap-2 w-full py-2.5 rounded bg-surface-container-lowest/10 text-surface-container-highest hover:bg-error hover:text-on-error transition-all font-label-md text-label-md" data-path="deconnexion" href="login.html"><span class="material-symbols-outlined text-[18px]">logout</span><span>Déconnexion</span></a></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-20 bg-surface-container-lowest/95 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(7,20,38,0.04)] px-8 flex items-center justify-between"><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-on-surface"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm uppercase tracking-wider">Node Alger Connecté</span></div><span class="font-body-sm text-body-sm text-on-surface-variant">Plateforme d'Administration Immobilière de Luxe</span></div><div class="flex items-center gap-5"><a class="flex items-center gap-2 px-3.5 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm uppercase tracking-wide" href="../index.html" target="_blank"><span class="material-symbols-outlined text-[16px] text-secondary">open_in_new</span><span>Voir le site public</span></a><div class="relative flex items-center justify-center"><button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm flex items-center justify-center font-bold">12</span></div><div class="h-8 w-px bg-surface-variant"></div><div class="flex items-center gap-3 pl-1"><div class="flex flex-col text-right"><span class="font-title-md text-title-md text-on-surface leading-tight">Karim Benali</span><span class="font-label-sm text-label-sm text-secondary leading-tight uppercase">Directeur Exécutif</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-20 bg-surface flex-1 w-full px-8 pb-12"><div class="flex flex-col w-full">
+<!-- Section 1: Top Bar & Quick Actions -->
+<div class="flex flex-col xl:flex-row xl:items-end justify-between gap-6 pb-8">
+<div class="flex flex-col max-w-2xl">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary">Console d'Exploitation Nationale</span>
+<span class="text-surface-variant font-label-sm">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Alger Centre, DZ</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+        Tableau de Bord — Console d'Administration
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1.5">
+        Supervision globale du parc immobilier, flux de modération foncière et traitement des demandes acquéreurs en Algérie.
+      </p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Live Sync Indicator -->
+<div class="flex items-center gap-2 px-3 py-2 rounded bg-surface-container-low shadow-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-fixed-dim opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Supabase DB connectée <strong class="text-on-surface font-semibold">(v15.2)</strong></span>
+</div>
+<!-- Export Button -->
+<button class="flex items-center gap-2 px-4 py-2.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface transition-all duration-200 font-label-md text-label-md shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">file_download</span>
+<span>Exporter le registre (CSV/PDF)</span>
+</button>
+<!-- Primary Action: Ajouter un bien -->
+<a class="flex items-center gap-2 px-5 py-2.5 rounded bg-secondary hover:bg-secondary-fixed-dim text-on-secondary hover:text-on-secondary-fixed transition-all duration-200 font-label-lg text-label-lg shadow-md shadow-secondary/20 transform hover:-translate-y-0.5" data-path="ajouter-un-bien" href="ajouter-bien.html">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Ajouter un bien</span>
+</a>
+</div>
+</div>
+<!-- Section 2: Key Metrics KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 pb-8">
+<!-- Card 1: Total des Biens -->
+<div class="p-6 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between pb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Total des Biens en Base</span>
+<div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-currency-display text-on-surface">148</span>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container px-2 py-0.5 rounded-full font-bold">+12 ce mois</span>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low rounded p-2.5 flex items-center justify-between font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="text-on-surface font-semibold">94 Ventes</span>
+<span class="text-on-surface-variant">(63.5%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-on-surface font-semibold">54 Locations</span>
+<span class="text-on-surface-variant">(36.5%)</span>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-3 overflow-hidden flex">
+<div class="bg-primary-container h-full" style="width: 63.5%"></div>
+<div class="bg-secondary h-full" style="width: 36.5%"></div>
+</div>
+</div>
+<!-- Card 2: Biens Actifs Publiés -->
+<div class="p-6 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between pb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Biens Actifs Publiés</span>
+<div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">public</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-currency-display text-on-surface">128</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">en ligne</span>
+</div>
+<div class="mt-4 flex items-center gap-2 px-2.5 py-1.5 rounded bg-surface-container-high text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+<span class="font-label-sm text-label-sm truncate font-semibold">Visibilité 100% sur le site public</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 font-body-sm text-body-sm text-on-surface-variant">
+<span>Taux de conversion vue/contact</span>
+<span class="font-bold text-on-surface">4.8%</span>
+</div>
+</div>
+<!-- Card 3: En attente d'Approbation (Alert) -->
+<div class="p-6 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between pb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">En Attente d'Approbation</span>
+<div class="w-9 h-9 rounded bg-error-container text-on-error-container flex items-center justify-center animate-pulse">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-currency-display text-error">14</span>
+<span class="font-body-sm text-body-sm text-error font-medium">dossiers fonciers</span>
+</div>
+<div class="mt-4 flex items-center gap-2 px-2.5 py-1.5 rounded bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[16px]">priority_high</span>
+<span class="font-label-sm text-label-sm font-semibold truncate">Action requise sous 24h</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-3 font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">description</span>
+<span class="truncate">Actes notariés &amp; livrets en vérif</span>
+</div>
+</div>
+<!-- Card 4: Nouvelles Demandes & Visites -->
+<div class="p-6 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between pb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Nouvelles Demandes &amp; Visites</span>
+<div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">mark_chat_unread</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-currency-display text-on-surface">38</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">requêtes</span>
+</div>
+<div class="mt-4 flex items-center justify-between px-2.5 py-1.5 rounded bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">8 non traitées aujourd'hui</span>
+<span class="w-2 h-2 rounded-full bg-error"></span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 font-body-sm text-body-sm text-on-surface-variant">
+<span>Canal dominant : WhatsApp DZ</span>
+<span class="font-bold text-secondary">71%</span>
+</div>
+</div>
+</div>
+<!-- Secondary Mini-KPIs Bar -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 pb-8">
+<div class="p-4 rounded bg-primary-container text-surface-container-lowest flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-surface-container-lowest/10 flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined text-[26px]">account_balance</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-surface-container-highest">Volume Valeur Portefeuille Géré</span>
+<div class="flex items-baseline gap-1.5 mt-0.5">
+<span class="font-currency-display text-currency-display text-secondary-fixed">24.8</span>
+<span class="font-title-md text-title-md text-surface-container-lowest">Milliards DA</span>
+</div>
+</div>
+</div>
+<div class="hidden sm:flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-surface-container-highest">Évaluation Algérie 2025</span>
+<span class="font-body-sm text-body-sm text-secondary-fixed">+8.4% vs T4 2024</span>
+</div>
+</div>
+<div class="p-4 rounded bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[26px]">map</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Wilayas Actives Couvertes</span>
+<div class="flex items-baseline gap-2 mt-0.5">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">14 Wilayas</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">(Alger, Oran, Blida, Boumerdès, Tipaza...)</span>
+</div>
+</div>
+</div>
+<a class="hidden sm:flex items-center gap-1 font-label-md text-label-md text-secondary hover:underline" href="#">
+<span>Cartographie</span>
+<span class="material-symbols-outlined text-[16px]">north_east</span>
+</a>
+</div>
+</div>
+<!-- Section 3: Two Columns Asymmetric Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Column: 65% width (col-span-1 lg:col-span-8) -->
+<div class="lg:col-span-8 flex flex-col gap-5">
+<!-- Section Header & Filter Pills -->
+<div class="p-6 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Biens Récemment Ajoutés &amp; Soumis</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Suivi en temps réel des transactions, dossiers d'annonces et statuts d'approbation</p>
+</div>
+<!-- Quick Filter Pills -->
+<div class="inline-flex rounded bg-surface-container p-1 gap-1">
+<button class="px-3 py-1.5 rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface shadow-sm font-semibold transition-all" type="button">Tous (148)</button>
+<button class="px-3 py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" type="button">En attente (14)</button>
+<button class="px-3 py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" type="button">Publiés (128)</button>
+</div>
+</div>
+<!-- Table of Properties -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+<th class="py-3 px-4 rounded-l">Bien &amp; Référence</th>
+<th class="py-3 px-3">Type / Mandat</th>
+<th class="py-3 px-3">Prix Actuel</th>
+<th class="py-3 px-3">Localisation</th>
+<th class="py-3 px-3">Statut</th>
+<th class="py-3 px-4 text-right rounded-r">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-surface-container-high/40">
+<!-- Item 1 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-3.5 px-4 flex items-center gap-3">
+<div class="w-14 h-12 rounded bg-surface-container overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Luxurious modern villa exterior in Hydra Algiers with private swimming pool, palm trees, architectural limestone facade, bright Mediterranean daylight, golden hour reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJdUJNFHFdrmdMGZr5rRpYjpaUgWlsoh1TcbcCrnhjAAso39bdhR_HGRPJyRhGFWezJXFq27mfsK7VHxyAxLDT6Jg-DxJLero2fXkvSvQFFi-d-Moiemwcx3lbda7pB43X8Pkji0bYxLPrSq5BeaMj74xVdVus83U85eDdmw2F65bpTdE-mcdZmFr8L34CPfXqQ8x_VptTn7T8SprQxIMlkdDMCWgTqIEtpcznvVQOe34vBnRANNI"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface font-semibold truncate">Villa d'Architecte avec Piscine</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">REF: PH-ALG-104 • 650 m²</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Villa</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Vente Exclusive</span>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">165 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold ml-0.5">DA</span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[15px] text-secondary">location_on</span>
+<span class="font-medium">Hydra, Alger</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Publié</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Examiner" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Modifier" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Item 2 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-3.5 px-4 flex items-center gap-3">
+<div class="w-14 h-12 rounded bg-surface-container overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="High-end duplex living room interior in El Biar Algiers with panoramic bay view, luxury minimalist Italian furniture, marble floors, warm ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNWNnt1QYF392ZdXIZv2JyYOOC1CKVSeeR6-lXZpXFjruoBgiUe5k8efxtzIo656O-tl4WvI2br2rBNcxtposN0Q6SBT-QiMdlFtrlWE7mRaCvDQn92d5Z2YzAKkevF_jAH9Tgqrp0-o526kvhKtue7lUv8USa4hIT0QGCemCiarcpPR4x1Bg6CwWohniF8v7REe-8qg9fB0eZKIq1X9oMPSmIaXvpxRkWQ_WfvX2oNzLozPg_Kb4"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface font-semibold truncate">Duplex de Maître Belvédère</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">REF: PH-LOC-088 • 290 m²</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Duplex</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Location</span>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">450 000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">DA/mois</span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[15px] text-secondary">location_on</span>
+<span class="font-medium">El Biar, Alger</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Publié</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Examiner" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Modifier" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Item 3 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-3.5 px-4 flex items-center gap-3">
+<div class="w-14 h-12 rounded bg-surface-container overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Exclusive luxury seaside penthouse in Canastel Oran overlooking the Mediterranean sea, large glass balcony with panoramic ocean horizon, refined exterior architecture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbZXPoI9G6eXajBebcvPqzhnEB0ejRn1lQR7t4Rp_2KPRxvBq7wUprEGKtiXIY1VAAuwjDgp1F62RMhGH_v_Eyxmoiq2uUG794Di-Fjd04Iy0EM7p3-V0pvt0QSd0FjXArtrS9-BuDZNBoMpwKRVAUmiY5xVkJs9L82DGXiyLwpeEpBBEC8udKgVsKHlpubrFo5vu-7AisZPQbdqIXwtX3nIRAb3S9H5_Kpc56xTQC7uXI9CTuh5E"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface font-semibold truncate">Penthouse Front de Mer</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">REF: PH-ORN-019 • 410 m²</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Penthouse</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Vente Prestige</span>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">115 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold ml-0.5">DA</span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[15px] text-secondary">location_on</span>
+<span class="font-medium">Canastel, Oran</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>En modération</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Examiner" type="button">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Modifier" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Item 4 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-3.5 px-4 flex items-center gap-3">
+<div class="w-14 h-12 rounded bg-surface-container overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Spacious residential plot of building land in Corso Boumerdes Algeria with lush olive trees, gentle slope, modern surveyor markers, calm blue sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhSjdMw_yYdH11ldDMETV8cjoVgDhEljpLixvQjh6BU-y7j5fWlk7mj996_FfFFFYnapIBsg_Hsj212Q7LovR-IVERtenf8VfrUoY66akGvzFeexv0J4hM7OV2uOIMTrjUs35FfC0oGVeta2DsZtJRJdpShtYUTOl6x41lm4WWa3HdsJlnQlSjP1WgS_mugozEL1QkLUJtM-9NFAnYkeRO5F_oH6cAhMjPFqegp2HNE4SHR9kfyco"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface font-semibold truncate">Terrain constructible viabilisé</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">REF: PH-BMD-041 • 1 200 m²</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Terrain</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Vente</span>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">93 000 000</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold ml-0.5">DA</span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[15px] text-secondary">location_on</span>
+<span class="font-medium">Corso, Boumerdès</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>Brouillon</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Examiner" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Modifier" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" title="Options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Pagination / Link -->
+<div class="flex items-center justify-between pt-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Affichage de 4 biens sur 148 au registre national</span>
+<a class="inline-flex items-center gap-2 font-label-lg text-label-lg text-secondary hover:text-on-surface transition-colors font-semibold" data-path="tous-les-biens" href="biens.html">
+<span>Voir l'intégralité des 148 biens</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Quick Moderation Banner Card -->
+<div class="p-5 rounded-lg bg-primary-container text-surface-container-lowest shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary flex items-center justify-center text-on-secondary flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">policy</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-surface-container-lowest">Contrôle Foncier &amp; Sécurisation Notariale</h3>
+<p class="font-body-sm text-body-sm text-surface-container-highest">14 dossiers en attente avec livret foncier numérisé sous protocole d'authentification.</p>
+</div>
+</div>
+<a class="px-4 py-2 rounded bg-surface-container-lowest/15 hover:bg-surface-container-lowest/25 text-surface-container-lowest font-label-md text-label-md transition-colors text-center whitespace-nowrap" data-path="biens-en-moderation" href="moderation.html">
+          Ouvrir le sas de validation
+        </a>
+</div>
+</div>
+<!-- Right Column: 35% width (col-span-1 lg:col-span-4) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Card: Journal d'Activité Récente -->
+<div class="p-6 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<div class="flex items-center justify-between pb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">history</span>
+<h2 class="font-title-lg text-title-lg text-on-surface">Journal d'Activité</h2>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Temps réel</span>
+</div>
+<div class="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-surface-container-high">
+<!-- Timeline Item 1 -->
+<div class="relative group">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-secondary ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Approbation Mandat</span>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+                Me Yacine M. a validé la villa <strong>PH-ALG-104</strong> (Hydra).
+              </p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Il y a 32 min • Alger</span>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative group">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Nouvelle Demande de Visite</span>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+                Dr. Sofiane M. sur le Duplex <strong>PH-LOC-088</strong> via WhatsApp.
+              </p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Il y a 1h • Leads Concierge</span>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative group">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-secondary-fixed-dim ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Mise à la Une</span>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+                Penthouse Oran (Canastel) promu en couverture homepage.
+              </p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Il y a 3h • Gestion Vitrine</span>
+</div>
+</div>
+<!-- Timeline Item 4 -->
+<div class="relative group">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-outline ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Mise à Jour Tarifaire</span>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+                Prix réajusté sur Terrain Boumerdès (<strong>-5 000 000 DA</strong>).
+              </p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Il y a 5h • Propriétaire Mandant</span>
+</div>
+</div>
+<!-- Timeline Item 5 -->
+<div class="relative group">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-secondary ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Agent Partenaire</span>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+                Agence El Kheir Constantine en attente de vérification KYC.
+              </p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Il y a 6h • Réseau National</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface text-center font-label-md text-label-md transition-colors" type="button">
+          Voir l'historique complet des logs
+        </button>
+</div>
+<!-- Card: Statut Infrastructure Backend & Stockage -->
+<div class="p-6 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">dns</span>
+<h2 class="font-title-lg text-title-lg text-on-surface">Santé Système</h2>
+</div>
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary bg-surface-container px-2 py-0.5 rounded font-semibold">
+            Opérationnel
+          </span>
+</div>
+<!-- Metric 1: PostgreSQL Supabase -->
+<div class="p-3.5 rounded bg-surface-container-low flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              Base PostgreSQL Supabase
+            </span>
+<span class="text-secondary font-bold">99.98%</span>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-on-surface-variant">
+<span>Latence : 34ms (Nœud Alger)</span>
+<span>Cluster DZ-Nord</span>
+</div>
+</div>
+<!-- Metric 2: Stockage CDN -->
+<div class="p-3.5 rounded bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_done</span>
+              Stockage Photos CDN (WebP)
+            </span>
+<span class="text-on-surface font-bold">42.4%</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 42.4%"></div>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-on-surface-variant">
+<span>42.4 Go / 100 Go alloués</span>
+<span class="text-secondary font-semibold">Optimisation auto</span>
+</div>
+</div>
+<!-- Metric 3: RLS Security -->
+<div class="p-3.5 rounded bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">security</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Sécurité RLS Active</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Row Level Security validée</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+</div></main></div>
+    <script src="../js/data.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/admin.js"></script>
+  
+</body></html>

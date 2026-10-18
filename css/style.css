@@ -1,0 +1,124 @@
+/* Prime House - Luxury Real Estate Stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+:root {
+  --color-primary: #071426;
+  --color-gold: #c49a3a;
+  --color-champagne: #dfb758;
+  --color-slate: #4a5568;
+  --color-canvas: #f8f9fa;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #f8f9fa;
+  color: #111c2c;
+  overflow-x: hidden;
+}
+
+/* Custom Luxury Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f3ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5c6cd;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c49a3a;
+}
+
+/* Luxury Card Transitions */
+.card-transition {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.card-transition:hover {
+  transform: translateY(-4px);
+  border-color: rgba(196, 154, 58, 0.35);
+}
+
+/* Gold Metallic Accent Shimmer */
+.gold-shimmer {
+  background: linear-gradient(135deg, #c49a3a 0%, #dfb758 50%, #c49a3a 100%);
+  background-size: 200% auto;
+  transition: background-position 0.5s ease;
+}
+
+.gold-shimmer:hover {
+  background-position: right center;
+}
+
+/* Glassmorphism Surface */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-surface-dark {
+  background: rgba(7, 20, 38, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(196, 154, 58, 0.2);
+}
+
+/* Material Symbols fill helper */
+.material-symbols-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* User Profile Dropdown Menu */
+.user-dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.97);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top right;
+}
+
+.user-dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Nav Link Hover & Active */
+.nav-link-active {
+  background-color: #e7eeff !important;
+  color: #111c2c !important;
+  font-weight: 600 !important;
+  border-radius: 0.375rem !important;
+}
+
+/* Header Scrolled Elevation */
+header.header-scrolled {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: 0 10px 30px -5px rgba(7, 20, 38, 0.08), 0 0 0 1px rgba(7, 20, 38, 0.05) !important;
+}
+
+/* Print Styling for Dossier / Property Sheet */
+@media print {
+  header, footer, aside, .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
+
