@@ -4,8 +4,8 @@
   "private": true,
   "description": "Prime House - Immobilier de Prestige en Algérie",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js",
+    "dev": "node dev-server.js",
+    "start": "node dev-server.js",
     "build": "echo 'Prime House build ready'"
   },
   "keywords": [],
