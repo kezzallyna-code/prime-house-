@@ -50,22 +50,55 @@ function highlightActiveAdminSidebar() {
   });
 }
 
-function initAdminAuthCheck() {
+async function initAdminAuthCheck() {
   const path = window.location.pathname.toLowerCase();
-  const isLoginPage = path.endsWith('/login.html');
+  const isLoginPage = path.endsWith('/login.html') || path.endsWith('/login');
 
-  const user = window.primeApi.getCurrentUser();
+  const urlParams = new URLSearchParams(window.location.search);
+  const isServerRedirect = urlParams.has('redirect');
 
   if (isLoginPage) {
-    if (user) {
-      // Already logged in, redirect to dashboard
-      window.location.href = 'index.html';
+    if (isServerRedirect) {
+      // Server rejected cookie or session expired, clear stale local storage
+      localStorage.removeItem('prime_admin_user');
+      localStorage.removeItem('prime_admin_token');
+      if (window.primeApi) window.primeApi.currentUser = null;
+      return;
+    }
+    const token = localStorage.getItem('prime_admin_token');
+    if (token) {
+      try {
+        const res = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated && data.user && ['super_admin', 'admin', 'moderator'].includes(data.user.role)) {
+            window.location.href = 'index.html';
+            return;
+          }
+        }
+        localStorage.removeItem('prime_admin_user');
+        localStorage.removeItem('prime_admin_token');
+        if (window.primeApi) window.primeApi.currentUser = null;
+      } catch (e) {}
     }
   } else if (path.includes('/admin/')) {
-    if (!user) {
-      // Set default demo admin if direct navigation without login for developer ease, or redirect
-      // For strict security: redirect to login
-      window.location.href = 'login.html';
+    const user = window.primeApi.getCurrentUser();
+    const token = localStorage.getItem('prime_admin_token');
+    if (!user || !['super_admin', 'admin', 'moderator'].includes(user.role)) {
+      window.location.href = `login.html?redirect=${encodeURIComponent(window.location.pathname)}`;
+      return;
+    }
+    // Verify session asynchronously with server if real backend is active
+    if (token && !token.startsWith('local_')) {
+      try {
+        const res = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+        if (!res.ok && res.status === 401) {
+          localStorage.removeItem('prime_admin_user');
+          localStorage.removeItem('prime_admin_token');
+          if (window.primeApi) window.primeApi.currentUser = null;
+          window.location.href = `login.html?redirect=${encodeURIComponent(window.location.pathname)}`;
+        }
+      } catch (e) {}
     }
   }
 }
@@ -226,12 +259,28 @@ function routeAdminPage() {
 // 4. PAGE: LOGIN (admin/login.html)
 // ==============================================================================
 function initLoginPage() {
-  const form = document.querySelector('form');
+  const form = document.getElementById('loginForm') || document.querySelector('form');
   if (!form) return;
 
-  const adminIdInput = document.getElementById('adminId');
-  const adminKeyInput = document.getElementById('adminKey') || form.querySelector('input[type="password"]');
-  const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button.bg-secondary');
+  const emailInput = document.getElementById('email') || form.querySelector('input[type="email"]') || document.getElementById('adminId');
+  const passwordInput = document.getElementById('password') || form.querySelector('input[type="password"]') || document.getElementById('adminKey');
+  const submitBtn = document.getElementById('submitBtn') || form.querySelector('button[type="submit"]') || form.querySelector('button.bg-secondary');
+  const btnIcon = document.getElementById('btnIcon');
+  const btnText = document.getElementById('btnText');
+  const toggleBtn = document.getElementById('togglePasswordBtn');
+  const passIcon = document.getElementById('passIcon');
+
+  // Toggle password visibility
+  if (toggleBtn && passwordInput) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isPass = passwordInput.type === 'password';
+      passwordInput.type = isPass ? 'text' : 'password';
+      if (passIcon) {
+        passIcon.textContent = isPass ? 'visibility_off' : 'visibility';
+      }
+    });
+  }
 
   // Insert status alert container
   let statusBox = document.getElementById('loginStatusAlert');
@@ -242,65 +291,89 @@ function initLoginPage() {
     form.parentNode.insertBefore(statusBox, form);
   }
 
-  // Quick Demo Accounts Fill Button
-  const demoPill = document.createElement('div');
-  demoPill.className = 'mt-4 pt-4 border-t border-surface-container-high/60 flex items-center justify-between text-xs text-on-surface-variant';
-  demoPill.innerHTML = `
-    <span>Compte Démo :</span>
-    <button type="button" class="text-secondary hover:underline font-semibold" id="fillDemoSuperadmin">Super-Admin (Karim Benali)</button>
-    <button type="button" class="text-secondary hover:underline font-semibold" id="fillDemoModerator">Modérateur (Amine Zerrouki)</button>
-  `;
-  form.appendChild(demoPill);
-
-  document.getElementById('fillDemoSuperadmin')?.addEventListener('click', () => {
-    if (adminIdInput) adminIdInput.value = 'direction@primehouse-dz.com';
-    if (adminKeyInput) adminKeyInput.value = 'admin123';
-  });
-
-  document.getElementById('fillDemoModerator')?.addEventListener('click', () => {
-    if (adminIdInput) adminIdInput.value = 'moderation@primehouse-dz.com';
-    if (adminKeyInput) adminKeyInput.value = 'admin123';
-  });
+  function resetLoadingState() {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      if (btnIcon) {
+        btnIcon.className = 'material-symbols-outlined text-title-md';
+        btnIcon.textContent = 'login';
+      }
+      if (btnText) {
+        btnText.textContent = 'Se connecter';
+      } else {
+        submitBtn.innerHTML = '<span class="material-symbols-outlined text-title-md">login</span><span>Se connecter</span>';
+      }
+    }
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = adminIdInput ? adminIdInput.value.trim() : '';
-    const password = adminKeyInput ? adminKeyInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const password = passwordInput ? passwordInput.value : '';
 
+    // Client-side Validation: Empty fields
     if (!email || !password) {
       statusBox.className = 'p-3.5 rounded-lg bg-error-container text-on-error-container font-body-sm text-body-sm mb-4 flex items-center gap-2';
-      statusBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span><span>Veuillez renseigner votre identifiant et votre clé maîtresse.</span>';
+      statusBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span><span>Veuillez renseigner votre adresse email et votre mot de passe.</span>';
       statusBox.classList.remove('hidden');
+      if (!email && emailInput) emailInput.focus();
+      else if (!password && passwordInput) passwordInput.focus();
       return;
     }
 
-    // Loading state
+    // Client-side Validation: Email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      statusBox.className = 'p-3.5 rounded-lg bg-error-container text-on-error-container font-body-sm text-body-sm mb-4 flex items-center gap-2';
+      statusBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span><span>Veuillez saisir une adresse email valide.</span>';
+      statusBox.classList.remove('hidden');
+      if (emailInput) emailInput.focus();
+      return;
+    }
+
+    // Loading state: "Connexion en cours..." and spinner
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">sync</span><span>Vérification cryptographique...</span>';
+      if (btnIcon) {
+        btnIcon.className = 'material-symbols-outlined text-title-md animate-spin';
+        btnIcon.textContent = 'progress_activity';
+      }
+      if (btnText) {
+        btnText.textContent = 'Connexion en cours...';
+      } else {
+        submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span><span>Connexion en cours...</span>';
+      }
     }
 
     statusBox.classList.add('hidden');
 
-    const result = await window.primeApi.signIn(email, password);
+    try {
+      const result = await window.primeApi.signIn(email, password);
 
-    if (result.success) {
-      statusBox.className = 'p-3.5 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-body-sm text-body-sm mb-4 flex items-center gap-2 font-semibold animate-pulse';
-      statusBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span><span>Authentification validée. Redirection vers la console...</span>';
-      statusBox.classList.remove('hidden');
+      if (result.success) {
+        statusBox.className = 'p-3.5 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-body-sm text-body-sm mb-4 flex items-center gap-2 font-semibold animate-pulse';
+        statusBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span><span>Authentification validée. Redirection vers la console...</span>';
+        statusBox.classList.remove('hidden');
 
-      setTimeout(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get('redirect') || 'index.html';
-        window.location.href = redirect;
-      }, 700);
-    } else {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">lock_open</span><span>Déverrouiller la Console</span>';
+        setTimeout(() => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect') || 'index.html';
+          if (redirect.startsWith('/') || redirect.endsWith('.html')) {
+            window.location.href = redirect;
+          } else {
+            window.location.href = 'index.html';
+          }
+        }, 600);
+      } else {
+        resetLoadingState();
+        statusBox.className = 'p-3.5 rounded-lg bg-error-container text-on-error-container font-body-sm text-body-sm mb-4 flex items-center gap-2';
+        statusBox.innerHTML = `<span class="material-symbols-outlined text-[18px]">error</span><span>${result.error || 'Adresse email ou mot de passe incorrect.'}</span>`;
+        statusBox.classList.remove('hidden');
       }
+    } catch (err) {
+      resetLoadingState();
       statusBox.className = 'p-3.5 rounded-lg bg-error-container text-on-error-container font-body-sm text-body-sm mb-4 flex items-center gap-2';
-      statusBox.innerHTML = `<span class="material-symbols-outlined text-[18px]">error</span><span>${result.error || 'Identifiant ou clé d’accès non reconnue.'}</span>`;
+      statusBox.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span><span>Erreur de connexion au serveur d’authentification.</span>';
       statusBox.classList.remove('hidden');
     }
   });
@@ -346,7 +419,7 @@ async function initDashboardPage() {
   // Portfolio Volume in Milliards DA
   const totalVolumeDa = sales.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
   const volumeInMilliards = (totalVolumeDa / 1000000000).toFixed(2);
-  const volEl = document.querySelector('.font-currency-display.text-secondary-fixed');
+  const volEl = document.getElementById('admin-portfolio-volume') || document.querySelector('.font-currency-display.text-secondary-fixed');
   if (volEl) volEl.textContent = volumeInMilliards;
 
   // Populate Recent Properties in Table if present
@@ -784,6 +857,9 @@ async function initAjouterBienPage() {
   // Multi-image upload dropzone
   initImageUploadDropzone();
 
+  // Bilingual Arabic/French editorial description tabs
+  initBilingualDescriptionTabs();
+
   if (editId) {
     if (pageTitle) pageTitle.textContent = 'Modification du Mandat Immobilier';
     const prop = await window.primeApi.getPropertyById(editId);
@@ -890,14 +966,61 @@ window.removeUploadedImage = function (index) {
   renderUploadedImages();
 };
 
+function initBilingualDescriptionTabs() {
+  const tabFr = document.getElementById('descTabFr');
+  const tabAr = document.getElementById('descTabAr');
+  const descFr = document.getElementById('prop-description-fr');
+  const descAr = document.getElementById('prop-description-ar');
+  const indicator = document.getElementById('descLangIndicator');
+
+  if (!tabFr || !tabAr) return;
+
+  tabFr.addEventListener('click', (e) => {
+    e.preventDefault();
+    tabFr.classList.add('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
+    tabFr.classList.remove('text-on-surface-variant');
+    tabAr.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
+    tabAr.classList.add('text-on-surface-variant');
+
+    if (descFr) descFr.classList.remove('hidden');
+    if (descAr) descAr.classList.add('hidden');
+    if (indicator) indicator.textContent = 'Français (LTR) • Optimisé SEO';
+  });
+
+  tabAr.addEventListener('click', (e) => {
+    e.preventDefault();
+    tabAr.classList.add('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
+    tabAr.classList.remove('text-on-surface-variant');
+    tabFr.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
+    tabFr.classList.add('text-on-surface-variant');
+
+    if (descAr) {
+      descAr.classList.remove('hidden');
+      descAr.focus();
+    }
+    if (descFr) descFr.classList.add('hidden');
+    if (indicator) indicator.textContent = 'العربية (RTL) • محتوى عربي مخصص ومحسن لمحركات البحث';
+  });
+}
+
 function populateFormWithProperty(p) {
   // Radio transaction
   const radio = document.querySelector(`input[name="transaction_type"][value="${p.transaction_type}"]`);
   if (radio) radio.checked = true;
 
-  // Title
-  const titleInput = document.querySelector('input[placeholder*="Villa"], input[placeholder*="Titre"], #section-general input[type="text"]');
+  // Title French & Arabic
+  const titleInput = document.getElementById('prop-title-fr') || document.querySelector('input[placeholder*="Villa"], input[placeholder*="Titre"], #section-general input[type="text"]');
   if (titleInput) titleInput.value = p.title || '';
+
+  const titleArInput = document.getElementById('prop-title-ar');
+  if (titleArInput && p.title_ar) titleArInput.value = p.title_ar;
+
+  // Description French & Arabic
+  const descFr = document.getElementById('prop-description-fr');
+  if (descFr && p.description) descFr.value = p.description;
+
+  const descAr = document.getElementById('prop-description-ar');
+  if (descAr && p.description_ar) descAr.value = p.description_ar;
 
   // Price
   const priceInput = document.querySelector('input[placeholder*="165 000 000"], #section-financial input[type="number"], #section-financial input[type="text"]');
@@ -918,11 +1041,17 @@ function populateFormWithProperty(p) {
 }
 
 async function savePropertyForm(editId, publicationStatus = 'publie') {
-  const titleInput = document.querySelector('input[placeholder*="Villa"], #section-general input[type="text"]');
+  const titleInput = document.getElementById('prop-title-fr') || document.querySelector('input[placeholder*="Villa"], #section-general input[type="text"]');
+  const titleArInput = document.getElementById('prop-title-ar');
+  const descFrInput = document.getElementById('prop-description-fr');
+  const descArInput = document.getElementById('prop-description-ar');
   const priceInput = document.querySelector('input[placeholder*="165 000 000"], #section-financial input[type="number"], #section-financial input[type="text"]');
   const transactionRadio = document.querySelector('input[name="transaction_type"]:checked');
 
   const title = titleInput ? titleInput.value.trim() : '';
+  const title_ar = titleArInput ? titleArInput.value.trim() : '';
+  const description = descFrInput ? descFrInput.value.trim() : '';
+  const description_ar = descArInput ? descArInput.value.trim() : '';
   const priceStr = priceInput ? priceInput.value.replace(/\s+/g, '') : '';
   const price = parseFloat(priceStr) || 0;
   const transaction_type = transactionRadio ? transactionRadio.value : 'vente';
@@ -941,6 +1070,9 @@ async function savePropertyForm(editId, publicationStatus = 'publie') {
 
   const payload = {
     title,
+    title_ar: title_ar || undefined,
+    description: description || undefined,
+    description_ar: description_ar || undefined,
     price,
     transaction_type,
     category_name: 'Villa Contemporaine',
@@ -1150,8 +1282,34 @@ async function initVitrinePage() {
     </div>
   `).join('');
 
+  // Update dynamic count elements
+  const countBadge = document.getElementById('featured-count-badge');
+  if (countBadge) countBadge.textContent = `${featured.length} Emplacements Définis`;
+  const countBanner = document.getElementById('featured-count-banner');
+  if (countBanner) countBanner.innerHTML = `<strong>${featured.length} biens</strong> sont actuellement affichés en page d'accueil publique. Toute modification de position ou de statut se répercute instantanément sur le site public via le cache Edge Supabase.`;
+  const lastUpdated = document.getElementById('featured-last-updated');
+  if (lastUpdated) lastUpdated.textContent = 'Aujourd\'hui, ' + new Date().toLocaleTimeString('fr-FR');
+
   // Hook Add to Featured CTA
   window.openAddModal = openAddFeaturedModal;
+
+  window.refreshStatus = async function () {
+    const icon = document.getElementById('refresh-icon');
+    if (icon) icon.classList.add('animate-spin');
+    await initVitrinePage();
+    setTimeout(() => {
+      if (icon) icon.classList.remove('animate-spin');
+      showAdminToast('Cache actualisé', 'La vitrine et l\'Edge Cache sont synchronisés.');
+    }, 600);
+  };
+
+  window.resetDefaultPositions = async function () {
+    const data = await window.primeApi.getProperties({ limit: 100 });
+    const pubs = (data.properties || []).filter(p => p.publication_status === 'publie').slice(0, 6);
+    await window.primeApi.reorderFeatured(pubs.map(p => p.id));
+    showAdminToast('Ordre réinitialisé', 'Positions par défaut restaurées.');
+    initVitrinePage();
+  };
 }
 
 window.moveFeaturedUp = async function (id) {
@@ -1250,69 +1408,149 @@ window.confirmAddToFeatured = async function (id) {
 // ==============================================================================
 async function initDemandesPage() {
   const data = await window.primeApi.getInquiries();
-  const inquiries = data.inquiries || [];
+  const allInquiries = data.inquiries || [];
+  let currentFilter = 'all';
+  let searchQuery = '';
 
-  const tableBody = document.querySelector('tbody');
+  const tableBody = document.querySelector('tbody') || document.getElementById('inquiries-tbody');
   if (!tableBody) return;
 
-  if (inquiries.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="7" class="p-12 text-center text-on-surface-variant font-body-sm">Aucune demande de visite enregistrée.</td></tr>`;
-    return;
+  // Update KPI counters
+  const totalCount = allInquiries.length;
+  const newCount = allInquiries.filter(i => i.status === 'Nouveau').length;
+  const visitCount = allInquiries.filter(i => i.status === 'Visite programmée').length;
+  const contactCount = allInquiries.filter(i => i.status === 'Contacté' || i.status === 'En cours').length;
+  const closedCount = allInquiries.filter(i => i.status === 'Terminé' || i.status === 'Annulé').length;
+
+  const totalEl = document.getElementById('kpi-total-inquiries');
+  if (totalEl) totalEl.textContent = totalCount;
+  const newEl = document.getElementById('kpi-new-inquiries');
+  if (newEl) newEl.textContent = newCount;
+  const visitEl = document.getElementById('kpi-scheduled-visits');
+  if (visitEl) visitEl.textContent = visitCount;
+  const countLabel = document.getElementById('activeCountLabel');
+  if (countLabel) countLabel.textContent = `${totalCount} pistes identifiées`;
+
+  // Update Tab Badges
+  const tabAll = document.getElementById('tab-count-all');
+  if (tabAll) tabAll.textContent = totalCount;
+  const tabNew = document.getElementById('tab-count-nouveau');
+  if (tabNew) tabNew.textContent = newCount;
+  const tabContact = document.getElementById('tab-count-contacte');
+  if (tabContact) tabContact.textContent = contactCount;
+  const tabVisit = document.getElementById('tab-count-visite');
+  if (tabVisit) tabVisit.textContent = visitCount;
+  const tabClose = document.getElementById('tab-count-cloture');
+  if (tabClose) tabClose.textContent = closedCount;
+
+  function renderTable() {
+    let filtered = [...allInquiries];
+
+    if (currentFilter !== 'all') {
+      if (currentFilter === 'Contacté') {
+        filtered = filtered.filter(i => i.status === 'Contacté' || i.status === 'En cours');
+      } else if (currentFilter === 'Terminé') {
+        filtered = filtered.filter(i => i.status === 'Terminé' || i.status === 'Annulé');
+      } else {
+        filtered = filtered.filter(i => i.status === currentFilter);
+      }
+    }
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(i =>
+        (i.client_name || '').toLowerCase().includes(q) ||
+        (i.client_phone || '').toLowerCase().includes(q) ||
+        (i.client_email || '').toLowerCase().includes(q) ||
+        (i.property_ref || '').toLowerCase().includes(q) ||
+        (i.property_title || '').toLowerCase().includes(q)
+      );
+    }
+
+    if (filtered.length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="7" class="p-12 text-center text-on-surface-variant font-body-sm">Aucun dossier correspondant au filtre actif.</td></tr>`;
+      return;
+    }
+
+    tableBody.innerHTML = filtered.map(i => `
+      <tr class="border-b border-surface-container-high/40 hover:bg-surface-container-low transition-colors" data-inq-id="${i.id}">
+        <td class="py-4 px-4 font-body-sm text-xs text-on-surface-variant font-mono">
+          ${new Date(i.created_at || Date.now()).toLocaleDateString('fr-FR')}
+        </td>
+        <td class="py-4 px-4">
+          <div class="flex flex-col">
+            <span class="font-title-md text-sm text-on-surface font-semibold">${i.client_name}</span>
+            <span class="font-body-sm text-xs text-secondary font-mono">${i.client_phone}</span>
+            ${i.client_email ? `<span class="font-body-sm text-xs text-outline">${i.client_email}</span>` : ''}
+          </div>
+        </td>
+        <td class="py-4 px-4">
+          <div class="flex flex-col min-w-0">
+            <span class="font-title-md text-xs text-on-surface font-semibold truncate max-w-[200px]">${i.property_title || 'Demande générale'}</span>
+            <span class="font-mono text-[11px] text-secondary font-bold">${i.property_ref || 'GÉNÉRAL'}</span>
+          </div>
+        </td>
+        <td class="py-4 px-4 font-body-sm text-xs text-on-surface-variant max-w-xs truncate" title="${i.message || ''}">
+          ${i.message || '<em class="text-outline">Sans message</em>'}
+        </td>
+        <td class="py-4 px-4">
+          <select onchange="updateInquiryStatusAction('${i.id}', this.value)" class="p-1.5 rounded text-xs font-semibold cursor-pointer ${
+            i.status === 'Nouveau' ? 'bg-error text-on-error' : (i.status === 'Visite programmée' ? 'bg-secondary text-on-secondary font-bold' : 'bg-surface-container text-on-surface')
+          }">
+            <option ${i.status === 'Nouveau' ? 'selected' : ''}>Nouveau</option>
+            <option ${i.status === 'En cours' ? 'selected' : ''}>En cours</option>
+            <option ${i.status === 'Contacté' ? 'selected' : ''}>Contacté</option>
+            <option ${i.status === 'Visite programmée' ? 'selected' : ''}>Visite programmée</option>
+            <option ${i.status === 'Terminé' ? 'selected' : ''}>Terminé</option>
+            <option ${i.status === 'Annulé' ? 'selected' : ''}>Annulé</option>
+          </select>
+        </td>
+        <td class="py-4 px-4 font-body-sm text-xs font-mono text-on-surface">
+          ${i.visit_date ? new Date(i.visit_date).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : '<span class="text-outline">—</span>'}
+        </td>
+        <td class="py-4 px-4 text-right">
+          <div class="flex items-center justify-end gap-1">
+            <button onclick="scheduleVisitModal('${i.id}')" class="p-1.5 rounded hover:bg-surface-container text-secondary" title="Planifier / Modifier la visite">
+              <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+            </button>
+            <button onclick="viewInquiryNotes('${i.id}')" class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Notes internes">
+              <span class="material-symbols-outlined text-[18px]">notes</span>
+            </button>
+            <button onclick="deleteInquiryAction('${i.id}')" class="p-1.5 rounded hover:bg-error-container text-on-surface-variant hover:text-error" title="Supprimer">
+              <span class="material-symbols-outlined text-[18px]">delete</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
   }
 
-  tableBody.innerHTML = inquiries.map(i => `
-    <tr class="border-b border-surface-container-high/40 hover:bg-surface-container-low transition-colors" data-inq-id="${i.id}">
-      <td class="py-4 px-4 font-body-sm text-xs text-on-surface-variant font-mono">
-        ${new Date(i.created_at || Date.now()).toLocaleDateString('fr-FR')}
-      </td>
-      <td class="py-4 px-4">
-        <div class="flex flex-col">
-          <span class="font-title-md text-sm text-on-surface font-semibold">${i.client_name}</span>
-          <span class="font-body-sm text-xs text-secondary font-mono">${i.client_phone}</span>
-          ${i.client_email ? `<span class="font-body-sm text-xs text-outline">${i.client_email}</span>` : ''}
-        </div>
-      </td>
-      <td class="py-4 px-4">
-        <div class="flex flex-col min-w-0">
-          <span class="font-title-md text-xs text-on-surface font-semibold truncate max-w-[200px]">${i.property_title || 'Général'}</span>
-          <span class="font-mono text-[11px] text-secondary font-bold">${i.property_ref || 'N/A'}</span>
-        </div>
-      </td>
-      <td class="py-4 px-4 font-body-sm text-xs text-on-surface-variant max-w-xs truncate" title="${i.message || ''}">
-        ${i.message || '<em class="text-outline">Sans message</em>'}
-      </td>
-      <td class="py-4 px-4">
-        <select onchange="updateInquiryStatusAction('${i.id}', this.value)" class="p-1.5 rounded text-xs font-semibold cursor-pointer ${
-          i.status === 'Nouveau' ? 'bg-error text-on-error' : (i.status === 'Visite programmée' ? 'bg-secondary text-on-secondary font-bold' : 'bg-surface-container text-on-surface')
-        }">
-          <option ${i.status === 'Nouveau' ? 'selected' : ''}>Nouveau</option>
-          <option ${i.status === 'En cours' ? 'selected' : ''}>En cours</option>
-          <option ${i.status === 'Contacté' ? 'selected' : ''}>Contacté</option>
-          <option ${i.status === 'Visite programmée' ? 'selected' : ''}>Visite programmée</option>
-          <option ${i.status === 'Terminé' ? 'selected' : ''}>Terminé</option>
-          <option ${i.status === 'Annulé' ? 'selected' : ''}>Annulé</option>
-        </select>
-      </td>
-      <td class="py-4 px-4 font-body-sm text-xs font-mono text-on-surface">
-        ${i.visit_date ? new Date(i.visit_date).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : '<span class="text-outline">—</span>'}
-      </td>
-      <td class="py-4 px-4 text-right">
-        <div class="flex items-center justify-end gap-1">
-          <button onclick="scheduleVisitModal('${i.id}')" class="p-1.5 rounded hover:bg-surface-container text-secondary" title="Planifier / Modifier la visite">
-            <span class="material-symbols-outlined text-[18px]">calendar_month</span>
-          </button>
-          <button onclick="viewInquiryNotes('${i.id}')" class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Notes internes">
-            <span class="material-symbols-outlined text-[18px]">notes</span>
-          </button>
-          <button onclick="deleteInquiryAction('${i.id}')" class="p-1.5 rounded hover:bg-error-container text-on-surface-variant hover:text-error" title="Supprimer">
-            <span class="material-symbols-outlined text-[18px]">delete</span>
-          </button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
+  // Hook live search
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.oninput = (e) => {
+      searchQuery = e.target.value.trim();
+      renderTable();
+    };
+  }
+
+  // Hook status tabs
+  window.filterInquiriesStatus = function (status, btn) {
+    currentFilter = status;
+    document.querySelectorAll('.status-tab').forEach(b => {
+      b.className = 'status-tab flex items-center gap-2 px-4 py-2 rounded font-label-md text-label-md bg-surface text-on-surface hover:bg-surface-container transition-all whitespace-nowrap';
+    });
+    if (btn) {
+      btn.className = 'status-tab flex items-center gap-2 px-4 py-2 rounded font-label-md text-label-md bg-primary text-on-primary font-bold shadow-sm transition-all whitespace-nowrap';
+    }
+    renderTable();
+  };
+
+  // Render initial
+  renderTable();
 
   // Hook CSV export button
+  const exportBtn = document.getElementById('exportLeadsBtn');
   document.querySelectorAll('button').forEach(btn => {
     if (btn.textContent.includes('Exporter Leads')) {
       btn.onclick = () => window.location.href = '/api/export/inquiries';
@@ -1404,8 +1642,14 @@ async function initCategoriesWilayasPage() {
   const categories = await window.primeApi.getCategories();
   const wilayas = await window.primeApi.getWilayas();
 
+  // Update Top Metric Counters
+  const wilayaCountEl = document.getElementById('active-wilayas-count');
+  if (wilayaCountEl) wilayaCountEl.textContent = wilayas.filter(w => w.is_active).length;
+  const catCountEl = document.getElementById('active-categories-count');
+  if (catCountEl) catCountEl.textContent = categories.filter(c => c.is_active).length;
+
   // Populate Wilayas List
-  const wilayasContainer = document.querySelector('div.lg\\:col-span-7 div.flex.flex-col.gap-4');
+  const wilayasContainer = document.getElementById('wilayas-list') || document.querySelector('div.lg\\:col-span-7 div.flex.flex-col.gap-4');
   if (wilayasContainer) {
     wilayasContainer.innerHTML = wilayas.map(w => `
       <div class="rounded-lg bg-surface-container-low p-4 flex items-center justify-between gap-4">
@@ -1428,10 +1672,9 @@ async function initCategoriesWilayasPage() {
   }
 
   // Populate Categories List
-  const catContainer = document.querySelector('div.lg\\:col-span-5 div.flex.flex-col.gap-3') || document.querySelector('div.lg\\:col-span-5');
+  const catContainer = document.getElementById('categories-list') || document.querySelector('div.lg\\:col-span-5 div.flex.flex-col.gap-3');
   if (catContainer) {
-    const listDiv = catContainer.querySelector('.flex.flex-col.gap-3') || catContainer;
-    listDiv.innerHTML = categories.map(c => `
+    catContainer.innerHTML = categories.map(c => `
       <div class="p-3.5 rounded-lg bg-surface-container-low flex items-center justify-between gap-3">
         <div class="flex items-center gap-3 min-w-0">
           <span class="material-symbols-outlined text-secondary text-[22px] shrink-0">${c.icon || 'apartment'}</span>
@@ -1500,12 +1743,31 @@ window.deleteCategoryAction = async function (id) {
 async function initParametresPage() {
   const settings = await window.primeApi.getSettings();
 
-  // Populate fields
+  // Populate Tab 1: Identité
   const nameInput = document.querySelector('input[value*="Prime House"]');
   if (nameInput && settings.general?.agency_name) nameInput.value = settings.general.agency_name;
 
   const sloganInput = document.querySelector('input[value*="L\'Excellence"]');
   if (sloganInput && settings.general?.official_slogan) sloganInput.value = settings.general.official_slogan;
+
+  const textareas = document.querySelectorAll('#tab-identity textarea');
+  if (textareas[0] && settings.general?.description_fr) textareas[0].value = settings.general.description_fr;
+  if (textareas[1] && settings.general?.description_ar) textareas[1].value = settings.general.description_ar;
+
+  // Populate Tab 2: Coordonnées
+  const contactTextareas = document.querySelectorAll('#tab-contacts textarea');
+  if (contactTextareas[0] && settings.contacts?.headquarters_address) contactTextareas[0].value = settings.contacts.headquarters_address;
+  if (contactTextareas[1] && settings.contacts?.secondary_address) contactTextareas[1].value = settings.contacts.secondary_address;
+
+  const contactInputs = document.querySelectorAll('#tab-contacts input');
+  if (contactInputs[0] && settings.contacts?.primary_phone) contactInputs[0].value = settings.contacts.primary_phone;
+  if (contactInputs[1] && settings.contacts?.primary_email) contactInputs[1].value = settings.contacts.primary_email;
+  if (contactInputs[2] && settings.contacts?.mobile_phone) contactInputs[2].value = settings.contacts.mobile_phone;
+  if (contactInputs[3] && settings.contacts?.concierge_email) contactInputs[3].value = settings.contacts.concierge_email;
+
+  // Populate Tab 3: Conciergerie & WhatsApp
+  const whatsappInput = document.querySelector('#tab-vip input[type="tel"]') || document.querySelector('#tab-vip input');
+  if (whatsappInput && settings.contacts?.whatsapp_number) whatsappInput.value = settings.contacts.whatsapp_number;
 
   // Handle Tab Switching
   window.switchTab = function (tabId) {
@@ -1527,10 +1789,24 @@ async function initParametresPage() {
       general: {
         agency_name: nameInput ? nameInput.value : 'Prime House Immobilier de Prestige',
         official_slogan: sloganInput ? sloganInput.value : 'L\'Excellence Foncière & Immobilière en Algérie',
+        description_fr: textareas[0] ? textareas[0].value : settings.general?.description_fr,
+        description_ar: textareas[1] ? textareas[1].value : settings.general?.description_ar,
         reference_currency: 'DZD (DA)'
+      },
+      contacts: {
+        ...settings.contacts,
+        headquarters_address: contactTextareas[0] ? contactTextareas[0].value : settings.contacts?.headquarters_address,
+        secondary_address: contactTextareas[1] ? contactTextareas[1].value : settings.contacts?.secondary_address,
+        primary_phone: contactInputs[0] ? contactInputs[0].value : settings.contacts?.primary_phone,
+        primary_email: contactInputs[1] ? contactInputs[1].value : settings.contacts?.primary_email,
+        mobile_phone: contactInputs[2] ? contactInputs[2].value : settings.contacts?.mobile_phone,
+        whatsapp_number: whatsappInput ? whatsappInput.value : settings.contacts?.whatsapp_number
       }
     };
     await window.primeApi.saveSettings(updated);
     showAdminToast('Sauvegarde validée', 'Paramètres enregistrés avec succès. Le portail public est à jour.');
   };
+
+  // Activate initial tab to hide other panels
+  window.switchTab('tab-identity');
 }

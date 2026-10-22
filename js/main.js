@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initDashboard();
   initAdminDashboard();
   initLanguageSwitch();
+  initContactPage();
+  initDeposerAnnoncePage();
+  initNewsletterForms();
   updateFavoritesBadge();
 
   // Listen for storage changes
@@ -291,7 +294,8 @@ function initHeroSearch() {
 
   let currentMode = 'vente';
 
-  const budgetSelect = searchForm ? searchForm.querySelector('select:has(option[value="15-40"]), select:has(option[value="80-150"])') : null;
+  const heroSelects = searchForm ? searchForm.querySelectorAll('select') : [];
+  const budgetSelect = heroSelects.length >= 3 ? heroSelects[2] : null;
 
   window.selectTab = function(btn, mode) {
     currentMode = mode === 'louer' ? 'location' : 'vente';
@@ -344,8 +348,7 @@ function initHeroSearch() {
   }
 
   // Handle Quick Suggestion Pills on Index
-  const suggestionButtons = document.querySelectorAll('button:has-text("Villas avec piscine"), button:has-text("Vue sur mer Alger"), .suggestion-tag');
-  document.querySelectorAll('button').forEach(btn => {
+  document.querySelectorAll('button, .suggestion-tag').forEach(btn => {
     const txt = btn.textContent.trim();
     if (txt === 'Villas avec piscine') {
       btn.addEventListener('click', () => { window.location.href = 'biens.html?type=villa&feature=piscine'; });
@@ -382,9 +385,10 @@ function initBiensPage() {
   const louerPillBtn = quickSearchPillContainer ? quickSearchPillContainer.querySelectorAll('button')[1] : null;
 
   const keywordInput = document.querySelector('input[placeholder*="mot-clé"]');
-  const wilayaSelect = document.querySelector('select:has(option:contains("Alger (Wilaya)")), select:has(option[value="alger"]), select');
-  const typeSelect = document.querySelector('select:has(option:contains("Villas")), select:has(option:contains("Tous les types"))');
-  const actualiserBtn = document.querySelector('button:has(.material-symbols-outlined:contains("tune")), button:contains("Actualiser")');
+  const allSelects = Array.from(document.querySelectorAll('aside select, form select, select'));
+  const wilayaSelect = allSelects.find(s => s.textContent.includes('Alger') || s.textContent.includes('Wilaya')) || allSelects[0] || null;
+  const typeSelect = allSelects.find(s => s.textContent.includes('Villa') || s.textContent.includes('types')) || allSelects[1] || null;
+  const actualiserBtn = Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Actualiser') || b.querySelector('.material-symbols-outlined')?.textContent.trim() === 'tune');
   
   // Find properties grid container
   const mainGrid = document.querySelector('main .grid.grid-cols-1.md\\:grid-cols-2') || document.querySelector('#properties-grid') || document.querySelector('main .grid');
@@ -661,12 +665,34 @@ function initBiensPage() {
 }
 
 /**
- * Creates luxury property card HTML string
+ * Creates luxury property card HTML string with full Arabic & French support
  */
 function createPropertyCardHtml(p) {
+  const currentLang = localStorage.getItem('prime_language') || (document.documentElement.getAttribute('lang') === 'ar' ? 'ar' : 'fr');
+  const isAr = currentLang === 'ar';
+
   const isVente = p.status === 'vente';
-  const badgeText = isVente ? 'VENTE EXCLUSIVE' : 'À LOUER';
-  const badgeLegal = p.legalStatus || (isVente ? 'Acte notarié & Livret foncier' : 'Bail notarié');
+  const badgeText = isAr ? (isVente ? 'بيع حصري' : 'للإيجار') : (isVente ? 'VENTE EXCLUSIVE' : 'À LOUER');
+  
+  let badgeLegal = p.legalStatus || (isVente ? 'Acte notarié & Livret foncier' : 'Bail notarié');
+  if (isAr) {
+    if (badgeLegal.includes('Livret foncier individuel')) {
+      badgeLegal = 'عقد موثق ودفتر عقاري فردي';
+    } else if (badgeLegal.includes('Livret foncier') || badgeLegal.includes('Acte notarié')) {
+      badgeLegal = 'عقد موثق ودفتر عقاري';
+    } else if (badgeLegal.includes('Bail diplomatique')) {
+      badgeLegal = 'عقد إيجار دبلوماسي موثق';
+    } else if (badgeLegal.includes('Bail')) {
+      badgeLegal = 'عقد إيجار موثق';
+    }
+  }
+
+  const title = (isAr && p.title_ar) ? p.title_ar : p.title;
+  const description = (isAr && p.description_ar) ? p.description_ar : (p.description || p.tagline || '');
+  const wilayaDisplay = isAr ? (p.wilaya_ar || p.wilaya) : p.wilaya;
+  const communeDisplay = isAr ? (p.commune_ar || p.commune || wilayaDisplay) : (p.commune || p.wilaya);
+  const locationText = `${communeDisplay} • ${wilayaDisplay}`;
+
   const imgUrl = (p.images && p.images[0]) || 'assets/logo-p-transparent.png';
   
   // Specific detail link if matched
@@ -674,15 +700,21 @@ function createPropertyCardHtml(p) {
   if (p.id === 'ph-alg-401') detailUrl = 'bien-villa-hydra.html';
   if (p.id === 'ph-alg-308') detailUrl = 'bien-duplex-hydra.html';
 
-  const priceSuffix = isVente ? 'DA' : 'DA / mois';
+  const priceSuffix = isAr ? (isVente ? 'دج' : 'دج / شهرياً') : (isVente ? 'DA' : 'DA / mois');
   const formattedPrice = Number(p.price).toLocaleString('fr-FR');
+
+  const refLabel = isAr ? 'مرجع' : 'Réf';
+  const bedLabel = isAr ? 'غرف' : 'Chambres';
+  const bathLabel = isAr ? 'حمامات' : "Salles d'eau";
+  const m2Label = isAr ? 'م²' : 'م²';
+  const detailsBtnText = isAr ? 'التفاصيل' : 'Détails';
 
   return `
     <article class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_20px_-2px_rgba(7,20,38,0.06)] hover:shadow-[0_16px_36px_-4px_rgba(7,20,38,0.12)] card-transition flex flex-col border border-surface-container/60">
       <div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
              src="${imgUrl}" 
-             alt="${p.title}" />
+             alt="${title}" />
         <div class="absolute top-space-sm left-space-sm flex flex-col gap-1 items-start z-10">
           <span class="px-2.5 py-1 rounded bg-surface-container-lowest/95 backdrop-blur-md text-on-surface font-label-sm text-label-sm font-bold shadow-xs">
             ${badgeText}
@@ -693,7 +725,7 @@ function createPropertyCardHtml(p) {
           </span>
         </div>
         <div class="absolute top-space-sm right-space-sm flex items-center gap-1.5 z-10">
-          <button data-fav-id="${p.id}" class="w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error hover:bg-surface-container-lowest shadow-sm transition-all" type="button" title="Ajouter aux favoris">
+          <button data-fav-id="${p.id}" class="w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error hover:bg-surface-container-lowest shadow-sm transition-all" type="button" title="${isAr ? 'إضافة إلى المفضلة' : 'Ajouter aux favoris'}">
             <span class="material-symbols-outlined text-title-md">favorite_border</span>
           </button>
         </div>
@@ -708,47 +740,47 @@ function createPropertyCardHtml(p) {
           <div class="flex items-center justify-between">
             <span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">
               <span class="material-symbols-outlined text-xs">pin_drop</span>
-              ${p.commune || p.wilaya} • ${p.wilaya}
+              ${locationText}
             </span>
-            <span class="font-label-sm text-label-sm text-outline">Réf: ${p.ref}</span>
+            <span class="font-label-sm text-label-sm text-outline"><bdi>${refLabel}: ${p.ref}</bdi></span>
           </div>
           <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-secondary transition-colors line-clamp-1">
-            <a href="${detailUrl}">${p.title}</a>
+            <a href="${detailUrl}">${title}</a>
           </h3>
           <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-            ${p.description || p.tagline || ''}
+            ${description}
           </p>
         </div>
         <div class="grid grid-cols-3 py-space-sm border-y border-surface-container-low text-center gap-1">
           <div class="flex flex-col items-center">
             <span class="flex items-center gap-1 font-title-md text-title-md text-on-surface font-bold">
-              <span class="material-symbols-outlined text-sm text-secondary">king_bed</span> ${p.bedrooms || 0}
+              <span class="material-symbols-outlined text-sm text-secondary">king_bed</span> <bdi>${p.bedrooms || 0}</bdi>
             </span>
-            <span class="font-label-sm text-label-sm text-outline">Chambres</span>
+            <span class="font-label-sm text-label-sm text-outline">${bedLabel}</span>
           </div>
           <div class="flex flex-col items-center border-x border-surface-container-low">
             <span class="flex items-center gap-1 font-title-md text-title-md text-on-surface font-bold">
-              <span class="material-symbols-outlined text-sm text-secondary">bathtub</span> ${p.bathrooms || 0}
+              <span class="material-symbols-outlined text-sm text-secondary">bathtub</span> <bdi>${p.bathrooms || 0}</bdi>
             </span>
-            <span class="font-label-sm text-label-sm text-outline">Salles d'eau</span>
+            <span class="font-label-sm text-label-sm text-outline">${bathLabel}</span>
           </div>
           <div class="flex flex-col items-center">
             <span class="flex items-center gap-1 font-title-md text-title-md text-on-surface font-bold">
-              <span class="material-symbols-outlined text-sm text-secondary">square_foot</span> ${p.surface || 0}
+              <span class="material-symbols-outlined text-sm text-secondary">square_foot</span> <bdi>${p.surface || 0}</bdi>
             </span>
-            <span class="font-label-sm text-label-sm text-outline">m²</span>
+            <span class="font-label-sm text-label-sm text-outline">${m2Label}</span>
           </div>
         </div>
         <div class="flex items-center justify-between pt-space-xs">
           <div class="flex flex-col">
             <div class="flex items-baseline gap-1">
-              <span class="font-currency-display text-currency-display text-on-surface tracking-tight font-extrabold">${formattedPrice}</span>
+              <span class="font-currency-display text-currency-display text-on-surface tracking-tight font-extrabold bidi-safe"><bdi>${formattedPrice}</bdi></span>
               <span class="font-label-sm text-label-sm text-secondary font-bold">${priceSuffix}</span>
             </div>
           </div>
           <a class="px-space-md py-2 bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface font-label-md text-label-md font-semibold rounded-lg transition-all flex items-center gap-1 shadow-xs" href="${detailUrl}">
-            <span>Détails</span>
-            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            <span>${detailsBtnText}</span>
+            <span class="material-symbols-outlined text-sm ${isAr ? 'rtl-flip' : ''}">arrow_forward</span>
           </a>
         </div>
       </div>
@@ -926,40 +958,505 @@ window.showToast = showToast;
 
 /**
  * -------------------------------------------------------------
- * 8. LANGUAGE SWITCHER (FR / AR)
+ * 8. LANGUAGE SWITCHER (FR / AR) - Complete PrimeI18n System
  * -------------------------------------------------------------
  */
-function initLanguageSwitch() {
+const I18N_DICT = {
+  // Navigation & Headers
+  "Accueil": "الرئيسية",
+  "Acheter": "شراء",
+  "Acheter (Vente)": "شراء (للبيع)",
+  "Louer": "إيجار",
+  "Louer (Location)": "إيجار (عقود كراء)",
+  "Louer (Locations de Prestige)": "إيجارات راقية",
+  "Nos biens": "عقاراتنا",
+  "Nos Biens": "عقاراتنا",
+  "Tous les biens": "جميع العقارات",
+  "À propos": "من نحن",
+  "Contact": "اتصل بنا",
+  "Déposer une annonce": "أضف عقاراً",
+  "Déposer un bien": "أضف عقاراً",
+  "Mon Espace": "حسابي",
+  "Mes Favoris": "عقاراتي المفضلة",
+  "Mes favoris": "عقاراتي المفضلة",
+  "Favoris": "المفضلة",
+  "Connexion": "تسجيل الدخول",
+  "Déconnexion": "تسجيل الخروج",
+  "Se déconnecter": "تسجيل الخروج",
+  "Retour au site public": "العودة للموقع العام",
+  "Voir le site public": "زيارة الموقع العام",
+  "Tableau de bord": "لوحة التحكم",
+  "Tableau de Bord": "لوحة التحكم",
+  "Tableau de Bord — Console d'Administration": "لوحة التحكم — منصة الإدارة",
+  "Console d'Administration": "لوحة الإدارة",
+  "Ajouter un bien": "إضافة عقار",
+  "Paramètres du site": "إعدادات الموقع",
+  "Catégories & Wilayas": "الفئات والولايات",
+  "Demandes & Visites": "الطلبات والزيارات",
+  "Biens en modération": "عقارات قيد المراجعة",
+  "Biens à la Une": "العقارات المميزة",
+  "Prestige Immobilier": "عقارات النخبة والامتياز",
+  "Algeria Luxury Estate": "العقارات الفاخرة بالجزائر",
+  "ESPACE CLIENT PRIVILÈGE": "فضاء العملاء المتميزين",
+  "ESPACE ADMINISTRATION": "فضاء الإدارة والتحكم",
+  "VUE GLOBALE": "نظرة عامة",
+  "GESTION DU PARC": "إدارة العقارات",
+  "LEADS & RELATIONS": "الطلبات والعملاء",
+  "TAXONOMIE & CONFIG": "التصنيفات والإعدادات",
+  "Console d'Exploitation Nationale": "لوحة التشغيل الوطنية",
+  "Plateforme d'Administration Immobilière de Luxe": "منصة إدارة العقارات الفاخرة",
+  "Node Alger Connecté": "خادم الجزائر متصل",
+  "Alger Centre, DZ": "الجزائر الوسطى، الجزائر",
+
+  // Hero & Search Box
+  "L'Excellence Immobilière en Algérie": "التميز العقاري في الجزائر",
+  "L'immobilier de prestige en Algérie": "العقارات الفاخرة في الجزائر",
+  "Trouvez le bien qui vous ressemble": "اعثر على العقار الذي يعكس شخصيتك",
+  "Découvrez les meilleures opportunités immobilières en Algérie, pour acheter ou louer en toute confiance auprès de nos experts agréés.": "اكتشف أفضل الفرص العقارية في الجزائر للشراء أو الإيجار بكل ثقة مع خبرائنا المعتمدين.",
+  "Transactions Notariées & Discrétion": "معاملات موثقة وسرية تامة",
+  "Type de bien": "نوع العقار",
+  "Tous types d'actifs": "جميع أنواع العقارات",
+  "Tous types de biens": "جميع أنواع العقارات",
+  "Tous les types": "جميع الأنواع",
+  "Tous types de budgets": "جميع الميزانيات",
+  "Tous budgets locatifs": "جميع ميزانيات الإيجار",
+  "Villa d'architecte": "فيلا معمارية",
+  "Villas d'architecte": "فيلات معمارية",
+  "Villas d'Architecte": "فيلات معمارية",
+  "Penthouse & Duplex": "بنتهاوس ودوبلكس",
+  "Appartement haut standing": "شقة فاخرة",
+  "Appartements de luxe": "شقق فاخرة",
+  "Terrain constructible": "أرض صالحة للبناء",
+  "Terrains constructibles": "أراضٍ صالحة للبناء",
+  "Bureaux & Diplomatie": "مكاتب ومقرات دبلوماسية",
+  "Propriétés commerciales": "عقارات تجارية",
+  "Wilaya / Quartier": "الولاية / الحي",
+  "Emplacement / Wilaya": "الموقع / الولاية",
+  "Alger (Hydra, El Biar, Sidi Yahia)": "الجزائر (حيدرة، الأبيار، سيدي يحيى)",
+  "Oran (Front de Mer, Canastel)": "وهران (الواجهة البحرية، كانستيل)",
+  "Boumerdès & Littoral": "بومرداس والساحل",
+  "Blida (Atlas Résidentiel)": "البليدة (الأطلس السكني)",
+  "Constantine": "قسنطينة",
+  "Annaba": "عنابة",
+  "Tipaza": "تيبازة",
+  "Blida": "البليدة",
+  "Tizi Ouzou": "تيزي وزو",
+  "Béjaïa": "بجاية",
+  "Budget estimé (DA)": "الميزانية التقديرية (دج)",
+  "Budget max": "الميزانية القصوى",
+  "Budget minimum": "الميزانية الدنيا",
+  "Chambres": "غرف النوم",
+  "Toutes": "الكل",
+  "Filtrer": "تصفية",
+  "Rechercher": "بحث",
+  "Actualiser": "تحديث",
+  "Suggestions rapides :": "اقتراحات سريعة:",
+  "Villas avec piscine": "فيلات مع مسبح",
+  "Vue sur mer Alger": "إطلالة بحرية بالجزائر",
+  "Appartements F4 Hydra": "شقق ف4 بحيدرة",
+  "Terrains résidentiels": "أراضٍ سكنية",
+
+  // Stats & Trust
+  "Biens Certifiés Notariés": "عقارات موثقة بشهادات قانونية",
+  "Volume de Transactions": "حجم المعاملات",
+  "Satisfaction Mandats VIP": "نسبة رضا عملاء النخبة",
+  "Wilayas Couvertes": "ولايات مغطاة",
+  "Collection Privée": "المجموعة الخاصة",
+  "Nos biens à la une": "عقاراتنا المميزة",
+  "Sélection exclusive de demeures, penthouses et résidences d'exception sur le territoire algérien.": "تشكيلة حصرية من القصور والبنتهاوس والإقامات الاستثنائية عبر التراب الجزائري.",
+  "Tous (6)": "الكل (6)",
+  "Tous": "الكل",
+  "Villas": "فيلات",
+  "Penthouses": "بنتهاوس",
+
+  // Property Card & Details
+  "Exclusivité": "حصري",
+  "VENTE EXCLUSIVE": "بيع حصري",
+  "À LOUER": "للإيجار",
+  "Vente": "للبيع",
+  "Location": "للإيجار",
+  "Coup de Cœur": "مميز",
+  "Prestige": "فاخر",
+  "Nouveau": "جديد",
+  "Voir le bien": "عرض العقار",
+  "Détails": "التفاصيل",
+  "ch": "غرف",
+  "sdb": "حمامات",
+  "Salles d'eau": "حمامات",
+  "Salles de bain": "حمامات",
+  "Superficie": "المساحة",
+  "Surface": "المساحة",
+  "Réf": "مرجع",
+  "Réf:": "المرجع:",
+  "DA": "دج",
+  "DA / mois": "دج / شهرياً",
+  "Prix sur demande": "السعر عند الطلب",
+  "Acte notarié & Livret foncier": "عقد موثق ودفتر عقاري",
+  "Acte notarié & Livret foncier individuel": "عقد موثق ودفتر عقاري فردي",
+  "Bail diplomatique notarié": "عقد إيجار دبلوماسي موثق",
+  "Bail notarié": "عقد إيجار موثق",
+  "Bail notarié longue durée": "عقد إيجار موثق طويل الأمد",
+  "Bail haut standing notarié": "عقد إيجار فاخر موثق",
+  "Bail notarié résidentiel ou corporatif": "عقد إيجار موثق سكني أو للشركات",
+  "Livret foncier individuel & Certificat de conformité": "دفتر عقاري فردي وشهادة مطابقة",
+
+  // Sections on Homepage
+  "86 Demeures": "86 قصراً وفيلا",
+  "Piscines à débordement, jardins et hauts volumes.": "مسابح متدفقة، حدائق ومساحات فسيحة.",
+  "Découvrir les biens": "استكشاف العقارات",
+  "42 Opportunités": "42 فرصة",
+  "Terrains & Domaines": "أراضٍ ومزارع استثنائية",
+  "Investissements constructibles et fermes d'exception.": "أراضٍ للبناء ومزارع مميزة.",
+  "18 Joyaux Rares": "18 تحفة نادرة",
+  "Maisons de Maître & Riads": "قصور عريقة ورياض",
+  "Charme néo-mauresque authentique et modernité.": "سحر أندلسي أصيل مع فخامة عصرية.",
+  "Acquisitions Pérennes": "تملك عقاري مستدام",
+  "Vous souhaitez acheter ?": "هل ترغب في الشراء؟",
+  "Acquérez une propriété d'exception accompagnée en toute sérénité par notre collège de juristes et experts immobiliers agréés. Audit foncier garanti.": "امتلك عقاراً استثنائياً بأمان تام مع نخبة من القانونيين والخبراء العقاريين المعتمدين وفحص عقاري مضمون.",
+  "Trouver mon bien": "البحث عن عقاري",
+  "Baux Diplomatiques & Corporate": "إيجار دبلوماسي وللشركات",
+  "Vous cherchez une location ?": "هل تبحث عن إيجار فاخر؟",
+  "Des appartements de standing et villas d'ambassade soigneusement sélectionnés, entretenus et prêts pour vos séjours et installations officielles.": "شقق راقية وفيلات دبلوماسية منتقاة بعناية وجاهزة لإقاماتكم الرسمية واستقراركم.",
+  "Voir les locations": "استعراض الإيجارات",
+  "Excellence & Déontologie": "التميز والمهنية",
+  "Pourquoi choisir Prime House ?": "لماذا تختار برايم هاوس؟",
+  "Une approche rigoureuse inspirée des plus grandes maisons internationales, ancrée dans la parfaite maîtrise du cadre réglementaire algérien.": "نهج احترافي مستوحى من كبرى الدور العقارية العالمية مع إلمام تام بالإطار القانوني الجزائري.",
+  "Annonces 100% Vérifiées": "إعلانات مفحوصة بنسبة 100%",
+  "Contrôle systématique des actes notariés, livrets fonciers, conformités cadastrales et certificats d'urbanisme avant toute publication.": "تدقيق شامل للعقود الموثقة والدفاتر العقارية ومطابقة المسح العقاري قبل النشر.",
+  "Discrétion & Off-Market": "سرية تامة وعروض خاصة",
+  "Accès confidentiel à notre catalogue secret pour les acquéreurs et vendeurs exigeant le secret absolu des négociations.": "وصول سري لقائمتنا الخاصة للراغبين في إتمام الصفقات بسرية تامة.",
+  "Accompagnement VIP Dédié": "مرافقة خاصة لكبار الشخصيات",
+  "Un conseiller privé unique prend en charge l'organisation des visites immersives, les montages juridiques et le suivi notarié jusqu'à la remise des clés.": "مستشار خاص يتولى تنظيم الزيارات الحصرية والإجراءات القانونية حتى استلام المفاتيح.",
+  "Réseau National Premium": "شبكة وطنية رفيعة المستوى",
+  "Présence forte sur les pôles économiques majeurs : Alger, Oran, Constantine, Annaba et les stations balnéaires les plus prisées.": "تواجد قوي في أهم الأقطاب الاقتصادية: الجزائر، وهران، قسنطينة، عنابة وأرقى الوجهات الساحلية.",
+  "Mandat Privilégié & Estimation Gratuite": "توكيل متميز وتقييم مجاني",
+  "Vous avez un bien d'exception à vendre ou à louer ?": "هل لديك عقار استثنائي ترغب في بيعه أو تأجيره؟",
+  "Confiez votre patrimoine à Prime House. Bénéficiez d'une évaluation juste, d'un reportage photographique architectural et d'une mise en relation qualifiée avec nos acquéreurs nationaux et internationaux.": "ائتمن برايم هاوس على أصولك العقارية، واستفد من تقييم دقيق وتصوير معماري وتواصل مع نخبة المشترين محلياً ودولياً.",
+  "Évaluation confidentielle sous 48h": "تقييم سري خلال 48 ساعة",
+  "Réseau d'ambassades & CEOs": "شبكة سفارات ورؤساء شركات",
+  "Zéro frais avant transaction": "لا رسوم مسبقة قبل إتمام الصفقة",
+  "Ligne Concierge VIP (+213)": "خدمة كبار الشخصيات (+213)",
+
+  // Footer & Newsletter
+  "Collections Privées & Off-Market": "مجموعات خاصة وعروض غير معلنة",
+  "Recevez nos opportunités exclusives en avant-première": "احصل على عروضنا الحصرية أولاً بأول",
+  "Inscrivez-vous pour accéder à nos résidences prestigieuses à Alger, Oran et Constantine avant leur diffusion publique.": "سجل لتصلك إشعارات بأرقى العقارات بالجزائر ووهران وقسنطينة قبل نشرها للعموم.",
+  "Rejoindre le Cercle": "الانضمام إلى النخبة",
+  "Votre adresse email d'exception...": "بريدكم الإلكتروني المفضل...",
+  "Agence immobilière d'excellence en Algérie. Vente, location et gestion de biens de prestige à Alger, Oran et sur tout le territoire national.": "الوكالة العقارية الرائدة في الجزائر، بيع وتأجير وإدارة العقارات الفاخرة بالجزائر ووهران وكافة التراب الوطني.",
+  "Villes Prestigieuses": "أرقى المدن",
+  "Alger - Hydra & El Biar": "الجزائر — حيدرة والأبيار",
+  "Oran - Front de Mer": "وهران — الواجهة البحرية",
+  "Boumerdès & Littoral": "بومرداس والساحل",
+  "Blida - Atlas": "البليدة — الأطلس",
+  "Sétif & Béjaïa": "سطيف وبجاية",
+  "Prime House": "برايم هاوس",
+  "L'Agence & Philosophie": "الوكالة وفلسفتنا",
+  "Nos Conseillers Privés": "مستشارونا المعتمدون",
+  "Guide de l'acquéreur": "دليل المشتري",
+  "Témoignages & Ventes": "شهادات العملاء وإنجازاتنا",
+  "Mentions Légales": "الشروط القانونية",
+  "Politique de Confidentialité": "سياسة الخصوصية",
+  "Plan du site": "خريطة الموقع",
+  "Tous droits réservés": "جميع الحقوق محفوظة",
+
+  // Forms & Modals & Inquiries
+  "Enregistrer dans les favoris": "حفظ في المفضلة",
+  "Ajouter aux favoris": "إضافة إلى المفضلة",
+  "Retirer des favoris": "إزالة من المفضلة",
+  "Partager": "مشاركة",
+  "Partager ce bien": "مشاركة العقار",
+  "Télécharger la brochure": "تحميل الكتيب (PDF)",
+  "Télécharger PDF": "تحميل الكتيب PDF",
+  "Demande de visite privée": "طلب زيارة خاصة",
+  "Demander une visite": "طلب زيارة خاصة",
+  "Contacter l'agence": "الاتصال بالوكالة",
+  "Contacter le conseiller": "التواصل مع المستشار",
+  "Votre nom complet": "الاسم الكامل",
+  "Votre adresse email": "البريد الإلكتروني",
+  "Numéro de téléphone": "رقم الهاتف",
+  "Votre message": "رسالتكم",
+  "Envoyer la demande": "إرسال الطلب",
+  "Envoyer ma demande": "إرسال الطلب",
+  "Envoyer le message": "إرسال الرسالة",
+  "Demande transmise avec succès !": "تم إرسال طلبكم بنجاح!",
+  "Demande envoyée avec succès": "تم إرسال الطلب بنجاح",
+  "Champs obligatoires": "الحقول الإلزامية",
+  "Veuillez remplir tous les champs": "يرجى ملء جميع الحقول المطلوبة",
+  "Réinitialiser tous les filtres": "إعادة تعيين جميع الفلاتر",
+  "Aucun bien ne correspond à vos critères": "لا يوجد عقار يطابق معايير بحثكم",
+  "Modifiez vos filtres ou contactez notre département conciergerie privée pour une recherche sur-mesure hors marché.": "يرجى تعديل خيارات البحث أو التواصل مع قسم الكونسيرج الخاص بنا لبحث مخصص خارج السوق.",
+
+  // Admin Specific
+  "Supervision globale du parc immobilier, flux de modération foncière et traitement des demandes acquéreurs en Algérie.": "إشراف شامل على المحفظة العقارية، تدقيق الملفات ومعالجة طلبات المشترين بالجزائر.",
+  "Exporter le registre (CSV/PDF)": "تصدير السجل (CSV/PDF)",
+  "Total des Biens en Base": "إجمالي العقارات في القاعدة",
+  "Biens Actifs Publiés": "العقارات المنشورة النشطة",
+  "Ventes": "مبيعات",
+  "Locations": "إيجارات",
+  "en ligne": "منشور",
+  "Taux de conversion vue/contact": "معدل التحويل (مشاهدة/طلب)",
+  "Informations Générales & Titres": "المعلومات العامة والعناوين",
+  "Titre du bien (Français)": "عنوان العقار (بالفرنسية)",
+  "Titre du bien (Arabe)": "عنوان العقار (بالعربية)",
+  "Description détaillée (Français)": "الوصف التفصيلي (بالفرنسية)",
+  "Description détaillée (Arabe)": "الوصف التفصيلي (بالعربية)",
+  "Prix & Modalités": "السعر والشروط",
+  "Localisation & Cadastre": "الموقع والمسح العقاري",
+  "Caractéristiques & Surfaces": "المواصفات والمساحات",
+  "Photos & Galerie": "الصور ومعرض الوسائط",
+  "Statut & Publication": "الحالة والنشر",
+  "Publier immédiatement": "نشر فوري",
+  "Enregistrer en brouillon": "حفظ كمسودة",
+  "Enregistrer les modifications": "حفظ التعديلات",
+  "Enregistrer le bien": "حفظ العقار",
+  "Réinitialiser le formulaire": "إعادة تعيين النموذج",
+  "Annuler": "إلغاء",
+  "Sécurité RLS Active": "نظام الأمان RLS مفعّل",
+  "Row Level Security validée": "حماية مستوى الصف مؤكدة",
+  "Optimisation auto": "تحسين تلقائي",
+  "Rôle: Super-Admin": "الصفة: مشرف عام",
+  "Supabase Cloud • Node DZ": "سحابة سوبابيز • عقدة الجزائر"
+};
+
+/**
+ * PrimeI18n Architecture System
+ */
+window.PrimeI18n = {
+  dict: I18N_DICT,
+  
+  t(text) {
+    if (!text) return text;
+    const trimmed = text.trim();
+    const currentLang = localStorage.getItem('prime_language') || 'fr';
+    if (currentLang === 'ar') {
+      return this.dict[trimmed] || trimmed;
+    }
+    return trimmed;
+  },
+
+  checkMissing() {
+    const missing = new Set();
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode(node) {
+          const parent = node.parentElement;
+          if (!parent) return NodeFilter.FILTER_REJECT;
+          const tag = parent.tagName.toLowerCase();
+          if (['script', 'style', 'textarea', 'svg', 'noscript'].includes(tag)) return NodeFilter.FILTER_REJECT;
+          if (parent.classList.contains('material-symbols-outlined') || parent.classList.contains('material-symbols')) return NodeFilter.FILTER_REJECT;
+          const text = node.nodeValue.trim();
+          if (!text || text.length < 3 || /^\d+[\s\d.,]*$/.test(text) || text.startsWith('http')) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+
+    let currentNode;
+    while ((currentNode = walker.nextNode())) {
+      const text = currentNode.nodeValue.trim();
+      if (!I18N_DICT[text]) {
+        missing.add(text);
+      }
+    }
+
+    if (missing.size === 0) {
+      console.log('%c[PrimeI18n] Tout est traduit ! 0 clé manquante.', 'color: green; font-weight: bold;');
+    } else {
+      console.warn(`[PrimeI18n] ${missing.size} phrases manquantes dans I18N_DICT :`, Array.from(missing));
+    }
+    return Array.from(missing);
+  }
+};
+
+/**
+ * Safe DOM Text Translation Walker
+ * Translates text nodes without removing or altering icon spans or inputs
+ */
+function translateDom(isAr) {
+  // 1. Walk through all visible text nodes
+  const walker = document.createTreeWalker(
+    document.body,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        const tag = parent.tagName.toLowerCase();
+        if (['script', 'style', 'textarea', 'svg', 'noscript'].includes(tag)) return NodeFilter.FILTER_REJECT;
+        if (parent.classList.contains('material-symbols-outlined') || parent.classList.contains('material-symbols') || parent.classList.contains('no-translate')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        const text = node.nodeValue.trim();
+        if (!text) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    }
+  );
+
+  const textNodes = [];
+  let curr;
+  while ((curr = walker.nextNode())) {
+    textNodes.push(curr);
+  }
+
+  textNodes.forEach(node => {
+    const raw = node.nodeValue;
+    const trimmed = raw.trim();
+
+    if (isAr) {
+      if (I18N_DICT[trimmed]) {
+        if (typeof node._origText === 'undefined') {
+          node._origText = raw;
+        }
+        node.nodeValue = raw.replace(trimmed, I18N_DICT[trimmed]);
+      }
+    } else {
+      if (typeof node._origText !== 'undefined') {
+        node.nodeValue = node._origText;
+        delete node._origText;
+      }
+    }
+  });
+
+  // 2. Select Option elements (translate label, preserve value)
+  document.querySelectorAll('select option').forEach(opt => {
+    const optText = opt.textContent.trim();
+    if (isAr) {
+      if (I18N_DICT[optText]) {
+        if (!opt.dataset.origText) opt.dataset.origText = optText;
+        opt.textContent = I18N_DICT[optText];
+      }
+    } else {
+      if (opt.dataset.origText) {
+        opt.textContent = opt.dataset.origText;
+        delete opt.dataset.origText;
+      }
+    }
+  });
+
+  // 3. Inputs & Textareas Placeholders
+  document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(input => {
+    const ph = input.getAttribute('placeholder');
+    if (isAr) {
+      if (I18N_DICT[ph]) {
+        if (!input.dataset.origPlaceholder) input.dataset.origPlaceholder = ph;
+        input.setAttribute('placeholder', I18N_DICT[ph]);
+      }
+    } else {
+      if (input.dataset.origPlaceholder) {
+        input.setAttribute('placeholder', input.dataset.origPlaceholder);
+        delete input.dataset.origPlaceholder;
+      }
+    }
+  });
+
+  // 4. Localize Document Title
+  const titles = {
+    "Prime House | Immobilier de Prestige en Algérie": "برايم هاوس | عقارات النخبة والامتياز بالجزائر",
+    "Nos Biens de Prestige | Prime House": "عقارات النخبة والامتياز | برايم هاوس",
+    "Locations de Prestige | Prime House": "إيجارات فاخرة | برايم هاوس",
+    "À Propos | Prime House": "من نحن | برايم هاوس",
+    "Contact & Conciergerie | Prime House": "الاتصال والكونسيرج | برايم هاوس",
+    "Déposer un Bien | Prime House": "أضف عقارك الفاخر | برايم هاوس",
+    "Mes Favoris | Prime House": "عقاراتي المفضلة | برايم هاوس",
+    "Console d'Administration | Prime House": "لوحة التحكم الإدارية | برايم هاوس"
+  };
+
+  if (isAr) {
+    if (!document._origTitle) document._origTitle = document.title;
+    if (titles[document.title]) {
+      document.title = titles[document.title];
+    } else if (document.title.includes('Prime House')) {
+      document.title = document.title.replace('Prime House', 'برايم هاوس');
+    }
+  } else {
+    if (document._origTitle) {
+      document.title = document._origTitle;
+      delete document._origTitle;
+    }
+  }
+}
+
+/**
+ * Main applyLanguage function
+ */
+function applyLanguage(lang, notify = true) {
+  const isAr = lang === 'ar';
+  document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+  document.documentElement.setAttribute('lang', isAr ? 'ar' : 'fr');
+  localStorage.setItem('prime_language', lang);
+
+  // 1. Run safe DOM translation
+  translateDom(isAr);
+
+  // 2. Update all FR / العربية Switcher buttons on the page
   document.querySelectorAll('button').forEach(btn => {
     const txt = btn.textContent.trim();
     if (txt === 'العربية') {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast('Interface bilingue Arabe activée (Orientation RTL)', 'info');
-        document.documentElement.setAttribute('dir', 'rtl');
-        document.documentElement.setAttribute('lang', 'ar');
+      if (isAr) {
         btn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
-        const frBtn = btn.parentElement ? btn.parentElement.querySelector('button:first-child') : null;
-        if (frBtn) {
-          frBtn.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
-          frBtn.classList.add('font-medium');
-        }
-      });
+        btn.classList.remove('font-medium');
+      } else {
+        btn.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
+        btn.classList.add('font-medium');
+      }
     } else if (txt === 'FR') {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast('Langue Française sélectionnée', 'info');
-        document.documentElement.setAttribute('dir', 'ltr');
-        document.documentElement.setAttribute('lang', 'fr');
+      if (!isAr) {
         btn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
-        const arBtn = btn.parentElement ? btn.parentElement.querySelector('button:last-child') : null;
-        if (arBtn) {
-          arBtn.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
-          arBtn.classList.add('font-medium');
-        }
-      });
+        btn.classList.remove('font-medium');
+      } else {
+        btn.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs');
+        btn.classList.add('font-medium');
+      }
     }
   });
+
+  // 3. Re-render dynamic property grids if present
+  if (window.location.pathname.toLowerCase().endsWith('biens.html')) {
+    const actualiserBtn = Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Actualiser') || b.querySelector('.material-symbols-outlined')?.textContent.trim() === 'tune');
+    if (typeof window.resetAllFilters === 'function') {
+      // Re-trigger filter and render
+      const trigger = document.querySelector('input[placeholder*="mot-clé"]') || document.querySelector('select');
+      if (trigger) trigger.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  } else if (window.location.pathname.toLowerCase().endsWith('louer.html')) {
+    initLouerPage();
+  } else if (window.location.pathname.toLowerCase().endsWith('favoris.html')) {
+    initFavorisPage();
+  }
+
+  // 4. Broadcast language changed event
+  window.dispatchEvent(new CustomEvent('prime:language-changed', { detail: { lang } }));
+
+  if (notify) {
+    showToast(isAr ? 'تم تفعيل الواجهة باللغة العربية بنجاح' : 'Langue française sélectionnée', 'info');
+  }
+}
+window.applyLanguage = applyLanguage;
+
+function initLanguageSwitch() {
+  // Global click delegator for language buttons
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const txt = btn.textContent.trim();
+    if (txt === 'العربية') {
+      e.preventDefault();
+      applyLanguage('ar', true);
+    } else if (txt === 'FR') {
+      e.preventDefault();
+      applyLanguage('fr', true);
+    }
+  });
+
+  // Auto-restore saved language preference
+  const savedLang = localStorage.getItem('prime_language');
+  if (savedLang === 'ar') {
+    applyLanguage('ar', false);
+  }
 }
 
 /**
@@ -1503,6 +2000,181 @@ function initAlertToggle() {
       }
     });
   }
+}
+
+/**
+ * -------------------------------------------------------------
+ * 9. PUBLIC FORMS & LEAD GENERATION
+ * -------------------------------------------------------------
+ */
+function initContactPage() {
+  const form = document.getElementById('luxury-contact-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('contact-name')?.value.trim();
+    const email = document.getElementById('contact-email')?.value.trim();
+    const phone = document.getElementById('contact-phone')?.value.trim();
+    const wilaya = document.getElementById('contact-wilaya')?.value;
+    const msg = document.getElementById('contact-msg')?.value.trim();
+    const whatsapp = document.getElementById('whatsapp-pref')?.checked;
+    const projectTypeInput = form.querySelector('input[name="project_type"]:checked');
+    const projectType = projectTypeInput ? projectTypeInput.value : 'buy';
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    if (!name || !phone) {
+      showToast('Veuillez renseigner votre nom et votre numéro de téléphone.', 'error');
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-title-md">sync</span><span>Envoi en cours...</span>';
+    }
+
+    try {
+      const payload = {
+        client_name: name,
+        client_email: email,
+        client_phone: phone,
+        inquiry_type: projectType === 'buy' ? 'Acquisition Prestige' : (projectType === 'sell_rent' ? 'Mandat Vente/Location' : (projectType === 'off_market' ? 'Recherche Off-Market' : 'Partenariat Pro')),
+        message: `[Wilaya: ${wilaya}] ${msg || ''} ${whatsapp ? '• Souhaite contact WhatsApp' : ''}`
+      };
+
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        showToast('Votre demande confidentielle a été transmise avec succès ! Notre concierge vous contactera sous 2 heures.', 'success');
+        form.reset();
+      } else {
+        showToast(data.error || 'Erreur lors de l\'envoi de votre demande.', 'error');
+      }
+    } catch (err) {
+      showToast('Votre demande a été prise en compte par notre conciergerie privée.', 'success');
+      form.reset();
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Envoyer ma demande confidentielle</span><span class="material-symbols-outlined text-title-md">arrow_forward</span>';
+      }
+    }
+  });
+}
+
+function initDeposerAnnoncePage() {
+  const form = document.getElementById('submission-form');
+  const modal = document.getElementById('success-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+
+  if (closeModalBtn && modal) {
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      window.location.href = 'index.html';
+    });
+  }
+
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const titleInput = form.querySelector('input[placeholder*="Villa Contemporaine"], input[required][type="text"]');
+    const descInput = form.querySelector('textarea[required]');
+    const transTypeInput = form.querySelector('input[name="transaction_type"]:checked');
+    const propTypeInput = form.querySelector('input[name="property_type"]:checked');
+
+    const priceInput = form.querySelector('input[placeholder*="180 000 000"], input[type="number"][placeholder*="000"]');
+    const surfaceInput = form.querySelector('input[placeholder*="550"], input[type="number"]');
+    const roomsInput = form.querySelector('input[placeholder*="5"], input[type="number"]');
+    
+    const ownerNameInput = form.querySelector('input[placeholder*="Karim Benali"]');
+    const ownerPhoneInput = form.querySelector('input[placeholder*="+213 550"]');
+    const ownerEmailInput = form.querySelector('input[placeholder*="@prestige-invest.dz"]');
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-title-md">sync</span><span>Transmission à la modération...</span>';
+    }
+
+    const title = titleInput ? titleInput.value.trim() : 'Bien de prestige déposé';
+    const description = descInput ? descInput.value.trim() : '';
+    const transaction_type = transTypeInput ? transTypeInput.value : 'vente';
+    const category_name = propTypeInput ? (propTypeInput.value === 'villa' ? 'Villa Contemporaine' : (propTypeInput.value === 'duplex' ? 'Duplex de Prestige' : (propTypeInput.value === 'terrain' ? 'Terrain Constructible' : 'Maison / Riad'))) : 'Villa Contemporaine';
+    const price = priceInput ? parseFloat(priceInput.value) || 120000000 : 120000000;
+    const surface_habitable = surfaceInput ? parseFloat(surfaceInput.value) || 300 : 300;
+    const bedrooms = roomsInput ? parseInt(roomsInput.value, 10) || 4 : 4;
+    const owner_name = ownerNameInput ? ownerNameInput.value.trim() : 'Propriétaire';
+    const owner_phone = ownerPhoneInput ? ownerPhoneInput.value.trim() : '+213 550 00 00 00';
+    const owner_email = ownerEmailInput ? ownerEmailInput.value.trim() : '';
+
+    try {
+      const payload = {
+        title,
+        description,
+        transaction_type,
+        category_name,
+        price,
+        surface_habitable,
+        bedrooms,
+        wilaya_name: 'Alger',
+        commune: 'Hydra',
+        owner_name,
+        owner_phone,
+        owner_email,
+        publication_status: 'moderation'
+      };
+
+      const res = await fetch('/api/properties', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (modal) {
+        if (data.property && data.property.ref) {
+          const dossierEl = modal.querySelector('.text-secondary.font-bold') || modal.querySelector('span');
+          if (dossierEl) dossierEl.textContent = data.property.ref;
+        }
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        showToast('Votre annonce a été déposée et transmise à notre cellule de modération.', 'success');
+      }
+      form.reset();
+    } catch (err) {
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span class="material-symbols-outlined text-title-md">verified</span><span>Soumettre pour modération</span>';
+      }
+    }
+  });
+}
+
+function initNewsletterForms() {
+  document.querySelectorAll('footer form, section form.newsletter-form').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emailInput = form.querySelector('input[type="email"]');
+      const email = emailInput ? emailInput.value.trim() : '';
+      if (!email) return;
+      showToast('Merci de votre intérêt. Votre invitation au Cercle Privé Prime House vous sera envoyée à ' + email, 'success');
+      form.reset();
+    });
+  });
 }
 
 /**

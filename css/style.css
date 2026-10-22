@@ -1,6 +1,6 @@
 /* Prime House - Luxury Real Estate Stylesheet */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 :root {
@@ -20,6 +20,70 @@ body {
   background-color: #f8f9fa;
   color: #111c2c;
   overflow-x: hidden;
+}
+
+/* Arabic & RTL Luxury Font Overrides */
+html[lang="ar"],
+html[dir="rtl"],
+html[lang="ar"] body,
+html[dir="rtl"] body,
+[dir="rtl"] {
+  font-family: 'Cairo', 'Outfit', system-ui, sans-serif;
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .font-headline-sm,
+[dir="rtl"] .font-headline-md,
+[dir="rtl"] .font-headline-lg,
+[dir="rtl"] .font-headline-xl,
+[dir="rtl"] .font-display {
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+}
+
+/* Prevent numbers, prices, phone numbers and refs from inversions in BiDi */
+[dir="rtl"] .font-currency-display,
+[dir="rtl"] bdi,
+[dir="rtl"] .bidi-safe {
+  unicode-bidi: isolate;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* RTL directional icon flipping */
+[dir="rtl"] .rtl-flip,
+[dir="rtl"] .material-symbols-outlined.rtl-flip {
+  transform: scaleX(-1);
+  display: inline-block;
+}
+
+/* Admin Panel RTL Layout Overrides */
+[dir="rtl"] aside {
+  left: auto !important;
+  right: 0 !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: none !important;
+}
+
+[dir="rtl"] .pl-72 {
+  padding-left: 0 !important;
+  padding-right: 18rem !important;
+}
+
+[dir="rtl"] header.left-72,
+[dir="rtl"] .left-72 {
+  left: 0 !important;
+  right: 18rem !important;
+}
+
+@media (max-width: 1024px) {
+  [dir="rtl"] .pl-72 {
+    padding-right: 0 !important;
+  }
+  [dir="rtl"] header.left-72,
+  [dir="rtl"] .left-72 {
+    right: 0 !important;
+  }
 }
 
 /* Custom Luxury Scrollbar */

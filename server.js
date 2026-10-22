@@ -1,4 +1,5 @@
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -144,6 +145,66 @@ function createSession(user) {
   return session;
 }
 
+const ADMIN_ROLES = ['super_admin', 'admin', 'moderator'];
+
+function verifyPassword(inputPassword, storedHashOrPassword) {
+  if (!inputPassword || !storedHashOrPassword) return false;
+  if (inputPassword === storedHashOrPassword) return true;
+  const sha256 = crypto.createHash('sha256').update(inputPassword).digest('hex');
+  if (sha256 === storedHashOrPassword) return true;
+  return false;
+}
+
+function authenticateWithSupabase(email, password) {
+  return new Promise((resolve) => {
+    try {
+      const url = new URL(`${SUPABASE_URL}/auth/v1/token?grant_type=password`);
+      const postData = JSON.stringify({ email, password });
+      const client = url.protocol === 'https:' ? https : http;
+
+      const req = client.request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Content-Length': Buffer.byteLength(postData)
+        },
+        timeout: 8000
+      }, (res) => {
+        let body = '';
+        res.on('data', chunk => body += chunk);
+        res.on('end', () => {
+          try {
+            const data = JSON.parse(body);
+            if (res.statusCode >= 200 && res.statusCode < 300 && data.user) {
+              resolve({ success: true, data });
+            } else {
+              resolve({ success: false, error: data.error_description || data.msg || 'Identifiants invalides' });
+            }
+          } catch (e) {
+            resolve({ success: false, error: 'Réponse Supabase invalide' });
+          }
+        });
+      });
+
+      req.on('error', (err) => {
+        console.warn('Erreur connexion Supabase Auth:', err.message);
+        resolve({ success: false, error: err.message, networkError: true });
+      });
+
+      req.on('timeout', () => {
+        req.destroy();
+        resolve({ success: false, error: 'Délai d’attente Supabase dépassé', networkError: true });
+      });
+
+      req.write(postData);
+      req.end();
+    } catch (err) {
+      resolve({ success: false, error: err.message, networkError: true });
+    }
+  });
+}
+
 // ==============================================================================
 // 4. MIME TYPES FOR STATIC ASSETS
 // ==============================================================================
@@ -187,6 +248,15 @@ const server = http.createServer(async (req, res) => {
 
   const sendError = (message, status = 400) => {
     sendJson({ error: message, success: false }, status);
+  };
+
+  const requireAdminSession = () => {
+    const session = getSessionFromReq(req);
+    if (!session || !session.user || !ADMIN_ROLES.includes(session.user.role)) {
+      sendJson({ error: 'Accès non autorisé. Session administrateur requise.', success: false }, 401);
+      return null;
+    }
+    return session;
   };
 
   // Handle CORS preflight
@@ -254,21 +324,57 @@ const server = http.createServer(async (req, res) => {
       const { email, password } = body;
 
       if (!email || !password) {
-        return sendError('Veuillez fournir un identifiant et un mot de passe.');
+        return sendError('Veuillez renseigner votre adresse email et votre mot de passe.', 400);
       }
 
-      const db = getDatabase();
-      // Match against admin users
-      const user = db.admin_users.find(u => 
-        (u.email.toLowerCase() === email.trim().toLowerCase() || (u.matricule && u.matricule.toLowerCase() === email.trim().toLowerCase())) &&
-        (u.passwordHash === password.trim() || password === 'admin123' || password === 'PrimeHouse2026!')
-      );
+      const cleanEmail = String(email).trim().toLowerCase();
+      const cleanPassword = String(password);
 
-      if (!user) {
-        return sendError('Identifiant ou clé maîtresse incorrecte, ou compte non autorisé.', 401);
+      let authenticatedAdmin = null;
+
+      // 1. If Supabase is configured, authenticate via Supabase Auth
+      if (isSupabaseConfigured) {
+        const supaResult = await authenticateWithSupabase(cleanEmail, cleanPassword);
+        if (supaResult.success && supaResult.data && supaResult.data.user) {
+          const sUser = supaResult.data.user;
+          const userRole = sUser.app_metadata?.role || sUser.user_metadata?.role || 'admin';
+          if (!ADMIN_ROLES.includes(userRole)) {
+            return sendError('Accès refusé. Ce compte ne dispose pas des privilèges administrateur.', 403);
+          }
+          authenticatedAdmin = {
+            id: sUser.id,
+            email: sUser.email || cleanEmail,
+            full_name: sUser.user_metadata?.full_name || sUser.email?.split('@')[0] || 'Administrateur',
+            role: userRole,
+            title: sUser.user_metadata?.title || 'Administrateur',
+            matricule: sUser.user_metadata?.matricule || 'ADM-SUPA',
+            avatar_url: sUser.user_metadata?.avatar_url || '../assets/logo-p-transparent.png'
+          };
+        } else if (!supaResult.networkError) {
+          return sendError('Adresse email ou mot de passe incorrect.', 401);
+        }
       }
 
-      const session = createSession(user);
+      // 2. Local database engine authentication (standalone or Supabase fallback)
+      if (!authenticatedAdmin) {
+        const db = getDatabase();
+        const user = db.admin_users.find(u => 
+          u.email && u.email.toLowerCase() === cleanEmail &&
+          verifyPassword(cleanPassword, u.passwordHash)
+        );
+
+        if (!user) {
+          return sendError('Adresse email ou mot de passe incorrect.', 401);
+        }
+
+        if (!ADMIN_ROLES.includes(user.role)) {
+          return sendError('Accès refusé. Ce compte ne dispose pas des privilèges administrateur.', 403);
+        }
+
+        authenticatedAdmin = user;
+      }
+
+      const session = createSession(authenticatedAdmin);
       const cookieHeader = `prime_admin_session=${session.token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400`;
 
       return sendJson({
@@ -371,8 +477,9 @@ const server = http.createServer(async (req, res) => {
       });
     }
 
-    // 6. Properties: Create
+    // 6. Properties: Create (Admin Only)
     if (apiPath === '/properties' && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const body = await parseBody();
       if (!body.title || !body.price) {
         return sendError('Le titre et le prix sont obligatoires.');
@@ -389,6 +496,7 @@ const server = http.createServer(async (req, res) => {
         id: newId,
         ref: body.ref || randomRef,
         title: body.title,
+        title_ar: body.title_ar || '',
         tagline: body.tagline || '',
         description: body.description || '',
         description_ar: body.description_ar || '',
@@ -449,6 +557,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       if (req.method === 'PUT') {
+        if (!requireAdminSession()) return;
         const body = await parseBody();
         const existing = db.properties[propIndex];
 
@@ -471,6 +580,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       if (req.method === 'DELETE') {
+        if (!requireAdminSession()) return;
         const deleted = db.properties.splice(propIndex, 1)[0];
         saveDatabase(db);
         return sendJson({ success: true, message: 'Propriété supprimée.', id: deleted.id });
@@ -480,6 +590,7 @@ const server = http.createServer(async (req, res) => {
     // 8. Properties: Toggle Publish
     const togglePubMatch = apiPath.match(/^\/properties\/([^\/]+)\/toggle-publish$/);
     if (togglePubMatch && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const propId = togglePubMatch[1];
       const db = getDatabase();
       const prop = db.properties.find(p => p.id === propId || p.ref === propId);
@@ -494,6 +605,7 @@ const server = http.createServer(async (req, res) => {
     // 9. Properties: Toggle Featured
     const toggleFeatMatch = apiPath.match(/^\/properties\/([^\/]+)\/toggle-featured$/);
     if (toggleFeatMatch && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const propId = toggleFeatMatch[1];
       const db = getDatabase();
       const prop = db.properties.find(p => p.id === propId || p.ref === propId);
@@ -514,6 +626,7 @@ const server = http.createServer(async (req, res) => {
 
     // 10. Moderation Queue
     if (apiPath === '/moderation' && req.method === 'GET') {
+      if (!requireAdminSession()) return;
       const db = getDatabase();
       const pending = db.properties.filter(p => p.publication_status === 'moderation');
       return sendJson({ pending, count: pending.length });
@@ -522,6 +635,7 @@ const server = http.createServer(async (req, res) => {
     // 11. Moderation: Approve
     const modApproveMatch = apiPath.match(/^\/moderation\/([^\/]+)\/approve$/);
     if (modApproveMatch && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const propId = modApproveMatch[1];
       const db = getDatabase();
       const prop = db.properties.find(p => p.id === propId || p.ref === propId);
@@ -546,6 +660,7 @@ const server = http.createServer(async (req, res) => {
     // 12. Moderation: Reject
     const modRejectMatch = apiPath.match(/^\/moderation\/([^\/]+)\/reject$/);
     if (modRejectMatch && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const propId = modRejectMatch[1];
       const body = await parseBody();
       const db = getDatabase();
@@ -580,6 +695,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (apiPath === '/featured/reorder' && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const body = await parseBody();
       const { orderedIds } = body;
       if (!Array.isArray(orderedIds)) {
@@ -597,6 +713,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (apiPath === '/featured/add' && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const body = await parseBody();
       const { propertyId } = body;
       const db = getDatabase();
@@ -616,6 +733,7 @@ const server = http.createServer(async (req, res) => {
 
     const removeFeatMatch = apiPath.match(/^\/featured\/([^\/]+)$/);
     if (removeFeatMatch && req.method === 'DELETE') {
+      if (!requireAdminSession()) return;
       const propId = removeFeatMatch[1];
       const db = getDatabase();
       const prop = db.properties.find(p => p.id === propId || p.ref === propId);
@@ -636,6 +754,7 @@ const server = http.createServer(async (req, res) => {
 
     // 14. Inquiries & Visits Management
     if (apiPath === '/inquiries' && req.method === 'GET') {
+      if (!requireAdminSession()) return;
       const db = getDatabase();
       let list = [...(db.inquiries || [])];
       const status = reqUrl.searchParams.get('status');
@@ -691,6 +810,7 @@ const server = http.createServer(async (req, res) => {
       if (inqIndex === -1) return sendError('Demande introuvable.', 404);
 
       if (req.method === 'PUT') {
+        if (!requireAdminSession()) return;
         const body = await parseBody();
         const existing = db.inquiries[inqIndex];
         const updated = {
@@ -729,6 +849,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       if (req.method === 'DELETE') {
+        if (!requireAdminSession()) return;
         db.inquiries.splice(inqIndex, 1);
         saveDatabase(db);
         return sendJson({ success: true, message: 'Demande supprimée.' });
@@ -742,6 +863,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (apiPath === '/categories' && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const body = await parseBody();
       if (!body.name) return sendError('Nom de catégorie requis.');
       const db = getDatabase();
@@ -767,6 +889,7 @@ const server = http.createServer(async (req, res) => {
       if (idx === -1) return sendError('Catégorie introuvable.', 404);
 
       if (req.method === 'PUT') {
+        if (!requireAdminSession()) return;
         const body = await parseBody();
         db.categories[idx] = { ...db.categories[idx], ...body, id: db.categories[idx].id };
         saveDatabase(db);
@@ -774,6 +897,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       if (req.method === 'DELETE') {
+        if (!requireAdminSession()) return;
         const target = db.categories[idx];
         const linkedCount = db.properties.filter(p => p.category_id === target.id || p.category_name === target.name).length;
         if (linkedCount > 0) {
@@ -792,6 +916,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (apiPath === '/wilayas' && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const body = await parseBody();
       if (!body.name || !body.code) return sendError('Code et nom de wilaya requis.');
       const db = getDatabase();
@@ -815,6 +940,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (apiPath === '/settings' && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const body = await parseBody();
       const db = getDatabase();
       db.site_settings = {
@@ -827,6 +953,7 @@ const server = http.createServer(async (req, res) => {
 
     // 18. File Image Upload API
     if (apiPath === '/upload' && req.method === 'POST') {
+      if (!requireAdminSession()) return;
       const body = await parseBody();
       if (!body.image) {
         return sendError('Données image manquantes.');
@@ -863,6 +990,7 @@ const server = http.createServer(async (req, res) => {
 
     // 19. Export Registry to CSV
     if (apiPath === '/export/properties' && req.method === 'GET') {
+      if (!requireAdminSession()) return;
       const db = getDatabase();
       let csv = 'RÉFÉRENCE;TITRE;TRANSACTION;CATÉGORIE;WILAYA;COMMUNE;PRIX_DA;SURFACE_M2;CHAMBRES;STATUT;À_LA_UNE;DATE\n';
       db.properties.forEach(p => {
@@ -877,6 +1005,7 @@ const server = http.createServer(async (req, res) => {
 
     // 20. Export Inquiries to CSV
     if (apiPath === '/export/inquiries' && req.method === 'GET') {
+      if (!requireAdminSession()) return;
       const db = getDatabase();
       let csv = 'ID;CLIENT;TÉLÉPHONE;EMAIL;RÉF_BIEN;TITRE_BIEN;TYPE_DEMANDE;STATUT;DATE_VISITE;MESSAGE\n';
       db.inquiries.forEach(i => {
@@ -899,7 +1028,7 @@ const server = http.createServer(async (req, res) => {
     const isLoginScreen = pathname.includes('/admin/login.html');
     if (!isLoginScreen) {
       const session = getSessionFromReq(req);
-      if (!session) {
+      if (!session || !session.user || !ADMIN_ROLES.includes(session.user.role)) {
         // Enforce server-side protection: Redirect to login with original target
         res.writeHead(302, {
           'Location': `/admin/login.html?redirect=${encodeURIComponent(pathname)}`,

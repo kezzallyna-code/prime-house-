@@ -85,7 +85,18 @@
       "name": "Alger",
       "arabic_name": "الجزائر العاصمة",
       "region": "Centre",
-      "communes": ["Hydra", "El Biar", "Club des Pins", "Staouéli", "Sidi Yahia", "Poirson", "Val d'Hydra", "Chéraga", "Ben Aknoun", "Dely Ibrahim"],
+      "communes": [
+        "Hydra",
+        "El Biar",
+        "Club des Pins",
+        "Staouéli",
+        "Sidi Yahia",
+        "Poirson",
+        "Val d'Hydra",
+        "Chéraga",
+        "Ben Aknoun",
+        "Dely Ibrahim"
+      ],
       "is_active": true
     },
     {
@@ -93,7 +104,14 @@
       "name": "Oran",
       "arabic_name": "وهران",
       "region": "Ouest",
-      "communes": ["Canastel", "Akid Lotfi", "Courbet", "Gambetta", "Front de Mer", "Belgaïd"],
+      "communes": [
+        "Canastel",
+        "Akid Lotfi",
+        "Courbet",
+        "Gambetta",
+        "Front de Mer",
+        "Belgaïd"
+      ],
       "is_active": true
     },
     {
@@ -101,7 +119,12 @@
       "name": "Constantine",
       "arabic_name": "قسنطينة",
       "region": "Est",
-      "communes": ["Bellevue", "Zouaghi", "Sidi Mabrouk", "Ali Mendjeli"],
+      "communes": [
+        "Bellevue",
+        "Zouaghi",
+        "Sidi Mabrouk",
+        "Ali Mendjeli"
+      ],
       "is_active": true
     },
     {
@@ -109,7 +132,12 @@
       "name": "Annaba",
       "arabic_name": "عنابة",
       "region": "Est",
-      "communes": ["Seraïdi", "Genêts", "Chapuis", "Bain Romains"],
+      "communes": [
+        "Seraïdi",
+        "Genêts",
+        "Chapuis",
+        "Bain Romains"
+      ],
       "is_active": true
     },
     {
@@ -117,7 +145,12 @@
       "name": "Tipaza",
       "arabic_name": "تيبازة",
       "region": "Centre-Littoral",
-      "communes": ["Chenoua", "Tipaza Ville", "Bou Haroun", "Bousmaïl"],
+      "communes": [
+        "Chenoua",
+        "Tipaza Ville",
+        "Bou Haroun",
+        "Bousmaïl"
+      ],
       "is_active": true
     },
     {
@@ -125,7 +158,12 @@
       "name": "Blida",
       "arabic_name": "البليدة",
       "region": "Mitidja",
-      "communes": ["Chréa", "Boufarik", "Blida Centre", "Ouled Yaïch"],
+      "communes": [
+        "Chréa",
+        "Boufarik",
+        "Blida Centre",
+        "Ouled Yaïch"
+      ],
       "is_active": true
     },
     {
@@ -133,7 +171,11 @@
       "name": "Tizi Ouzou",
       "arabic_name": "تيزي وزو",
       "region": "Kabylie",
-      "communes": ["Nouvelle Ville", "Tizi Ouzou Centre", "Tigzirt"],
+      "communes": [
+        "Nouvelle Ville",
+        "Tizi Ouzou Centre",
+        "Tigzirt"
+      ],
       "is_active": true
     },
     {
@@ -141,7 +183,12 @@
       "name": "Béjaïa",
       "arabic_name": "بجاية",
       "region": "Littoral-Est",
-      "communes": ["Tichy", "Cap Carbon", "Béjaïa Port", "Aokas"],
+      "communes": [
+        "Tichy",
+        "Cap Carbon",
+        "Béjaïa Port",
+        "Aokas"
+      ],
       "is_active": true
     }
   ],
@@ -150,6 +197,7 @@
       "id": "prop-01",
       "ref": "PH-ALG-104",
       "title": "Villa Contemporaine d'Exception avec Piscine Débordement",
+      "title_ar": "فيلا معمارية عصرية مع مسبح متدفق بحيدرة",
       "tagline": "Chef-d'œuvre architectural au cœur d'Hydra",
       "description": "Superbe villa d'architecte contemporaine située dans le quartier le plus exclusif d'Hydra. Elle offre de grands volumes baignés de lumière naturelle, de spacieuses suites parentales, un vaste salon de réception ouvrant sur un jardin paysager et une piscine à débordement chauffée. Finitions en marbre importé, domotique intégrée, sécurité 24/7 et bâche à eau de 20 000 litres.",
       "description_ar": "فيلا عصرية فاخرة بحيدرة، تتميز بمسابح داخلية وخارجية، حدائق مصممة وإطلالة بانورامية ساحرة.",
@@ -204,6 +252,7 @@
       "id": "prop-02",
       "ref": "PH-ALG-205",
       "title": "Duplex de Prestige avec Terrasse Panoramique",
+      "title_ar": "دوبلكس راقٍ مع تراس بانورامي في فال ديدرة",
       "tagline": "Résidence fermée et sécurisée au Val d'Hydra",
       "description": "Duplex d'exception occupant les deux derniers étages d'une résidence privée de très haut standing. Terrasse privative de 85 m² avec vue dégagée sur la baie d'Alger et les collines verdoyantes. Séjour cathédrale avec cheminée moderne, cuisine équipée haut de gamme et ascenseur avec accès privatif sécurisé.",
       "description_ar": "دوبلكس فاخر بفال ديدرة يطل على خليج الجزائر مع تراس واسع وأحدث التجهيزات العصرية.",
@@ -255,6 +304,7 @@
       "id": "prop-03",
       "ref": "PH-LOC-102",
       "title": "Hôtel Particulier pour Résidence Diplomatique El Biar",
+      "title_ar": "قصر خاص للإقامة الدبلوماسية في الأبيار",
       "tagline": "Propriété sécurisée homologuée pour chancellerie",
       "description": "Demeure de maître située sur les hauteurs d'El Biar, à proximité immédiate des ambassades et consulats. Architecture néo-mauresque raffinée, triple salon de réception d'apparat, vaste salle à manger diplomatique, 7 suites avec salles d'eau privatives, guérite de sécurité blindée et parking intérieur pour 8 véhicules de fonction.",
       "description_ar": "قصر دبلوماسي في الأبيار مخصص للإيجار طويل المدى للسفارات والبعثات الدبلوماسية.",
@@ -306,6 +356,7 @@
       "id": "prop-04",
       "ref": "PH-ORA-301",
       "title": "Penthouse Pieds dans l'Eau Canastel Oran",
+      "title_ar": "بنتهاوس على الواجهة البحرية كانستيل وهران",
       "tagline": "Vue panoramique 180° sur la baie d'Oran",
       "description": "Magnifique penthouse contemporain surplombant la falaise de Canastel. Baies vitrées du sol au plafond offrant un panorama spectaculaire sur la Méditerranée. Terrasse solarium avec jacuzzi extérieur, cuisine américaine ouverte sur grand living et prestations de luxe.",
       "description_ar": "بنتهاوس فاخر في كانستيل وهران بإطلالة بحرية خلابة وتراس شمسي وجاكوزي.",
@@ -357,6 +408,7 @@
       "id": "prop-05",
       "ref": "PH-ALG-505",
       "title": "Villa d'Architecte avec Solarium Club des Pins Staouéli",
+      "title_ar": "فيلا مصممة مع شرفة شمسية نادي الصنوبر بسطاوالي",
       "tagline": "Proximité immédiate de la plage et du golf",
       "description": "Prestigieuse villa moderne située à proximité immédiate de Club des Pins. Espace de réception d'exception, suites avec vue verdure, piscine chauffée et sécurité permanente.",
       "description_ar": "فيلا فخمة بالقرب من نادي الصنوبر بسطاوالي بمسبح وأمن متكامل.",
@@ -408,6 +460,7 @@
       "id": "prop-06",
       "ref": "PH-ALG-606",
       "title": "Appartement de Maître avec Loggia Sidi Yahia",
+      "title_ar": "شقة ملكية مع لوجيا بسيدي يحيى",
       "tagline": "Emplacement stratégique au cœur du pôle branché",
       "description": "Superbe appartement occupant tout un palier dans une résidence sécurisée de Sidi Yahia. Triple séjour, suite parentale magistrale avec dressing, loggia aménagée et parking sous-sol réservé.",
       "description_ar": "شقة فاخرة بسيدي يحيى تشغل طابقا كاملا مع مصعد خاص وتشطيبات ملكية.",
@@ -459,6 +512,7 @@
       "id": "prop-mod-01",
       "ref": "PH-MOD-701",
       "title": "Demeure Coloniale Rénovée avec Parc Poirson El Biar",
+      "title_ar": "قصر كلاسيكي مجدد مع حديقة بوارسون الأبيار",
       "tagline": "Propriété de caractère avec parc arboré centenaire",
       "description": "Propriété d'exception alliant le charme de l'architecture d'époque aux exigences du confort moderne. Soumise par un particulier, en cours de vérification notariale et cadastrale.",
       "description_ar": "قصر كلاسيكي مجدد بالأبيار قيد المراجعة والتدقيق العقاري.",
@@ -509,6 +563,7 @@
       "id": "prop-mod-02",
       "ref": "PH-MOD-702",
       "title": "Propriété de Maître avec Oliveraie Chréa Blida",
+      "title_ar": "عقار ريفي مع حقل زيتون الشريعة البليدة",
       "tagline": "Havre de paix sur les contreforts de l'Atlas",
       "description": "Splendide propriété située sur les hauteurs de Blida avec vue dominante sur la plaine de la Mitidja. Oliveraie productive de 150 arbres, villa principale de 480 m², dépendance pour invités.",
       "description_ar": "مزرعة وقصر في أعالي البليدة مع حقل زيتون وإطلالة شاملة على المتيجة.",
@@ -557,6 +612,23 @@
     }
   ],
   "inquiries": [
+    {
+      "id": "inq-1792586475326",
+      "property_id": null,
+      "property_ref": "Général",
+      "property_title": "Demande de contact générale",
+      "client_name": "Nassim Mansouri",
+      "client_email": "nassim.m@example.dz",
+      "client_phone": "+213 555 12 34 56",
+      "inquiry_type": "Visite Privée",
+      "message": "Demande de visite privée pour duplex Hydra",
+      "status": "Visite Programmée",
+      "visit_date": "2026-10-25T14:30:00Z",
+      "internal_notes": "",
+      "created_at": "2026-10-21T12:41:15.326Z",
+      "updated_at": "2026-10-21T12:41:15.331Z",
+      "escort_agent": "Karim Benali"
+    },
     {
       "id": "inq-101",
       "property_id": "prop-01",
@@ -618,6 +690,54 @@
       "client_name": "Dr. Mehdi Slimani",
       "client_phone": "+213 (0) 555 44 33 22",
       "notes": "Accès villa confirmé avec les gardiens. Protocole de discrétion."
+    },
+    {
+      "id": "vis-1792496280215",
+      "inquiry_id": "inq-1792496280210",
+      "property_id": null,
+      "property_title": "Demande de contact générale",
+      "scheduled_at": "2026-10-25T14:30:00Z",
+      "status": "Programmee",
+      "escort_agent": "Karim Benali",
+      "client_name": "Nassim Mansouri",
+      "client_phone": "+213 555 12 34 56",
+      "notes": ""
+    },
+    {
+      "id": "vis-1792505990050",
+      "inquiry_id": "inq-1792505990037",
+      "property_id": null,
+      "property_title": "Demande de contact générale",
+      "scheduled_at": "2026-10-25T14:30:00Z",
+      "status": "Programmee",
+      "escort_agent": "Karim Benali",
+      "client_name": "Nassim Mansouri",
+      "client_phone": "+213 555 12 34 56",
+      "notes": ""
+    },
+    {
+      "id": "vis-1792586475331",
+      "inquiry_id": "inq-1792586475326",
+      "property_id": null,
+      "property_title": "Demande de contact générale",
+      "scheduled_at": "2026-10-25T14:30:00Z",
+      "status": "Programmee",
+      "escort_agent": "Karim Benali",
+      "client_name": "Nassim Mansouri",
+      "client_phone": "+213 555 12 34 56",
+      "notes": ""
+    },
+    {
+      "id": "vis-1792586882105",
+      "inquiry_id": "inq-1792586882099",
+      "property_id": null,
+      "property_title": "Demande de contact générale",
+      "scheduled_at": "2026-10-25T14:30:00Z",
+      "status": "Programmee",
+      "escort_agent": "Karim Benali",
+      "client_name": "Nassim Mansouri",
+      "client_phone": "+213 555 12 34 56",
+      "notes": ""
     }
   ],
   "site_settings": {
@@ -647,6 +767,34 @@
     }
   },
   "moderation_history": [
+    {
+      "id": "mod-hist-1792586882075",
+      "property_id": "prop-1792586882032",
+      "action": "approved",
+      "reason": "Conformité cadastrale et légale vérifiée par la modération",
+      "created_at": "2026-10-21T12:48:02.075Z"
+    },
+    {
+      "id": "mod-hist-1792586475307",
+      "property_id": "prop-1792586474974",
+      "action": "approved",
+      "reason": "Conformité cadastrale et légale vérifiée par la modération",
+      "created_at": "2026-10-21T12:41:15.307Z"
+    },
+    {
+      "id": "mod-hist-1792505989973",
+      "property_id": "prop-1792505989522",
+      "action": "approved",
+      "reason": "Conformité cadastrale et légale vérifiée par la modération",
+      "created_at": "2026-10-20T14:19:49.973Z"
+    },
+    {
+      "id": "mod-hist-1792496280186",
+      "property_id": "prop-1792496280080",
+      "action": "approved",
+      "reason": "Conformité cadastrale et légale vérifiée par la modération",
+      "created_at": "2026-10-20T11:38:00.186Z"
+    },
     {
       "id": "mod-hist-01",
       "property_id": "prop-01",

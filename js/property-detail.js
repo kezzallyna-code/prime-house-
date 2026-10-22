@@ -12,36 +12,46 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!prop) return;
 
   // Update Page Title
-  document.title = `${prop.title} | Prime House Immobilier`;
+  function renderDetails(lang) {
+    const isAr = lang === 'ar';
+    document.title = `${isAr && prop.title_ar ? prop.title_ar : prop.title} | Prime House Immobilier`;
 
-  // Update DOM elements if present
-  const titleEl = document.getElementById('prop-title');
-  if (titleEl) titleEl.textContent = prop.title;
+    const titleEl = document.getElementById('prop-title');
+    if (titleEl) titleEl.textContent = (isAr && prop.title_ar) ? prop.title_ar : prop.title;
 
-  const priceEl = document.getElementById('prop-price');
-  if (priceEl) priceEl.textContent = Number(prop.price).toLocaleString('fr-FR');
+    const priceEl = document.getElementById('prop-price');
+    if (priceEl) priceEl.textContent = Number(prop.price).toLocaleString('fr-FR');
 
-  const refEl = document.getElementById('prop-ref');
-  if (refEl) refEl.textContent = `Réf: ${prop.ref}`;
+    const refEl = document.getElementById('prop-ref');
+    if (refEl) refEl.textContent = isAr ? `المرجع: ${prop.ref}` : `Réf: ${prop.ref}`;
 
-  const districtEl = document.getElementById('prop-district-city');
-  if (districtEl) {
-    districtEl.innerHTML = `<span class="material-symbols-outlined text-base">location_on</span> ${prop.commune} • ${prop.wilaya}`;
+    const districtEl = document.getElementById('prop-district-city');
+    if (districtEl) {
+      districtEl.innerHTML = `<span class="material-symbols-outlined text-base">location_on</span> ${prop.commune} • ${prop.wilaya}`;
+    }
+
+    const surfaceEl = document.getElementById('spec-area');
+    if (surfaceEl) surfaceEl.textContent = isAr ? `${prop.surface} م²` : `${prop.surface} m²`;
+
+    const bedEl = document.getElementById('spec-bedrooms');
+    if (bedEl) bedEl.textContent = isAr ? `${prop.bedrooms} غرف نوم` : `${prop.bedrooms} Chambres`;
+
+    const bathEl = document.getElementById('spec-bathrooms');
+    if (bathEl) bathEl.textContent = isAr ? `${prop.bathrooms} حمامات` : `${prop.bathrooms} Salles d'eau`;
+
+    const descEl = document.getElementById('prop-long-description');
+    if (descEl) {
+      const descContent = (isAr && prop.description_ar) ? prop.description_ar : prop.description;
+      if (descContent) descEl.innerHTML = `<p>${descContent}</p>`;
+    }
   }
 
-  const surfaceEl = document.getElementById('spec-area');
-  if (surfaceEl) surfaceEl.textContent = `${prop.surface} m²`;
+  const initialLang = localStorage.getItem('prime_language') || 'fr';
+  renderDetails(initialLang);
 
-  const bedEl = document.getElementById('spec-bedrooms');
-  if (bedEl) bedEl.textContent = `${prop.bedrooms} Chambres`;
-
-  const bathEl = document.getElementById('spec-bathrooms');
-  if (bathEl) bathEl.textContent = `${prop.bathrooms} Salles d'eau`;
-
-  const descEl = document.getElementById('prop-long-description');
-  if (descEl && prop.description) {
-    descEl.innerHTML = `<p>${prop.description}</p>`;
-  }
+  window.addEventListener('prime:language-changed', (e) => {
+    renderDetails(e.detail?.lang || 'fr');
+  });
 
   // Update Hero Gallery Main Image if available
   const heroImg = document.querySelector('.hero-gallery-main img');
