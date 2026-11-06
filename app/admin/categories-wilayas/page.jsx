@@ -24,7 +24,7 @@ function AdminContent() {
           Catégories, Wilayas &amp; Paramètres de Recherche
         </h1>
 <p className="font-body-md text-body-md text-on-surface-variant max-w-4xl">
-          Administrez les critères de recherche du site public, les 58 Wilayas algériennes couvertes, les typologies d'architecture et les équipements certifiés.
+          Administrez les critères de recherche du site public, les 69 Wilayas algériennes couvertes, les typologies d'architecture et les équipements certifiés.
         </p>
 </div>
 
@@ -47,7 +47,7 @@ function AdminContent() {
 </div>
 <div className="flex flex-col min-w-0">
 <span className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Territoires Actifs</span>
-<span className="font-headline-sm text-headline-sm text-primary-container font-semibold">14 <span className="font-body-sm text-body-sm text-outline font-normal">/ 58 Wilayas</span></span>
+<span className="font-headline-sm text-headline-sm text-primary-container font-semibold">14 <span className="font-body-sm text-body-sm text-outline font-normal">/ 69 Wilayas</span></span>
 </div>
 </div>
 <div className="bg-surface-container-lowest rounded-lg p-4 shadow-sm flex items-center gap-4">

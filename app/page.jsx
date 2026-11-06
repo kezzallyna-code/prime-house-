@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer from '@/components/Toast';
+import { ALL_WILAYAS } from '@/lib/data';
 
 export default function HomePage() {
   const router = useRouter();
@@ -68,7 +69,7 @@ export default function HomePage() {
           </span>
 </div>
 {/*  Search Form Grid  */}
-<form id="hero-search-form" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<form id="hero-search-form" onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
 {/*  Field 1: Type de bien  */}
 <div className="flex flex-col gap-space-xs">
 <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold flex items-center gap-space-xs">
@@ -76,7 +77,11 @@ export default function HomePage() {
               Type de bien
             </label>
 <div className="relative">
-<select className="w-full px-space-md py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer">
+<select
+  value={propertyType}
+  onChange={(e) => setPropertyType(e.target.value)}
+  className="w-full px-space-md py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer"
+>
 <option value="all">Tous types d'actifs</option>
 <option value="villa">Villa d'architecte</option>
 <option value="penthouse">Penthouse &amp; Duplex</option>
@@ -94,13 +99,31 @@ export default function HomePage() {
               Wilaya / Quartier
             </label>
 <div className="relative">
-<select className="w-full px-space-md py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer">
-<option value="alger">Alger (Hydra, El Biar, Sidi Yahia)</option>
-<option value="oran">Oran (Front de Mer, Canastel)</option>
-<option value="boumerdes">Boumerdès &amp; Littoral</option>
-<option value="blida">Blida (Atlas Résidentiel)</option>
-<option value="constantine">Constantine</option>
-<option value="annaba">Annaba</option>
+<select
+  value={wilaya}
+  onChange={(e) => setWilaya(e.target.value)}
+  className="w-full px-space-md py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer"
+>
+  <option value="all">Toutes les wilayas (69 wilayas)</option>
+  <optgroup label="Pôles Immobiliers Majeurs">
+    <option value="alger">16 - Alger (Hydra, El Biar, Sidi Yahia)</option>
+    <option value="oran">31 - Oran (Front de Mer, Canastel)</option>
+    <option value="constantine">25 - Constantine (Belle Vue, Zouaghi)</option>
+    <option value="annaba">23 - Annaba (Séraïdi, Chapuis)</option>
+    <option value="blida">09 - Blida (Atlas Résidentiel)</option>
+    <option value="boumerdes">35 - Boumerdès &amp; Littoral</option>
+    <option value="tipaza">42 - Tipaza &amp; Chenoua</option>
+    <option value="bejaia">06 - Béjaïa (Cap Carbon, Tichy)</option>
+    <option value="tlemcen">13 - Tlemcen (Mansourah)</option>
+    <option value="setif">19 - Sétif (Centre &amp; El Eulma)</option>
+  </optgroup>
+  <optgroup label="Toutes les 69 Wilayas d'Algérie">
+    {ALL_WILAYAS.map((w) => (
+      <option key={w.code} value={w.name.toLowerCase()}>
+        {w.code} - {w.name}
+      </option>
+    ))}
+  </optgroup>
 </select>
 <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
 </div>

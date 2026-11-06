@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 import AdminLayout from '@/components/AdminLayout';
 import ToastContainer from '@/components/Toast';
+import { ALL_WILAYAS } from '@/lib/data';
 
 function AdminContent() {
   return (
@@ -272,17 +273,14 @@ function AdminContent() {
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
 <div className="flex flex-col gap-2">
-<label className="font-label-md text-label-md text-on-surface uppercase tracking-wider">Wilaya (58 wilayas)</label>
+<label className="font-label-md text-label-md text-on-surface uppercase tracking-wider">Wilaya (69 wilayas)</label>
 <div className="relative">
 <select className="w-full px-4 py-3 rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:ring-2 focus:ring-secondary/40 outline-none appearance-none">
-<option  value="16">16 — Alger</option>
-<option value="31">31 — Oran</option>
-<option value="25">25 — Constantine</option>
-<option value="09">09 — Blida</option>
-<option value="42">42 — Tipaza</option>
-<option value="15">15 — Tizi Ouzou</option>
-<option value="23">23 — Annaba</option>
-<option value="30">30 — Ouargla / Hassi Messaoud</option>
+{ALL_WILAYAS.map((w) => (
+  <option key={`admin-add-wilaya-${w.code}`} value={w.code}>
+    {w.code} — {w.name}
+  </option>
+))}
 </select>
 <span className="material-symbols-outlined absolute right-3 top-3.5 pointer-events-none text-outline">expand_more</span>
 </div>

@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer, { showToast } from '@/components/Toast';
 import { primeStorage } from '@/lib/storage';
+import { ALL_WILAYAS } from '@/lib/data';
 
 function PageContent() {
   useEffect(() => {
@@ -240,15 +241,11 @@ function PageContent() {
 <div className="flex flex-col gap-space-xs">
 <label className="font-label-md text-label-md text-on-surface font-semibold">Wilaya *</label>
 <select className="w-full px-space-md py-space-sm rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none" required="">
-<option value="16">16 - Alger</option>
-<option value="31">31 - Oran</option>
-<option value="09">09 - Blida</option>
-<option value="25">25 - Constantine</option>
-<option value="35">35 - Boumerdès</option>
-<option value="42">42 - Tipaza</option>
-<option value="19">19 - Sétif</option>
-<option value="06">06 - Béjaïa</option>
-<option value="23">23 - Annaba</option>
+{ALL_WILAYAS.map((w) => (
+  <option key={`depot-wilaya-${w.code}`} value={w.code}>
+    {w.code} - {w.name}
+  </option>
+))}
 </select>
 </div>
 <div className="flex flex-col gap-space-xs">

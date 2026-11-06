@@ -81,114 +81,555 @@
   ],
   "wilayas": [
     {
-      "code": 16,
-      "name": "Alger",
-      "arabic_name": "الجزائر العاصمة",
-      "region": "Centre",
-      "communes": [
-        "Hydra",
-        "El Biar",
-        "Club des Pins",
-        "Staouéli",
-        "Sidi Yahia",
-        "Poirson",
-        "Val d'Hydra",
-        "Chéraga",
-        "Ben Aknoun",
-        "Dely Ibrahim"
-      ],
+      "code": 1,
+      "code_str": "01",
+      "name": "Adrar",
+      "arabic_name": "أدرار",
+      "region": "Sud",
       "is_active": true
     },
     {
-      "code": 31,
-      "name": "Oran",
-      "arabic_name": "وهران",
-      "region": "Ouest",
-      "communes": [
-        "Canastel",
-        "Akid Lotfi",
-        "Courbet",
-        "Gambetta",
-        "Front de Mer",
-        "Belgaïd"
-      ],
+      "code": 2,
+      "code_str": "02",
+      "name": "Chlef",
+      "arabic_name": "الشلف",
+      "region": "Centre-Ouest",
       "is_active": true
     },
     {
-      "code": 25,
-      "name": "Constantine",
-      "arabic_name": "قسنطينة",
+      "code": 3,
+      "code_str": "03",
+      "name": "Laghouat",
+      "arabic_name": "الأغواط",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 4,
+      "code_str": "04",
+      "name": "Oum El Bouaghi",
+      "arabic_name": "أم البواقي",
       "region": "Est",
-      "communes": [
-        "Bellevue",
-        "Zouaghi",
-        "Sidi Mabrouk",
-        "Ali Mendjeli"
-      ],
       "is_active": true
     },
     {
-      "code": 23,
-      "name": "Annaba",
-      "arabic_name": "عنابة",
+      "code": 5,
+      "code_str": "05",
+      "name": "Batna",
+      "arabic_name": "باتنة",
       "region": "Est",
-      "communes": [
-        "Seraïdi",
-        "Genêts",
-        "Chapuis",
-        "Bain Romains"
-      ],
-      "is_active": true
-    },
-    {
-      "code": 42,
-      "name": "Tipaza",
-      "arabic_name": "تيبازة",
-      "region": "Centre-Littoral",
-      "communes": [
-        "Chenoua",
-        "Tipaza Ville",
-        "Bou Haroun",
-        "Bousmaïl"
-      ],
-      "is_active": true
-    },
-    {
-      "code": 9,
-      "name": "Blida",
-      "arabic_name": "البليدة",
-      "region": "Mitidja",
-      "communes": [
-        "Chréa",
-        "Boufarik",
-        "Blida Centre",
-        "Ouled Yaïch"
-      ],
-      "is_active": true
-    },
-    {
-      "code": 15,
-      "name": "Tizi Ouzou",
-      "arabic_name": "تيزي وزو",
-      "region": "Kabylie",
-      "communes": [
-        "Nouvelle Ville",
-        "Tizi Ouzou Centre",
-        "Tigzirt"
-      ],
       "is_active": true
     },
     {
       "code": 6,
+      "code_str": "06",
       "name": "Béjaïa",
       "arabic_name": "بجاية",
+      "region": "Kabylie-Littoral",
+      "is_active": true
+    },
+    {
+      "code": 7,
+      "code_str": "07",
+      "name": "Biskra",
+      "arabic_name": "بسكرة",
+      "region": "Sud-Est",
+      "is_active": true
+    },
+    {
+      "code": 8,
+      "code_str": "08",
+      "name": "Béchar",
+      "arabic_name": "بشار",
+      "region": "Sud-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 9,
+      "code_str": "09",
+      "name": "Blida",
+      "arabic_name": "البليدة",
+      "region": "Mitidja",
+      "is_active": true
+    },
+    {
+      "code": 10,
+      "code_str": "10",
+      "name": "Bouira",
+      "arabic_name": "البويرة",
+      "region": "Centre-Est",
+      "is_active": true
+    },
+    {
+      "code": 11,
+      "code_str": "11",
+      "name": "Tamanrasset",
+      "arabic_name": "تمنراست",
+      "region": "Grand Sud",
+      "is_active": true
+    },
+    {
+      "code": 12,
+      "code_str": "12",
+      "name": "Tébessa",
+      "arabic_name": "تبسة",
+      "region": "Est",
+      "is_active": true
+    },
+    {
+      "code": 13,
+      "code_str": "13",
+      "name": "Tlemcen",
+      "arabic_name": "تلمسان",
+      "region": "Ouest",
+      "is_active": true
+    },
+    {
+      "code": 14,
+      "code_str": "14",
+      "name": "Tiaret",
+      "arabic_name": "تيارت",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 15,
+      "code_str": "15",
+      "name": "Tizi Ouzou",
+      "arabic_name": "تيزي وزو",
+      "region": "Kabylie",
+      "is_active": true
+    },
+    {
+      "code": 16,
+      "code_str": "16",
+      "name": "Alger",
+      "arabic_name": "الجزائر العاصمة",
+      "region": "Centre",
+      "is_active": true
+    },
+    {
+      "code": 17,
+      "code_str": "17",
+      "name": "Djelfa",
+      "arabic_name": "الجلفة",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 18,
+      "code_str": "18",
+      "name": "Jijel",
+      "arabic_name": "جيجل",
       "region": "Littoral-Est",
-      "communes": [
-        "Tichy",
-        "Cap Carbon",
-        "Béjaïa Port",
-        "Aokas"
-      ],
+      "is_active": true
+    },
+    {
+      "code": 19,
+      "code_str": "19",
+      "name": "Sétif",
+      "arabic_name": "سطيف",
+      "region": "Hauts-Plateaux Est",
+      "is_active": true
+    },
+    {
+      "code": 20,
+      "code_str": "20",
+      "name": "Saïda",
+      "arabic_name": "سعيدة",
+      "region": "Hauts-Plateaux Ouest",
+      "is_active": true
+    },
+    {
+      "code": 21,
+      "code_str": "21",
+      "name": "Skikda",
+      "arabic_name": "سكيكدة",
+      "region": "Littoral-Est",
+      "is_active": true
+    },
+    {
+      "code": 22,
+      "code_str": "22",
+      "name": "Sidi Bel Abbès",
+      "arabic_name": "سيدي بلعباس",
+      "region": "Ouest",
+      "is_active": true
+    },
+    {
+      "code": 23,
+      "code_str": "23",
+      "name": "Annaba",
+      "arabic_name": "عنابة",
+      "region": "Littoral-Est",
+      "is_active": true
+    },
+    {
+      "code": 24,
+      "code_str": "24",
+      "name": "Guelma",
+      "arabic_name": "قالمة",
+      "region": "Est",
+      "is_active": true
+    },
+    {
+      "code": 25,
+      "code_str": "25",
+      "name": "Constantine",
+      "arabic_name": "قسنطينة",
+      "region": "Est",
+      "is_active": true
+    },
+    {
+      "code": 26,
+      "code_str": "26",
+      "name": "Médéa",
+      "arabic_name": "المدية",
+      "region": "Centre",
+      "is_active": true
+    },
+    {
+      "code": 27,
+      "code_str": "27",
+      "name": "Mostaganem",
+      "arabic_name": "مستغانم",
+      "region": "Littoral-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 28,
+      "code_str": "28",
+      "name": "M'Sila",
+      "arabic_name": "المسيلة",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 29,
+      "code_str": "29",
+      "name": "Mascara",
+      "arabic_name": "معسكر",
+      "region": "Ouest",
+      "is_active": true
+    },
+    {
+      "code": 30,
+      "code_str": "30",
+      "name": "Ouargla",
+      "arabic_name": "ورقلة",
+      "region": "Sud",
+      "is_active": true
+    },
+    {
+      "code": 31,
+      "code_str": "31",
+      "name": "Oran",
+      "arabic_name": "وهران",
+      "region": "Littoral-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 32,
+      "code_str": "32",
+      "name": "El Bayadh",
+      "arabic_name": "البيض",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 33,
+      "code_str": "33",
+      "name": "Illizi",
+      "arabic_name": "إليزي",
+      "region": "Grand Sud",
+      "is_active": true
+    },
+    {
+      "code": 34,
+      "code_str": "34",
+      "name": "Bordj Bou Arréridj",
+      "arabic_name": "برج بوعريريج",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 35,
+      "code_str": "35",
+      "name": "Boumerdès",
+      "arabic_name": "بومرداس",
+      "region": "Centre-Littoral",
+      "is_active": true
+    },
+    {
+      "code": 36,
+      "code_str": "36",
+      "name": "El Tarf",
+      "arabic_name": "الطارف",
+      "region": "Littoral-Est",
+      "is_active": true
+    },
+    {
+      "code": 37,
+      "code_str": "37",
+      "name": "Tindouf",
+      "arabic_name": "تندوف",
+      "region": "Sud-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 38,
+      "code_str": "38",
+      "name": "Tissemsilt",
+      "arabic_name": "تيسمسيلت",
+      "region": "Centre-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 39,
+      "code_str": "39",
+      "name": "El Oued",
+      "arabic_name": "الوادي",
+      "region": "Sud-Est",
+      "is_active": true
+    },
+    {
+      "code": 40,
+      "code_str": "40",
+      "name": "Khenchela",
+      "arabic_name": "خنشلة",
+      "region": "Est",
+      "is_active": true
+    },
+    {
+      "code": 41,
+      "code_str": "41",
+      "name": "Souk Ahras",
+      "arabic_name": "سوق أهراس",
+      "region": "Est",
+      "is_active": true
+    },
+    {
+      "code": 42,
+      "code_str": "42",
+      "name": "Tipaza",
+      "arabic_name": "تيبازة",
+      "region": "Centre-Littoral",
+      "is_active": true
+    },
+    {
+      "code": 43,
+      "code_str": "43",
+      "name": "Mila",
+      "arabic_name": "ميلة",
+      "region": "Est",
+      "is_active": true
+    },
+    {
+      "code": 44,
+      "code_str": "44",
+      "name": "Aïn Defla",
+      "arabic_name": "عين الدفلى",
+      "region": "Centre-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 45,
+      "code_str": "45",
+      "name": "Naâma",
+      "arabic_name": "النعامة",
+      "region": "Sud-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 46,
+      "code_str": "46",
+      "name": "Aïn Témouchent",
+      "arabic_name": "عين تموشنت",
+      "region": "Littoral-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 47,
+      "code_str": "47",
+      "name": "Ghardaïa",
+      "arabic_name": "غرداية",
+      "region": "Sud",
+      "is_active": true
+    },
+    {
+      "code": 48,
+      "code_str": "48",
+      "name": "Relizane",
+      "arabic_name": "غليزان",
+      "region": "Ouest",
+      "is_active": true
+    },
+    {
+      "code": 49,
+      "code_str": "49",
+      "name": "Timimoun",
+      "arabic_name": "تيميمون",
+      "region": "Sud",
+      "is_active": true
+    },
+    {
+      "code": 50,
+      "code_str": "50",
+      "name": "Bordj Badji Mokhtar",
+      "arabic_name": "برج باجي مختار",
+      "region": "Grand Sud",
+      "is_active": true
+    },
+    {
+      "code": 51,
+      "code_str": "51",
+      "name": "Ouled Djellal",
+      "arabic_name": "أولاد جلال",
+      "region": "Sud-Est",
+      "is_active": true
+    },
+    {
+      "code": 52,
+      "code_str": "52",
+      "name": "Béni Abbès",
+      "arabic_name": "بني عباس",
+      "region": "Sud-Ouest",
+      "is_active": true
+    },
+    {
+      "code": 53,
+      "code_str": "53",
+      "name": "In Salah",
+      "arabic_name": "عين صالح",
+      "region": "Grand Sud",
+      "is_active": true
+    },
+    {
+      "code": 54,
+      "code_str": "54",
+      "name": "In Guezzam",
+      "arabic_name": "عين قزام",
+      "region": "Grand Sud",
+      "is_active": true
+    },
+    {
+      "code": 55,
+      "code_str": "55",
+      "name": "Touggourt",
+      "arabic_name": "تقرت",
+      "region": "Sud-Est",
+      "is_active": true
+    },
+    {
+      "code": 56,
+      "code_str": "56",
+      "name": "Djanet",
+      "arabic_name": "جانت",
+      "region": "Grand Sud",
+      "is_active": true
+    },
+    {
+      "code": 57,
+      "code_str": "57",
+      "name": "El M'Ghair",
+      "arabic_name": "المغير",
+      "region": "Sud-Est",
+      "is_active": true
+    },
+    {
+      "code": 58,
+      "code_str": "58",
+      "name": "El Meniaa",
+      "arabic_name": "المنيعة",
+      "region": "Sud",
+      "is_active": true
+    },
+    {
+      "code": 59,
+      "code_str": "59",
+      "name": "Aflou",
+      "arabic_name": "أفلو",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 60,
+      "code_str": "60",
+      "name": "Barika",
+      "arabic_name": "بريكة",
+      "region": "Hauts-Plateaux Est",
+      "is_active": true
+    },
+    {
+      "code": 61,
+      "code_str": "61",
+      "name": "El Kantara",
+      "arabic_name": "القنطرة",
+      "region": "Sud-Est",
+      "is_active": true
+    },
+    {
+      "code": 62,
+      "code_str": "62",
+      "name": "Bir El Ater",
+      "arabic_name": "بئر العاتر",
+      "region": "Est",
+      "is_active": true
+    },
+    {
+      "code": 63,
+      "code_str": "63",
+      "name": "El Aricha",
+      "arabic_name": "العريشة",
+      "region": "Hauts-Plateaux Ouest",
+      "is_active": true
+    },
+    {
+      "code": 64,
+      "code_str": "64",
+      "name": "Ksar Chellala",
+      "arabic_name": "قصر الشلالة",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 65,
+      "code_str": "65",
+      "name": "Aïn Oussera",
+      "arabic_name": "عين وسارة",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 66,
+      "code_str": "66",
+      "name": "Messaad",
+      "arabic_name": "مسعد",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 67,
+      "code_str": "67",
+      "name": "Ksar El Boukhari",
+      "arabic_name": "قصر البخاري",
+      "region": "Centre",
+      "is_active": true
+    },
+    {
+      "code": 68,
+      "code_str": "68",
+      "name": "Bou Saâda",
+      "arabic_name": "بوسعادة",
+      "region": "Hauts-Plateaux",
+      "is_active": true
+    },
+    {
+      "code": 69,
+      "code_str": "69",
+      "name": "El Abiodh Sidi Cheikh",
+      "arabic_name": "الأبيض سيدي الشيخ",
+      "region": "Hauts-Plateaux",
       "is_active": true
     }
   ],

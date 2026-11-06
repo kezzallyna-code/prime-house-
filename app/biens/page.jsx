@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer, { showToast } from '@/components/Toast';
 import { primeStorage } from '@/lib/storage';
+import { ALL_WILAYAS } from '@/lib/data';
 
 function PageContent() {
   useEffect(() => {
@@ -94,12 +95,18 @@ function PageContent() {
 <div className="relative min-w-[200px] flex items-center bg-surface-container-lowest rounded-lg px-space-md py-space-sm shadow-xs">
 <span className="material-symbols-outlined text-outline text-title-md mr-space-xs">location_city</span>
 <select className="w-full bg-transparent border-none text-on-surface font-body-md text-body-md focus:outline-none cursor-pointer appearance-none pr-space-md">
-<option >Alger (Wilaya)</option>
-<option>Oran (Wilaya)</option>
-<option>Boumerdès</option>
-<option>Blida</option>
-<option>Annaba</option>
-<option>Constantine</option>
+<option value="all">Toutes les wilayas (69 wilayas)</option>
+<option value="alger">16 - Alger (Wilaya)</option>
+<option value="oran">31 - Oran (Wilaya)</option>
+<option value="constantine">25 - Constantine</option>
+<option value="annaba">23 - Annaba</option>
+<option value="blida">09 - Blida</option>
+<option value="boumerdes">35 - Boumerdès</option>
+{ALL_WILAYAS.map((w) => (
+  <option key={w.code} value={w.name.toLowerCase()}>
+    {w.code} - {w.name}
+  </option>
+))}
 </select>
 <span className="material-symbols-outlined text-outline absolute right-3 pointer-events-none text-sm">expand_more</span>
 </div>
@@ -264,12 +271,18 @@ function PageContent() {
 <label className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-semibold">Wilaya &amp; Commune</label>
 <div className="relative">
 <select className="w-full bg-surface-container-low rounded-lg px-space-md py-2.5 text-on-surface font-body-sm text-body-sm focus:outline-none appearance-none cursor-pointer">
-<option >Alger (32 biens)</option>
-<option>Oran (9 biens)</option>
-<option>Boumerdès (4 biens)</option>
-<option>Blida (3 biens)</option>
-<option>Annaba (2 biens)</option>
-<option>Sétif (2 biens)</option>
+<option value="all">Toutes les wilayas (69)</option>
+<option value="alger">16 - Alger (32 biens)</option>
+<option value="oran">31 - Oran (9 biens)</option>
+<option value="boumerdes">35 - Boumerdès (4 biens)</option>
+<option value="blida">09 - Blida (3 biens)</option>
+<option value="annaba">23 - Annaba (2 biens)</option>
+<option value="setif">19 - Sétif (2 biens)</option>
+{ALL_WILAYAS.map((w) => (
+  <option key={`sidebar-${w.code}`} value={w.name.toLowerCase()}>
+    {w.code} - {w.name}
+  </option>
+))}
 </select>
 <span className="material-symbols-outlined text-outline absolute right-3 top-2.5 pointer-events-none text-sm">unfold_more</span>
 </div>

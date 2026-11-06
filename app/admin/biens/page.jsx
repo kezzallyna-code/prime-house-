@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 import AdminLayout from '@/components/AdminLayout';
 import ToastContainer from '@/components/Toast';
+import { ALL_WILAYAS } from '@/lib/data';
 
 function AdminContent() {
   return (
@@ -164,12 +165,17 @@ function AdminContent() {
 
 <div className="relative">
 <select className="w-full appearance-none px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm pr-9 outline-none focus:ring-2 focus:ring-secondary/40 cursor-pointer">
-<option>Toutes Wilayas</option>
-<option>16 — Alger (Hydra, Poirson, El Biar...)</option>
-<option>31 — Oran (Canastel, Akid Lotfi...)</option>
-<option>09 — Blida (Chréa, Centre...)</option>
-<option>35 — Boumerdès (Corso, Zemmouri...)</option>
-<option>25 — Constantine</option>
+<option value="all">Toutes les wilayas (69 wilayas)</option>
+<option value="16">16 — Alger (Hydra, Poirson, El Biar...)</option>
+<option value="31">31 — Oran (Canastel, Akid Lotfi...)</option>
+<option value="09">09 — Blida (Chréa, Centre...)</option>
+<option value="35">35 — Boumerdès (Corso, Zemmouri...)</option>
+<option value="25">25 — Constantine</option>
+{ALL_WILAYAS.map((w) => (
+  <option key={`admin-biens-wilaya-${w.code}`} value={w.code}>
+    {w.code} — {w.name}
+  </option>
+))}
 </select>
 <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">unfold_more</span>
 </div>

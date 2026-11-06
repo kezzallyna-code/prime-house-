@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer, { showToast } from '@/components/Toast';
 import { primeStorage } from '@/lib/storage';
+import { ALL_WILAYAS } from '@/lib/data';
 
 function PageContent() {
   useEffect(() => {
@@ -85,13 +86,21 @@ function PageContent() {
             </label>
 <div className="relative">
 <select className="w-full px-space-md py-3 rounded bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none appearance-none cursor-pointer">
-<option value="alger-all">Alger (Tous quartiers haut standing)</option>
-<option  value="hydra">Alger — Hydra &amp; Sidi Yahia</option>
-<option value="elbiar">Alger — El Biar &amp; Poirson</option>
-<option value="cheraga">Alger — Chéraga &amp; Dely Ibrahim</option>
-<option value="oran">Oran — Canastel &amp; Akid Lotfi</option>
-<option value="blida">Blida — Atlas &amp; Centre</option>
-<option value="boumerdes">Boumerdès — Front de Mer</option>
+<option value="all">Toutes les wilayas (69 wilayas)</option>
+<option value="alger-all">16 - Alger (Tous quartiers haut standing)</option>
+<option value="hydra">16 - Alger — Hydra &amp; Sidi Yahia</option>
+<option value="elbiar">16 - Alger — El Biar &amp; Poirson</option>
+<option value="cheraga">16 - Alger — Chéraga &amp; Dely Ibrahim</option>
+<option value="oran">31 - Oran — Canastel &amp; Akid Lotfi</option>
+<option value="constantine">25 - Constantine — Belle Vue &amp; Zouaghi</option>
+<option value="annaba">23 - Annaba — Séraïdi &amp; Chapuis</option>
+<option value="blida">09 - Blida — Atlas &amp; Centre</option>
+<option value="boumerdes">35 - Boumerdès — Front de Mer</option>
+{ALL_WILAYAS.map((w) => (
+  <option key={`louer-wilaya-${w.code}`} value={w.name.toLowerCase()}>
+    {w.code} - {w.name}
+  </option>
+))}
 </select>
 <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
 </div>
