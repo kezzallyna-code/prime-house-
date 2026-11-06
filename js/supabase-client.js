@@ -248,7 +248,7 @@
         if (!res.ok) throw new Error('Erreur modération');
         return await res.json();
       } catch (e) {
-        if (window.primeStorage) {
+        if (window.primeStorage && typeof window.primeStorage.getModerationList === 'function') {
           const list = window.primeStorage.getModerationList();
           return { pending: list, count: list.length };
         }

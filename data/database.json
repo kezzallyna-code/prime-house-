@@ -998,7 +998,7 @@
       ],
       "views_count": 85,
       "created_at": "2026-10-16T14:20:00Z",
-      "updated_at": "2026-10-18T10:00:00Z"
+      "updated_at": "2026-11-06T19:55:50.462Z"
     },
     {
       "id": "prop-mod-02",
@@ -1049,7 +1049,9 @@
       ],
       "views_count": 42,
       "created_at": "2026-10-17T08:45:00Z",
-      "updated_at": "2026-10-18T10:00:00Z"
+      "updated_at": "2026-11-06T19:55:50.448Z",
+      "moderation_rejection_reason": "urbanisme",
+      "moderation_notes": "Test de refus foncier unitaire"
     }
   ],
   "inquiries": [
@@ -1208,6 +1210,23 @@
     }
   },
   "moderation_history": [
+    {
+      "id": "mod-hist-1793994950462",
+      "property_id": "prop-mod-01",
+      "property_ref": "PH-MOD-701",
+      "action": "approved",
+      "reason": "Conformité cadastrale et légale certifiée par la modération",
+      "created_at": "2026-11-06T19:55:50.462Z"
+    },
+    {
+      "id": "mod-hist-1793994950448",
+      "property_id": "prop-mod-02",
+      "property_ref": "PH-MOD-702",
+      "action": "rejected",
+      "reason": "urbanisme",
+      "notes": "Test de refus foncier unitaire",
+      "created_at": "2026-11-06T19:55:50.448Z"
+    },
     {
       "id": "mod-hist-1792586882075",
       "property_id": "prop-1792586882032",
