@@ -1,8 +1,21 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { applyLanguage, getCurrentLanguage } from '@/lib/i18n';
 
 export default function MobileDrawer({ isOpen, onClose, favCount }) {
+  const [currentLang, setCurrentLang] = useState('fr');
+
+  useEffect(() => {
+    setCurrentLang(getCurrentLanguage());
+    const handleLangChange = (e) => {
+      if (e?.detail?.lang) setCurrentLang(e.detail.lang);
+    };
+    window.addEventListener('prime:language-changed', handleLangChange);
+    return () => window.removeEventListener('prime:language-changed', handleLangChange);
+  }, []);
+
   if (!isOpen) return null;
 
   return (
@@ -35,6 +48,34 @@ export default function MobileDrawer({ isOpen, onClose, favCount }) {
         >
           ✕
         </button>
+      </div>
+
+      <div className="pt-4 flex items-center justify-between">
+        <span className="text-xs uppercase tracking-wider text-surface-variant font-medium">Langue / اللغة :</span>
+        <div className="flex items-center gap-1 p-1 bg-surface-container-lowest/10 rounded-full border border-surface-container-highest/20">
+          <button
+            onClick={() => applyLanguage('fr', true)}
+            type="button"
+            className={`px-3 py-1 rounded-full text-xs transition-all ${
+              currentLang === 'fr'
+                ? 'bg-surface-container-lowest text-primary font-bold shadow-sm'
+                : 'text-surface hover:text-secondary-fixed'
+            }`}
+          >
+            FR
+          </button>
+          <button
+            onClick={() => applyLanguage('ar', true)}
+            type="button"
+            className={`px-3 py-1 rounded-full text-xs transition-all ${
+              currentLang === 'ar'
+                ? 'bg-surface-container-lowest text-primary font-bold shadow-sm'
+                : 'text-surface hover:text-secondary-fixed'
+            }`}
+          >
+            العربية
+          </button>
+        </div>
       </div>
 
       <nav className="flex flex-col gap-2 py-6 text-base font-medium">

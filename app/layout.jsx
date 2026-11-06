@@ -1,4 +1,5 @@
 import './globals.css';
+import I18nProvider from '@/components/I18nProvider';
 
 export const metadata = {
   title: 'Prime House | Immobilier de Prestige en Algérie',
@@ -24,7 +25,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container">
-        {children}
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

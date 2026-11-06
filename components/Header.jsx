@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { primeStorage } from '@/lib/storage';
+import { applyLanguage, getCurrentLanguage } from '@/lib/i18n';
 import MobileDrawer from './MobileDrawer';
 
 function HeaderContent() {
@@ -18,16 +19,8 @@ function HeaderContent() {
 
   useEffect(() => {
     setFavCount(primeStorage.getFavorites().length);
-    const initialLang = primeStorage.getLanguage();
+    const initialLang = getCurrentLanguage();
     setCurrentLang(initialLang);
-
-    if (initialLang === 'ar') {
-      document.documentElement.setAttribute('lang', 'ar');
-      document.documentElement.setAttribute('dir', 'rtl');
-    } else {
-      document.documentElement.setAttribute('lang', 'fr');
-      document.documentElement.removeAttribute('dir');
-    }
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -44,15 +37,23 @@ function HeaderContent() {
     };
     window.addEventListener('prime:favorites-changed', handleFavChange);
 
+    const handleLangChange = (e) => {
+      if (e?.detail?.lang) {
+        setCurrentLang(e.detail.lang);
+      }
+    };
+    window.addEventListener('prime:language-changed', handleLangChange);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('prime:favorites-changed', handleFavChange);
+      window.removeEventListener('prime:language-changed', handleLangChange);
     };
   }, []);
 
   const switchLanguage = (lang) => {
     setCurrentLang(lang);
-    primeStorage.setLanguage(lang);
+    applyLanguage(lang, true);
   };
 
   // Determine active section
