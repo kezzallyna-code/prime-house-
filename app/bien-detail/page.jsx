@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer, { showToast } from '@/components/Toast';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { primeStorage } from '@/lib/storage';
 
 function PageContent() {
@@ -573,7 +574,7 @@ function PageContent() {
 <span>Appeler (+213 23 45 67 89)</span>
 </a>
 <a className="w-full py-space-sm px-space-md bg-[#25D366] hover:bg-[#20ba59] text-surface font-label-lg text-label-lg rounded font-semibold text-center transition-all duration-200 flex items-center justify-center gap-space-xs shadow-sm" href="https://wa.me/213560123456?text=Bonjour,%20je%20souhaite%20des%20renseignements%20pour%20le%20bien%20PH-ALG-104" target="_blank">
-<span className="material-symbols-outlined text-title-md">chat</span>
+<WhatsAppIcon className="w-5 h-5" colored={false} fill="white" />
 <span>Échanger sur WhatsApp</span>
 </a>
 </div>

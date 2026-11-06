@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer from '@/components/Toast';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 function PageContent() {
   return (
@@ -38,7 +39,7 @@ function PageContent() {
 <span>Copier le lien</span>
 </button>
 <a className="w-full flex items-center gap-space-sm px-space-sm py-space-xs text-left hover:bg-surface-container-low rounded font-body-sm text-body-sm text-on-surface transition-colors" href="https://wa.me/?text=Découvrez%20cette%20somptueuse%20villa%20à%20Hydra%20sur%20Prime%20House" target="_blank">
-<span className="material-symbols-outlined text-title-md text-secondary">chat</span>
+<WhatsAppIcon className="w-4 h-4" />
 <span>WhatsApp</span>
 </a>
 </div>
@@ -420,7 +421,7 @@ function PageContent() {
 </div>
 
 <a className="mt-space-md w-full inline-flex items-center justify-center gap-space-sm px-space-lg py-space-sm bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container rounded font-label-lg text-label-lg font-bold transition-all shadow-md hover:-translate-y-0.5" href="https://wa.me/213560123456?text=Bonjour%20Sofiane,%20je%20souhaite%20obtenir%20des%20informations%20concernant%20la%20villa%20Réf%20PH-2024-089%20à%20Hydra." target="_blank">
-<span className="material-symbols-outlined text-title-lg">chat</span>
+<WhatsAppIcon className="w-5 h-5" />
 <span>Contacter sur WhatsApp</span>
 </a>
 

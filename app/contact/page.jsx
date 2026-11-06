@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer from '@/components/Toast';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 function PageContent() {
   return (
@@ -192,7 +193,7 @@ function PageContent() {
               Pour une consultation instantanée, l'envoi de brochures d'architecte ou une prise de rendez-vous urgente en discrétion.
             </p>
 <a className="w-full py-space-sm px-space-md bg-secondary text-on-secondary hover:bg-secondary-fixed hover:text-on-secondary-container rounded font-label-lg text-label-lg flex items-center justify-center gap-space-sm transition-all duration-200 shadow-md" href="https://wa.me/213560123456" rel="noopener noreferrer" target="_blank">
-<span className="material-symbols-outlined text-title-md">chat</span>
+<WhatsAppIcon className="w-5 h-5" />
 <span>Démarrer une conversation immédiate</span>
 </a>
 </div>

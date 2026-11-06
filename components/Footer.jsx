@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import WhatsAppIcon from './WhatsAppIcon';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -99,7 +100,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="material-symbols-outlined text-title-md">chat</span>
+                <WhatsAppIcon className="w-5 h-5" />
               </a>
             </div>
           </div>

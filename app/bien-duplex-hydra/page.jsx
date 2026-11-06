@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToastContainer from '@/components/Toast';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 function PageContent() {
   return (
@@ -411,7 +412,7 @@ function PageContent() {
 <span>+213 (0) 560 12 34 56</span>
 </a>
 <a className="w-full inline-flex items-center justify-center gap-space-sm py-space-sm px-space-md rounded bg-secondary hover:bg-on-tertiary-container text-on-secondary font-label-lg text-label-lg font-semibold transition-all shadow-sm" href="https://wa.me/213560123456?text=Bonjour,%20je%20souhaite%20des%20renseignements%20confidentiels%20sur%20le%20Duplex%20Hydra%20Ref:%20PH-DZ-2025-88" rel="noopener" target="_blank">
-<span className="material-symbols-outlined text-[20px]">chat</span>
+<WhatsAppIcon className="w-5 h-5" />
 <span>Échanger sur WhatsApp</span>
 </a>
 </div>
