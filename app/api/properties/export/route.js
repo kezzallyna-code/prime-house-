@@ -37,3 +37,4 @@ export async function GET() {
     return NextResponse.json({ success: false, error: 'Erreur lors de l’export CSV.' }, { status: 500 });
   }
 }
+
