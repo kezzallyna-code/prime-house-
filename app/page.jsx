@@ -14,17 +14,23 @@ export default function HomePage() {
   const [propertyType, setPropertyType] = useState('all');
   const [wilaya, setWilaya] = useState('all');
   const [budget, setBudget] = useState('all');
+  const [bedrooms, setBedrooms] = useState('all');
 
   const handleSearch = (e) => {
     e.preventDefault();
     const params = new URLSearchParams();
-    if (tab === 'acheter') params.set('mode', 'vente');
-    if (tab === 'louer') params.set('mode', 'location');
     if (propertyType && propertyType !== 'all') params.set('type', propertyType);
     if (wilaya && wilaya !== 'all') params.set('wilaya', wilaya);
     if (budget && budget !== 'all') params.set('budget', budget);
+    if (bedrooms && bedrooms !== 'all') params.set('chambres', bedrooms);
 
-    router.push(`/biens?${params.toString()}`);
+    if (tab === 'louer') {
+      params.set('mode', 'location');
+      router.push(`/louer?${params.toString()}`);
+    } else {
+      params.set('mode', 'vente');
+      router.push(`/biens?${params.toString()}`);
+    }
   };
 
   return (
@@ -56,12 +62,36 @@ export default function HomePage() {
 {/*  Tab Switcher (Acheter / Louer)  */}
 <div className="flex items-center gap-space-xs mb-space-lg pb-space-sm">
 <div className="inline-flex p-space-xs rounded-full bg-surface-container-low" id="hero-tabs">
-<button className="tab-btn px-space-lg py-space-xs rounded-full font-label-lg text-label-lg font-semibold transition-all bg-primary-container text-surface shadow-sm" data-tab="acheter" type="button">
-              Acheter
-            </button>
-<button className="tab-btn px-space-lg py-space-xs rounded-full font-label-lg text-label-lg font-semibold transition-all text-on-surface-variant hover:text-on-surface" data-tab="louer" type="button">
-              Louer
-            </button>
+<button
+  className={`tab-btn px-space-lg py-space-xs rounded-full font-label-lg text-label-lg font-semibold transition-all cursor-pointer ${
+    tab === 'acheter'
+      ? 'bg-primary-container text-surface shadow-sm'
+      : 'text-on-surface-variant hover:text-on-surface'
+  }`}
+  data-tab="acheter"
+  type="button"
+  onClick={() => {
+    setTab('acheter');
+    setBudget('all');
+  }}
+>
+  Acheter
+</button>
+<button
+  className={`tab-btn px-space-lg py-space-xs rounded-full font-label-lg text-label-lg font-semibold transition-all cursor-pointer ${
+    tab === 'louer'
+      ? 'bg-primary-container text-surface shadow-sm'
+      : 'text-on-surface-variant hover:text-on-surface'
+  }`}
+  data-tab="louer"
+  type="button"
+  onClick={() => {
+    setTab('louer');
+    setBudget('all');
+  }}
+>
+  Louer
+</button>
 </div>
 <span className="ml-auto hidden sm:inline-flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
 <span className="material-symbols-outlined text-secondary text-base">lock</span>
@@ -132,14 +162,31 @@ export default function HomePage() {
 <div className="flex flex-col gap-space-xs">
 <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold flex items-center gap-space-xs">
 <span className="material-symbols-outlined text-label-md text-secondary">payments</span>
-              Budget estimé (DA)
+              {tab === 'louer' ? 'Loyer mensuel (DA / mois)' : 'Budget estimé (DA)'}
             </label>
 <div className="relative">
-<select className="w-full px-space-md py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer">
-<option value="15-40">15M - 40M DA</option>
-<option value="40-80">40M - 80M DA</option>
-<option selected="" value="80-150">80M - 150M DA</option>
-<option value="150+">150M DA et plus</option>
+<select
+  value={budget}
+  onChange={(e) => setBudget(e.target.value)}
+  className="w-full px-space-md py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer"
+>
+  {tab === 'louer' ? (
+    <>
+      <option value="all">Tous loyers</option>
+      <option value="100-250">100 000 - 250 000 DA / mois</option>
+      <option value="250-500">250 000 - 500 000 DA / mois</option>
+      <option value="500-1000">500 000 - 1 000 000 DA / mois</option>
+      <option value="1000+">1 000 000 DA+ / mois</option>
+    </>
+  ) : (
+    <>
+      <option value="all">Tous budgets</option>
+      <option value="15-40">15M - 40M DA</option>
+      <option value="40-80">40M - 80M DA</option>
+      <option value="80-150">80M - 150M DA</option>
+      <option value="150+">150M DA et plus</option>
+    </>
+  )}
 </select>
 <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
 </div>
@@ -151,14 +198,19 @@ export default function HomePage() {
               Chambres
             </label>
 <div className="flex items-center gap-space-xs">
-<select className="w-1/2 px-space-sm py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer">
-<option value="any">Toutes</option>
+<select
+  value={bedrooms}
+  onChange={(e) => setBedrooms(e.target.value)}
+  className="w-1/2 px-space-sm py-space-sm rounded bg-surface-container-low text-on-surface font-title-md text-title-md appearance-none focus:outline-none cursor-pointer"
+>
+<option value="all">Toutes</option>
+<option value="2">2+</option>
 <option value="3">3+</option>
-<option selected="" value="4">4+</option>
+<option value="4">4+</option>
 <option value="5">5+</option>
 <option value="6">6+</option>
 </select>
-<button className="w-1/2 h-[46px] rounded bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-label-lg text-label-lg font-bold flex items-center justify-center gap-space-xs shadow-md transition-all hover:scale-[1.02]" type="submit">
+<button className="w-1/2 h-[46px] rounded bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-label-lg text-label-lg font-bold flex items-center justify-center gap-space-xs shadow-md transition-all hover:scale-[1.02] cursor-pointer" type="submit">
 <span className="material-symbols-outlined">search</span>
 <span className="hidden sm:inline">Filtrer</span>
 </button>
@@ -168,10 +220,10 @@ export default function HomePage() {
 {/*  Quick Tags Ribbon  */}
 <div className="flex flex-wrap items-center gap-space-sm mt-space-md pt-space-sm text-on-surface-variant">
 <span className="font-label-sm text-label-sm uppercase font-semibold text-secondary">Suggestions rapides :</span>
-<button className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors" type="button">Villas avec piscine</button>
-<button className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors" type="button">Vue sur mer Alger</button>
-<button className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors" type="button">Appartements F4 Hydra</button>
-<button className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors" type="button">Terrains résidentiels</button>
+<button onClick={() => router.push('/biens?type=villa&q=piscine')} className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors cursor-pointer" type="button">Villas avec piscine</button>
+<button onClick={() => router.push('/biens?wilaya=alger&q=mer')} className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors cursor-pointer" type="button">Vue sur mer Alger</button>
+<button onClick={() => router.push('/biens?type=appartement&wilaya=alger&chambres=4')} className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors cursor-pointer" type="button">Appartements F4 Hydra</button>
+<button onClick={() => router.push('/biens?type=terrain')} className="px-space-sm py-space-xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors cursor-pointer" type="button">Terrains résidentiels</button>
 </div>
 </div>
 {/*  Trust Metrics Bar  */}
@@ -605,10 +657,10 @@ export default function HomePage() {
           </p>
 </div>
 <div className="relative z-10 pt-space-lg">
-<a className="inline-flex items-center gap-space-sm px-space-lg py-space-sm bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed rounded font-label-lg text-label-lg font-bold transition-all shadow-md" href="#">
+<Link className="inline-flex items-center gap-space-sm px-space-lg py-space-sm bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed rounded font-label-lg text-label-lg font-bold transition-all shadow-md" href="/biens?mode=vente">
 <span>Trouver mon bien</span>
 <span className="material-symbols-outlined text-title-md">arrow_forward</span>
-</a>
+</Link>
 </div>
 </div>
 {/*  Banner Louer  */}
@@ -627,10 +679,10 @@ export default function HomePage() {
           </p>
 </div>
 <div className="relative z-10 pt-space-lg">
-<a className="inline-flex items-center gap-space-sm px-space-lg py-space-sm bg-primary-container text-surface hover:bg-on-surface rounded font-label-lg text-label-lg font-bold transition-all shadow-md" href="#">
+<Link className="inline-flex items-center gap-space-sm px-space-lg py-space-sm bg-primary-container text-surface hover:bg-on-surface rounded font-label-lg text-label-lg font-bold transition-all shadow-md" href="/louer">
 <span>Voir les locations</span>
 <span className="material-symbols-outlined text-title-md">arrow_forward</span>
-</a>
+</Link>
 </div>
 </div>
 </div>

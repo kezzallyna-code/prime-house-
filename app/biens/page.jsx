@@ -84,12 +84,18 @@ function PageContent() {
 </div>
 
 <div className="flex items-center bg-surface-container-lowest rounded-lg p-1">
-<button className="px-space-md py-1.5 rounded bg-primary-container text-surface font-label-md text-label-md font-semibold transition-all shadow-xs" type="button">
-            Acheter
-          </button>
-<button className="px-space-md py-1.5 rounded text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all" type="button">
-            Louer
-          </button>
+  <Link
+    href="/biens?mode=vente"
+    className="px-space-md py-1.5 rounded bg-primary-container text-surface font-label-md text-label-md font-semibold transition-all shadow-xs"
+  >
+    Acheter
+  </Link>
+  <Link
+    href="/louer"
+    className="px-space-md py-1.5 rounded text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all"
+  >
+    Louer
+  </Link>
 </div>
 
 <div className="relative min-w-[200px] flex items-center bg-surface-container-lowest rounded-lg px-space-md py-space-sm shadow-xs">
@@ -212,14 +218,18 @@ function PageContent() {
 <div className="flex flex-col gap-space-xs">
 <label className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-semibold">Mode de transaction</label>
 <div className="grid grid-cols-2 p-1 bg-surface-container-low rounded-lg gap-1">
-<label className="flex items-center justify-center py-2 px-space-sm rounded cursor-pointer transition-all bg-primary-container text-surface shadow-xs font-label-md text-label-md font-semibold">
-<input checked="" className="sr-only" name="sidebar_transaction" type="radio" value="vente"/>
-                Acheter
-              </label>
-<label className="flex items-center justify-center py-2 px-space-sm rounded cursor-pointer transition-all hover:bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md font-medium">
-<input className="sr-only" name="sidebar_transaction" type="radio" value="location"/>
-                Louer
-              </label>
+  <Link
+    href="/biens?mode=vente"
+    className="flex items-center justify-center py-2 px-space-sm rounded transition-all bg-primary-container text-surface shadow-xs font-label-md text-label-md font-semibold"
+  >
+    Acheter
+  </Link>
+  <Link
+    href="/louer"
+    className="flex items-center justify-center py-2 px-space-sm rounded transition-all hover:bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md font-medium"
+  >
+    Louer
+  </Link>
 </div>
 </div>
 
