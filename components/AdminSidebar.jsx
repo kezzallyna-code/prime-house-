@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { primeStorage } from '@/lib/storage';
@@ -7,6 +8,23 @@ import { primeStorage } from '@/lib/storage';
 export default function AdminSidebar() {
   const pathname = usePathname() || '/admin';
   const router = useRouter();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const u = primeStorage.getAdminUser();
+    if (u) {
+      setCurrentUser(u);
+    } else {
+      fetch('/api/auth/me')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.authenticated && data.user) {
+            setCurrentUser(data.user);
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -178,12 +196,23 @@ export default function AdminSidebar() {
       <div className="p-4 bg-primary-container">
         <div className="bg-surface-container-lowest/5 rounded p-3 flex flex-col gap-2 mb-3">
           <div className="flex items-center justify-between">
-            <span className="font-label-sm text-label-sm text-tertiary-fixed">Rôle: Super-Admin</span>
+            <span className="font-label-sm text-label-sm text-tertiary-fixed">
+              {currentUser?.role === 'super_admin'
+                ? 'Rôle: Super-Admin'
+                : currentUser?.role === 'moderator'
+                ? 'Rôle: Modérateur'
+                : currentUser?.role === 'agent'
+                ? 'Rôle: Agent'
+                : 'Rôle: Administrateur'}
+            </span>
             <span className="material-symbols-outlined text-secondary text-[16px]">verified_user</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
-            <span className="font-label-sm text-label-sm text-surface-variant">Supabase Cloud • Node DZ</span>
+          <div className="flex items-center justify-between text-[11px] text-surface-variant opacity-80">
+            <span className="truncate max-w-[140px]">{currentUser?.email || 'direction@primehouse-dz.com'}</span>
+            <span className="flex items-center gap-1 shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+              <span>Supabase</span>
+            </span>
           </div>
         </div>
         <button

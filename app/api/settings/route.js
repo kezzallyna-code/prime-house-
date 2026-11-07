@@ -24,7 +24,7 @@ export async function GET() {
 
 export async function PUT(request) {
   try {
-    const auth = await requireAdmin(request, ['super_admin', 'admin']);
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator']);
     if (!auth.authorized) return auth.response;
 
     const body = await request.json();
