@@ -92,7 +92,7 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const auth = await requireAdmin(request, ['super_admin', 'admin']);
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator']);
     if (!auth.authorized) return auth.response;
 
     const { id } = params;
