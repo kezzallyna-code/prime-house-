@@ -1,7 +1,25 @@
+# Dependencies
 node_modules/
+
+# Local Environment Variables & Secrets (NEVER PUSH TO GITHUB)
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Temporary / Scratch Files
+scratch/
+*.log
+
+# Build & Deployment Outputs
+.next/
+.vercel/
+out/
+build/
+dist/
+
+# OS Metadata
 .DS_Store
 Thumbs.db
-.vercel
-scratch/
-.next/

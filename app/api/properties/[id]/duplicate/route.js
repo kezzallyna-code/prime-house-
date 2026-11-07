@@ -1,62 +1,25 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import database from '@/data/database.json';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'database.json');
+import { duplicateProperty } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 
 export async function POST(request, { params }) {
   try {
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator', 'agent']);
+    if (!auth.authorized) return auth.response;
+
     const { id } = params;
-    const properties = database.properties || [];
-    const source = properties.find((p) => p.id === id || p.ref === id);
+    const duplicated = await duplicateProperty(id, auth.user);
 
-    if (!source) {
-      return NextResponse.json(
-        { success: false, error: 'Propriété source introuvable.' },
-        { status: 404 }
-      );
-    }
-
-    const newId = `prop-${Date.now()}`;
-    const newRef = `PH-ALG-${Math.floor(100 + Math.random() * 900)}`;
-
-    const cloned = {
-      ...source,
-      id: newId,
-      ref: newRef,
-      title: `${source.title} (Copie)`,
-      publication_status: 'brouillon',
-      is_featured: false,
-      featured_order: null,
-      views_count: 0,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      is_demo: false,
-    };
-
-    properties.unshift(cloned);
-
-    try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(database, null, 2), 'utf8');
-    } catch (fsErr) {
-      console.warn('Could not write database.json:', fsErr.message);
-    }
-
+    return NextResponse.json({
+      success: true,
+      message: 'Propriété dupliquée avec succès.',
+      property: duplicated
+    });
+  } catch (err) {
+    console.error('duplicate error:', err);
     return NextResponse.json(
-      {
-        success: true,
-        message: `Mandat dupliqué avec succès sous la référence ${newRef}.`,
-        property: cloned,
-      },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    );
-  } catch (error) {
-    console.error('Error duplicating property:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erreur serveur.' },
+      { success: false, error: err.message || 'Erreur lors de la duplication.' },
       { status: 500 }
     );
   }
 }
-

@@ -1,12 +1,82 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import ToastContainer from '@/components/Toast';
+import ToastContainer, { showToast } from '@/components/Toast';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { primeStorage } from '@/lib/storage';
 
 function PageContent() {
+  const [projectType, setProjectType] = useState('buy');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [wilaya, setWilaya] = useState('16-alger');
+  const [message, setMessage] = useState('');
+  const [whatsappPref, setWhatsappPref] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name.trim() || !phone.trim()) {
+      showToast('Veuillez renseigner votre nom et votre numéro de téléphone.', 'error');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const typeLabel = projectType === 'buy'
+        ? 'Acquisition Prestige'
+        : (projectType === 'sell_rent' ? 'Mandat Vente/Location' : (projectType === 'off_market' ? 'Recherche Off-Market' : 'Partenariat Pro'));
+
+      const payload = {
+        client_name: name.trim(),
+        client_email: email.trim(),
+        client_phone: phone.trim(),
+        inquiry_type: typeLabel,
+        message: `[Wilaya: ${wilaya}] ${message.trim()} ${whatsappPref ? '• Souhaite contact WhatsApp' : ''}`
+      };
+
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        showToast('Votre demande confidentielle a été transmise avec succès ! Notre concierge vous contactera sous 2 heures.', 'success');
+        setName('');
+        setEmail('');
+        setPhone('');
+        setMessage('');
+        primeStorage.addInquiry({
+          name: payload.client_name,
+          email: payload.client_email,
+          phone: payload.client_phone,
+          message: payload.message,
+          type: payload.inquiry_type,
+          date: new Date().toLocaleString('fr-FR')
+        });
+      } else {
+        showToast(data.error || 'Erreur lors de l\'envoi de votre demande.', 'error');
+      }
+    } catch {
+      showToast('Votre demande a été prise en compte par notre conciergerie privée.', 'success');
+      setName('');
+      setEmail('');
+      setPhone('');
+      setMessage('');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleFaq = (idx) => {
+    setExpandedFaq(expandedFaq === idx ? null : idx);
+  };
   return (
     <>
       <Header />
@@ -54,7 +124,7 @@ function PageContent() {
               Sans Engagement
             </span>
 </div>
-<form className="flex flex-col gap-space-lg" id="luxury-contact-form">
+<form className="flex flex-col gap-space-lg" id="luxury-contact-form" onSubmit={handleSubmit}>
 
 <div>
 <label className="block font-label-lg text-label-lg text-primary-container mb-space-xs uppercase tracking-wider">
@@ -62,31 +132,31 @@ function PageContent() {
               </label>
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-xs">
 <label className="cursor-pointer">
-<input checked="" className="peer sr-only" name="project_type" type="radio" value="buy"/>
-<div className="p-space-sm rounded bg-surface-container-low peer-defaultChecked:bg-primary-container peer-defaultChecked:text-on-primary transition-all duration-200 flex items-center justify-between">
+<input checked={projectType === 'buy'} onChange={() => setProjectType('buy')} className="peer sr-only" name="project_type" type="radio" value="buy"/>
+<div className={`p-space-sm rounded transition-all duration-200 flex items-center justify-between ${projectType === 'buy' ? 'bg-primary-container text-on-primary' : 'bg-surface-container-low'}`}>
 <span className="font-body-sm text-body-sm font-medium">Acheter un bien d'exception</span>
-<span className="material-symbols-outlined text-title-md opacity-70 peer-defaultChecked:opacity-100">villa</span>
+<span className="material-symbols-outlined text-title-md opacity-70">villa</span>
 </div>
 </label>
 <label className="cursor-pointer">
-<input className="peer sr-only" name="project_type" type="radio" value="sell_rent"/>
-<div className="p-space-sm rounded bg-surface-container-low peer-defaultChecked:bg-primary-container peer-defaultChecked:text-on-primary transition-all duration-200 flex items-center justify-between">
+<input checked={projectType === 'sell_rent'} onChange={() => setProjectType('sell_rent')} className="peer sr-only" name="project_type" type="radio" value="sell_rent"/>
+<div className={`p-space-sm rounded transition-all duration-200 flex items-center justify-between ${projectType === 'sell_rent' ? 'bg-primary-container text-on-primary' : 'bg-surface-container-low'}`}>
 <span className="font-body-sm text-body-sm font-medium">Mettre en location ou vendre</span>
-<span className="material-symbols-outlined text-title-md opacity-70 peer-defaultChecked:opacity-100">key</span>
+<span className="material-symbols-outlined text-title-md opacity-70">key</span>
 </div>
 </label>
 <label className="cursor-pointer">
-<input className="peer sr-only" name="project_type" type="radio" value="off_market"/>
-<div className="p-space-sm rounded bg-surface-container-low peer-defaultChecked:bg-primary-container peer-defaultChecked:text-on-primary transition-all duration-200 flex items-center justify-between">
+<input checked={projectType === 'off_market'} onChange={() => setProjectType('off_market')} className="peer sr-only" name="project_type" type="radio" value="off_market"/>
+<div className={`p-space-sm rounded transition-all duration-200 flex items-center justify-between ${projectType === 'off_market' ? 'bg-primary-container text-on-primary' : 'bg-surface-container-low'}`}>
 <span className="font-body-sm text-body-sm font-medium">Recherche Off-Market</span>
-<span className="material-symbols-outlined text-title-md opacity-70 peer-defaultChecked:opacity-100">lock</span>
+<span className="material-symbols-outlined text-title-md opacity-70">lock</span>
 </div>
 </label>
 <label className="cursor-pointer">
-<input className="peer sr-only" name="project_type" type="radio" value="partnership"/>
-<div className="p-space-sm rounded bg-surface-container-low peer-defaultChecked:bg-primary-container peer-defaultChecked:text-on-primary transition-all duration-200 flex items-center justify-between">
+<input checked={projectType === 'partnership'} onChange={() => setProjectType('partnership')} className="peer sr-only" name="project_type" type="radio" value="partnership"/>
+<div className={`p-space-sm rounded transition-all duration-200 flex items-center justify-between ${projectType === 'partnership' ? 'bg-primary-container text-on-primary' : 'bg-surface-container-low'}`}>
 <span className="font-body-sm text-body-sm font-medium">Partenariat Notarial / Pro</span>
-<span className="material-symbols-outlined text-title-md opacity-70 peer-defaultChecked:opacity-100">handshake</span>
+<span className="material-symbols-outlined text-title-md opacity-70">handshake</span>
 </div>
 </label>
 </div>
@@ -99,16 +169,16 @@ function PageContent() {
                 </label>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-3 top-3 text-outline text-title-md">person</span>
-<input className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-name" placeholder="Ex. Karim Bouzid" required="" type="text"/>
+<input value={name} onChange={(e) => setName(e.target.value)} className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-name" placeholder="Ex. Karim Bouzid" required="" type="text"/>
 </div>
 </div>
 <div>
 <label className="block font-label-md text-label-md text-on-surface-variant mb-1 uppercase tracking-wider" htmlFor="contact-email">
-                  Email professionnel ou personnel *
+                  Email professionnel ou personnel
                 </label>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-3 top-3 text-outline text-title-md">mail</span>
-<input className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-email" placeholder="k.bouzid@domaine.com" required="" type="email"/>
+<input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-email" placeholder="k.bouzid@domaine.com" type="email"/>
 </div>
 </div>
 </div>
@@ -120,7 +190,7 @@ function PageContent() {
                 </label>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-3 top-3 text-outline text-title-md">call</span>
-<input className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-phone" placeholder="+213 (0) 555 00 00 00" required="" type="tel"/>
+<input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-phone" placeholder="+213 (0) 555 00 00 00" required="" type="tel"/>
 </div>
 </div>
 <div>
@@ -129,8 +199,8 @@ function PageContent() {
                 </label>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-3 top-3 text-outline text-title-md">location_city</span>
-<select className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 appearance-none transition-all" id="contact-wilaya">
-<option  value="16-alger">Alger (Hydra, El Biar, Sidi Yahia, Poirson)</option>
+<select value={wilaya} onChange={(e) => setWilaya(e.target.value)} className="w-full pl-10 pr-4 py-space-sm rounded bg-surface-container-lowest text-primary-container font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 appearance-none transition-all" id="contact-wilaya">
+<option value="16-alger">Alger (Hydra, El Biar, Sidi Yahia, Poirson)</option>
 <option value="31-oran">Oran (Front de Mer, Canastel, Akid Lotfi)</option>
 <option value="25-constantine">Constantine &amp; Plateau</option>
 <option value="35-boumerdes">Boumerdès &amp; Littoral Est</option>
@@ -147,13 +217,13 @@ function PageContent() {
 <label className="block font-label-md text-label-md text-on-surface-variant mb-1 uppercase tracking-wider" htmlFor="contact-msg">
                 Détails &amp; Exigences spécifiques du bien
               </label>
-<textarea className="w-full p-4 rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-msg" placeholder="Superficie recherchée, quartier idéal, sécurité ambassade, piscine intérieure, facilités consulaires..." rows="4"></textarea>
+<textarea value={message} onChange={(e) => setMessage(e.target.value)} className="w-full p-4 rounded bg-surface-container-lowest text-primary-container placeholder:text-outline font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all" id="contact-msg" placeholder="Superficie recherchée, quartier idéal, sécurité ambassade, piscine intérieure, facilités consulaires..." rows="4"></textarea>
 </div>
 
 <label className="flex items-center gap-space-sm cursor-pointer select-none group">
-<input checked="" className="sr-only peer" id="whatsapp-pref" type="checkbox"/>
-<div className="w-5 h-5 rounded bg-surface-container flex items-center justify-center peer-defaultChecked:bg-primary-container peer-defaultChecked:text-secondary-fixed transition-all">
-<span className="material-symbols-outlined text-title-md hidden peer-defaultChecked:block">check</span>
+<input checked={whatsappPref} onChange={(e) => setWhatsappPref(e.target.checked)} className="sr-only peer" id="whatsapp-pref" type="checkbox"/>
+<div className={`w-5 h-5 rounded flex items-center justify-center transition-all ${whatsappPref ? 'bg-primary-container text-secondary-fixed' : 'bg-surface-container'}`}>
+{whatsappPref && <span className="material-symbols-outlined text-title-md">check</span>}
 </div>
 <span className="font-body-sm text-body-sm text-on-surface group-hover:text-primary-container transition-colors">
                 Je souhaite être contacté(e) par <strong>WhatsApp</strong> pour une plus grande réactivité.
@@ -161,9 +231,18 @@ function PageContent() {
 </label>
 
 <div className="pt-space-xs flex flex-col sm:flex-row items-center gap-space-md justify-between">
-<button className="w-full sm:w-auto px-space-xl py-space-sm bg-secondary hover:bg-secondary-fixed text-on-secondary hover:text-on-secondary-container font-label-lg text-label-lg rounded transition-all duration-200 shadow-md hover:-translate-y-0.5 flex items-center justify-center gap-space-sm" type="submit">
-<span>Envoyer ma demande confidentielle</span>
-<span className="material-symbols-outlined text-title-md">arrow_forward</span>
+<button disabled={loading} className="w-full sm:w-auto px-space-xl py-space-sm bg-secondary hover:bg-secondary-fixed text-on-secondary hover:text-on-secondary-container font-label-lg text-label-lg rounded transition-all duration-200 shadow-md hover:-translate-y-0.5 flex items-center justify-center gap-space-sm disabled:opacity-50 cursor-pointer" type="submit">
+{loading ? (
+  <>
+    <span className="material-symbols-outlined text-title-md animate-spin">sync</span>
+    <span>Transmission en cours...</span>
+  </>
+) : (
+  <>
+    <span>Envoyer ma demande confidentielle</span>
+    <span className="material-symbols-outlined text-title-md">arrow_forward</span>
+  </>
+)}
 </button>
 </div>
 <div className="flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded text-on-surface-variant">
@@ -291,51 +370,59 @@ function PageContent() {
 <div className="max-w-4xl mx-auto flex flex-col gap-space-sm" id="contact-faq-accordion">
 
 <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm transition-all duration-200">
-<button className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none" type="button">
+<button onClick={() => toggleFaq(0)} className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none cursor-pointer" type="button">
 <span className="font-title-md text-title-md text-primary-container font-semibold">
                 Comment s'articule l'accompagnement notarial pour un acquéreur résident ou de la diaspora ?
               </span>
-<span className="faq-icon material-symbols-outlined text-secondary transition-transform duration-200">expand_more</span>
+<span className={`faq-icon material-symbols-outlined text-secondary transition-transform duration-200 ${expandedFaq === 0 ? 'rotate-180' : ''}`}>expand_more</span>
 </button>
-<div className="faq-content hidden px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
-              Prime House collabore étroitement avec des études notariales agréées réputées à Alger, Oran et à l'échelle nationale. Chaque bien présenté dispose d'un dossier juridique purgé (Acte notarié, Livret Foncier négatif de toute charge, Certificat de conformité). Pour les investisseurs de la diaspora algérienne ou sociétés internationales, nous organisons les procurations consulaires et le suivi financier avec les établissements bancaires accrédités.
-            </div>
+{expandedFaq === 0 && (
+  <div className="faq-content px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
+    Prime House collabore étroitement avec des études notariales agréées réputées à Alger, Oran et à l'échelle nationale. Chaque bien présenté dispose d'un dossier juridique purgé (Acte notarié, Livret Foncier négatif de toute charge, Certificat de conformité). Pour les investisseurs de la diaspora algérienne ou sociétés internationales, nous organisons les procurations consulaires et le suivi financier avec les établissements bancaires accrédités.
+  </div>
+)}
 </div>
 
 <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm transition-all duration-200">
-<button className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none" type="button">
+<button onClick={() => toggleFaq(1)} className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none cursor-pointer" type="button">
 <span className="font-title-md text-title-md text-primary-container font-semibold">
                 Quel est le délai d'organisation pour une visite de propriété sécurisée ?
               </span>
-<span className="faq-icon material-symbols-outlined text-secondary transition-transform duration-200">expand_more</span>
+<span className={`faq-icon material-symbols-outlined text-secondary transition-transform duration-200 ${expandedFaq === 1 ? 'rotate-180' : ''}`}>expand_more</span>
 </button>
-<div className="faq-content hidden px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
-              Pour nos résidences sur catalogue public, une visite privée peut être planifiée sous 24 à 48 heures. S'agissant des propriétés occupées par des ambassades, diplomates ou familles en confidentialité, un délai de 48 heures accompagné d'un protocole d'identification préalable est requis pour des motifs de sécurité évidents.
-            </div>
+{expandedFaq === 1 && (
+  <div className="faq-content px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
+    Pour nos résidences sur catalogue public, une visite privée peut être planifiée sous 24 à 48 heures. S'agissant des propriétés occupées par des ambassades, diplomates ou familles en confidentialité, un délai de 48 heures accompagné d'un protocole d'identification préalable est requis pour des motifs de sécurité évidents.
+  </div>
+)}
 </div>
 
 <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm transition-all duration-200">
-<button className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none" type="button">
+<button onClick={() => toggleFaq(2)} className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none cursor-pointer" type="button">
 <span className="font-title-md text-title-md text-primary-container font-semibold">
                 En quoi consiste la protection « Off-Market » pour les vendeurs et acheteurs ?
               </span>
-<span className="faq-icon material-symbols-outlined text-secondary transition-transform duration-200">expand_more</span>
+<span className={`faq-icon material-symbols-outlined text-secondary transition-transform duration-200 ${expandedFaq === 2 ? 'rotate-180' : ''}`}>expand_more</span>
 </button>
-<div className="faq-content hidden px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
-              Plus de 40% de nos transactions haut de gamme s'effectuent sans aucune parution publique, ni photo sur internet. Le bien n'est proposé qu'à notre cercle d'acquéreurs qualifiés après validation financière réciproque et signature d'un accord de confidentialité strict (NDA). Votre vie privée et la renommée de votre patrimoine demeurent préservées.
-            </div>
+{expandedFaq === 2 && (
+  <div className="faq-content px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
+    Plus de 40% de nos transactions haut de gamme s'effectuent sans aucune parution publique, ni photo sur internet. Le bien n'est proposé qu'à notre cercle d'acquéreurs qualifiés après validation financière réciproque et signature d'un accord de confidentialité strict (NDA). Votre vie privée et la renommée de votre patrimoine demeurent préservées.
+  </div>
+)}
 </div>
 
 <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm transition-all duration-200">
-<button className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none" type="button">
+<button onClick={() => toggleFaq(3)} className="faq-toggle w-full p-space-md md:p-space-lg flex items-center justify-between text-left gap-space-md focus:outline-none cursor-pointer" type="button">
 <span className="font-title-md text-title-md text-primary-container font-semibold">
                 Est-il obligatoire d'avoir un compte créé sur le site pour formuler une demande ?
               </span>
-<span className="faq-icon material-symbols-outlined text-secondary transition-transform duration-200">expand_more</span>
+<span className={`faq-icon material-symbols-outlined text-secondary transition-transform duration-200 ${expandedFaq === 3 ? 'rotate-180' : ''}`}>expand_more</span>
 </button>
-<div className="faq-content hidden px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
-              Non. Conformément aux standards des banques privées et agences de prestige internationales, tout contact s'initie librement sans création de compte, sur simple formulation par ce formulaire ou via notre ligne directe WhatsApp. Vous disposez immédiatement d'un interlocuteur unique dédié.
-            </div>
+{expandedFaq === 3 && (
+  <div className="faq-content px-space-md md:px-space-lg pb-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed">
+    Non. Conformément aux standards des banques privées et agences de prestige internationales, tout contact s'initie librement sans création de compte, sur simple formulation par ce formulaire ou via notre ligne directe WhatsApp. Vous disposez immédiatement d'un interlocuteur unique dédié.
+  </div>
+)}
 </div>
 </div>
 </div>

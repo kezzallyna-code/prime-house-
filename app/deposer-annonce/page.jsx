@@ -39,7 +39,52 @@ function PageContent() {
     };
 
     document.addEventListener('click', handleFavClick);
-    return () => document.removeEventListener('click', handleFavClick);
+
+    // Form submission & modal handling
+    const form = document.getElementById('submission-form');
+    const modal = document.getElementById('success-modal');
+    const closeBtn = document.getElementById('close-modal-btn');
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const title = form.querySelector('input[placeholder*="Somptueuse"]')?.value || 'Dépôt de bien';
+      const name = form.querySelector('input[placeholder*="Karim Benali"]')?.value || 'Anonyme';
+      const phone = form.querySelector('input[type="tel"]')?.value || '';
+      const email = form.querySelector('input[type="email"]')?.value || '';
+      const message = form.querySelector('textarea')?.value || '';
+
+      primeStorage.addInquiry({
+        name,
+        phone,
+        email,
+        message: `Dépôt de bien: ${title} - ${message}`,
+        date: new Date().toLocaleString('fr-FR'),
+        type: 'Dépôt d\'annonce'
+      });
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      showToast('Votre annonce a été transmise avec succès pour modération !', 'success');
+    };
+
+    const handleCloseModal = () => {
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+      form?.reset();
+    };
+
+    if (form) form.addEventListener('submit', handleSubmit);
+    if (closeBtn) closeBtn.addEventListener('click', handleCloseModal);
+
+    return () => {
+      document.removeEventListener('click', handleFavClick);
+      if (form) form.removeEventListener('submit', handleSubmit);
+      if (closeBtn) closeBtn.removeEventListener('click', handleCloseModal);
+    };
   }, []);
 
   return (

@@ -1,34 +1,48 @@
 import { NextResponse } from 'next/server';
-import database from '@/data/database.json';
+import { getProperties, getInquiries, getCategories, getWilayas } from '@/lib/db';
+import { getSupabaseAdmin } from '@/lib/supabase-server';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const properties = database.properties || [];
-  const inquiries = database.inquiries || [];
-  const categories = database.categories || [];
-  const wilayas = database.wilayas || [];
+  try {
+    const supabase = getSupabaseAdmin();
 
-  return NextResponse.json(
-    {
-      status: 'online',
-      app: 'Prime House Real Estate Admin Console',
-      version: '2.0.0-Next.js',
-      node: 'Next.js App Router on Vercel',
+    // Verify DB connectivity
+    const startTime = Date.now();
+    const { data: dbCheck, error: dbErr } = await supabase.from('properties').select('id').limit(1);
+    const latencyMs = Date.now() - startTime;
+
+    const { counts } = await getProperties({ limit: 1 });
+    const inquiries = await getInquiries();
+    const categories = await getCategories();
+    const wilayas = await getWilayas();
+
+    return NextResponse.json({
+      status: dbErr ? 'degraded' : 'healthy',
+      database: 'Supabase PostgreSQL (Active Healthy)',
+      latencyMs: `${latencyMs}ms`,
+      app: 'Prime House Real Estate Production Portal',
+      version: '2.0.0-Production',
       counts: {
-        properties: properties.length,
-        published: properties.filter((p) => p.publication_status === 'publie').length,
-        moderation: properties.filter((p) => p.publication_status === 'moderation').length,
-        featured: properties.filter((p) => p.is_featured).length,
+        properties: counts.all,
+        published: counts.published,
+        moderation: counts.moderation,
+        drafts: counts.drafts,
+        archived: counts.archived,
+        featured: counts.featured,
         inquiries: inquiries.length,
         categories: categories.length,
         wilayas: wilayas.length,
       },
       time: new Date().toISOString(),
-    },
-    {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    }
-  );
+    });
+  } catch (err) {
+    return NextResponse.json({
+      status: 'error',
+      database: 'Disconnected',
+      error: err.message,
+      time: new Date().toISOString()
+    }, { status: 500 });
+  }
 }
-

@@ -1,17 +1,13 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import database from '@/data/database.json';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'database.json');
+import { getPropertyById, updateProperty, deleteProperty } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request, { params }) {
   try {
     const { id } = params;
-    const properties = database.properties || [];
-    const property = properties.find((p) => p.id === id || p.ref === id);
+    const property = await getPropertyById(id);
 
     if (!property) {
       return NextResponse.json(
@@ -20,14 +16,14 @@ export async function GET(request, { params }) {
       );
     }
 
+    return NextResponse.json({
+      success: true,
+      property
+    });
+  } catch (err) {
+    console.error(`GET /api/properties/${params?.id} error:`, err);
     return NextResponse.json(
-      { success: true, property },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    );
-  } catch (error) {
-    console.error('Error fetching property:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erreur serveur.' },
+      { success: false, error: 'Erreur lors de la récupération de la propriété.' },
       { status: 500 }
     );
   }
@@ -35,54 +31,60 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
-    const { id } = params;
-    const body = await request.json();
-    const properties = database.properties || [];
-    const index = properties.findIndex((p) => p.id === id || p.ref === id);
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator', 'agent']);
+    if (!auth.authorized) return auth.response;
 
-    if (index === -1) {
+    const { id } = params;
+    const existing = await getPropertyById(id);
+    if (!existing) {
       return NextResponse.json(
-        { success: false, error: 'Propriété introuvable pour mise à jour.' },
+        { success: false, error: 'Propriété introuvable.' },
         { status: 404 }
       );
     }
 
-    const current = properties[index];
-    const updated = {
-      ...current,
-      ...body,
-      id: current.id, // Preserve ID
-      ref: current.ref, // Preserve REF
-      price: body.price !== undefined ? Number(body.price) : current.price,
-      price_formatted: body.price !== undefined ? `${Number(body.price).toLocaleString('fr-FR')} DA` : current.price_formatted,
-      surface_habitable: body.surface_habitable !== undefined ? Number(body.surface_habitable) : current.surface_habitable,
-      surface_terrain: body.surface_terrain !== undefined ? Number(body.surface_terrain) : current.surface_terrain,
-      bedrooms: body.bedrooms !== undefined ? Number(body.bedrooms) : current.bedrooms,
-      bathrooms: body.bathrooms !== undefined ? Number(body.bathrooms) : current.bathrooms,
-      wilaya_code: body.wilaya_code !== undefined ? Number(body.wilaya_code) : current.wilaya_code,
-      updated_at: new Date().toISOString(),
-    };
+    const body = await request.json();
+    const updates = {};
 
-    properties[index] = updated;
+    const allowedFields = [
+      'title', 'title_ar', 'tagline', 'description', 'description_ar',
+      'transaction_type', 'category_id', 'category_name', 'price', 'price_formatted',
+      'price_period', 'price_negotiable', 'currency', 'wilaya_code', 'wilaya_name',
+      'commune', 'address', 'cadastral_section', 'cadastral_number',
+      'surface_habitable', 'surface_terrain', 'bedrooms', 'bathrooms', 'living_rooms',
+      'garage_spaces', 'floors', 'year_built', 'amenities', 'legal_status',
+      'ownership_info', 'publication_status', 'is_featured', 'featured_order',
+      'is_exclusive', 'is_sold', 'is_rented', 'owner_name', 'owner_phone',
+      'owner_email', 'owner_type', 'agent_id', 'main_image', 'images',
+      'video_url', 'virtual_tour_url'
+    ];
 
-    try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(database, null, 2), 'utf8');
-    } catch (fsErr) {
-      console.warn('Could not write database.json:', fsErr.message);
+    allowedFields.forEach(field => {
+      if (body[field] !== undefined) {
+        updates[field] = body[field];
+      }
+    });
+
+    if (updates.price !== undefined) {
+      const priceNum = Number(updates.price);
+      updates.price = priceNum;
+      if (!updates.price_formatted) {
+        const trans = updates.transaction_type || existing.transaction_type;
+        updates.price_formatted = `${priceNum.toLocaleString('fr-FR')} DA${trans === 'location' ? '/mois' : ''}`;
+      }
     }
 
+    const updated = await updateProperty(existing.id, updates, auth.user);
+
+    return NextResponse.json({
+      success: true,
+      message: 'Propriété mise à jour avec succès.',
+      property: updated
+    });
+  } catch (err) {
+    console.error(`PUT /api/properties/${params?.id} error:`, err);
     return NextResponse.json(
-      {
-        success: true,
-        message: 'Bien mis à jour avec succès.',
-        property: updated,
-      },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    );
-  } catch (error) {
-    console.error('Error updating property:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erreur serveur lors de la mise à jour.' },
+      { success: false, error: err.message || 'Erreur lors de la mise à jour.' },
       { status: 500 }
     );
   }
@@ -90,39 +92,29 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const { id } = params;
-    const properties = database.properties || [];
-    const index = properties.findIndex((p) => p.id === id || p.ref === id);
+    const auth = await requireAdmin(request, ['super_admin', 'admin']);
+    if (!auth.authorized) return auth.response;
 
-    if (index === -1) {
+    const { id } = params;
+    const existing = await getPropertyById(id);
+    if (!existing) {
       return NextResponse.json(
-        { success: false, error: 'Propriété introuvable pour suppression.' },
+        { success: false, error: 'Propriété introuvable.' },
         { status: 404 }
       );
     }
 
-    const removed = properties.splice(index, 1)[0];
+    await deleteProperty(existing.id, auth.user);
 
-    try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(database, null, 2), 'utf8');
-    } catch (fsErr) {
-      console.warn('Could not write database.json:', fsErr.message);
-    }
-
+    return NextResponse.json({
+      success: true,
+      message: 'Propriété supprimée avec succès.'
+    });
+  } catch (err) {
+    console.error(`DELETE /api/properties/${params?.id} error:`, err);
     return NextResponse.json(
-      {
-        success: true,
-        message: `Le bien ${removed.ref || removed.id} a été supprimé définitivement.`,
-        deletedId: removed.id,
-      },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    );
-  } catch (error) {
-    console.error('Error deleting property:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erreur serveur lors de la suppression.' },
+      { success: false, error: err.message || 'Erreur lors de la suppression.' },
       { status: 500 }
     );
   }
 }
-

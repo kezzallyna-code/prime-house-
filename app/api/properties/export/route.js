@@ -1,40 +1,69 @@
 import { NextResponse } from 'next/server';
-import database from '@/data/database.json';
+import { getProperties } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const properties = database.properties || [];
-    let csv = 'RÉFÉRENCE;TITRE;TRANSACTION;CATÉGORIE;WILAYA;COMMUNE;PRIX_DA;SURFACE_M2;CHAMBRES;STATUT;À_LA_UNE;DATE_CREATION\n';
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator']);
+    if (!auth.authorized) return auth.response;
 
-    properties.forEach((p) => {
-      const ref = (p.ref || '').replace(/;/g, ' ');
-      const title = (p.title || '').replace(/;/g, ' ');
-      const trans = p.transaction_type === 'vente' ? 'Vente' : 'Location';
-      const cat = (p.category_name || '').replace(/;/g, ' ');
-      const wilaya = (p.wilaya_name || '').replace(/;/g, ' ');
-      const commune = (p.commune || '').replace(/;/g, ' ');
-      const price = p.price || 0;
-      const surface = p.surface_habitable || 0;
-      const rooms = p.bedrooms || 0;
-      const status = p.publication_status || 'brouillon';
-      const featured = p.is_featured ? 'Oui' : 'Non';
-      const date = p.created_at ? new Date(p.created_at).toLocaleDateString('fr-FR') : '';
+    const { properties } = await getProperties({ limit: 1000 });
 
-      csv += `"${ref}";"${title}";"${trans}";"${cat}";"${wilaya}";"${commune}";${price};${surface};${rooms};"${status}";"${featured}";"${date}"\n`;
-    });
+    const headers = [
+      'Référence',
+      'Titre',
+      'Catégorie',
+      'Transaction',
+      'Prix (DZD)',
+      'Wilaya',
+      'Commune',
+      'Surface Habitable (m²)',
+      'Chambres',
+      'Salles de bain',
+      'Statut Publication',
+      'En Vitrine',
+      'Vues',
+      'Date Création'
+    ];
 
-    return new NextResponse(csv, {
+    const escapeCsv = (str) => {
+      const s = String(str ?? '').replace(/"/g, '""');
+      return `"${s}"`;
+    };
+
+    const rows = properties.map((p) => [
+      escapeCsv(p.ref),
+      escapeCsv(p.title),
+      escapeCsv(p.category_name),
+      escapeCsv(p.transaction_type),
+      escapeCsv(p.price),
+      escapeCsv(p.wilaya_name),
+      escapeCsv(p.commune),
+      escapeCsv(p.surface_habitable),
+      escapeCsv(p.bedrooms),
+      escapeCsv(p.bathrooms),
+      escapeCsv(p.publication_status),
+      escapeCsv(p.is_featured ? 'Oui' : 'Non'),
+      escapeCsv(p.views_count),
+      escapeCsv(p.created_at)
+    ]);
+
+    const csvContent = [headers.join(';'), ...rows.map((r) => r.join(';'))].join('\r\n');
+
+    return new Response('\uFEFF' + csvContent, {
       status: 200,
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': `attachment; filename="registre-foncier-prime-house-${Date.now()}.csv"`,
+        'Content-Disposition': `attachment; filename="prime_house_properties_${new Date().toISOString().slice(0, 10)}.csv"`,
       },
     });
-  } catch (error) {
-    console.error('Error exporting properties:', error);
-    return NextResponse.json({ success: false, error: 'Erreur lors de l’export CSV.' }, { status: 500 });
+  } catch (err) {
+    console.error('export error:', err);
+    return NextResponse.json(
+      { success: false, error: 'Erreur lors de l’export CSV.' },
+      { status: 500 }
+    );
   }
 }
-

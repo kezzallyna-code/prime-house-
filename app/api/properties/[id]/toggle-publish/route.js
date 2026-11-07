@@ -1,49 +1,26 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import database from '@/data/database.json';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'database.json');
+import { togglePublishProperty } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 
 export async function POST(request, { params }) {
   try {
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator']);
+    if (!auth.authorized) return auth.response;
+
     const { id } = params;
-    const properties = database.properties || [];
-    const property = properties.find((p) => p.id === id || p.ref === id);
+    const updated = await togglePublishProperty(id, auth.user);
 
-    if (!property) {
-      return NextResponse.json(
-        { success: false, error: 'Propriété introuvable.' },
-        { status: 404 }
-      );
-    }
-
-    const wasPublished = property.publication_status === 'publie';
-    property.publication_status = wasPublished ? 'archive' : 'publie';
-    property.updated_at = new Date().toISOString();
-
-    try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(database, null, 2), 'utf8');
-    } catch (fsErr) {
-      console.warn('Could not write database.json:', fsErr.message);
-    }
-
+    return NextResponse.json({
+      success: true,
+      message: updated.publication_status === 'publie' ? 'Propriété publiée sur la vitrine publique.' : 'Propriété passée en brouillon.',
+      publication_status: updated.publication_status,
+      property: updated
+    });
+  } catch (err) {
+    console.error('toggle-publish error:', err);
     return NextResponse.json(
-      {
-        success: true,
-        message: property.publication_status === 'publie'
-          ? `Le bien ${property.ref} est désormais en ligne et visible par le public.`
-          : `Le bien ${property.ref} a été archivé et retiré du site public.`,
-        publication_status: property.publication_status,
-      },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    );
-  } catch (error) {
-    console.error('Error toggling publish:', error);
-    return NextResponse.json(
-      { success: false, error: 'Erreur serveur.' },
+      { success: false, error: err.message || 'Erreur lors du changement de statut.' },
       { status: 500 }
     );
   }
 }
-

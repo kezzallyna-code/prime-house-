@@ -1,108 +1,50 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import database from '@/data/database.json';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'database.json');
+import { getProperties, createProperty } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const search = (searchParams.get('search') || searchParams.get('q') || '').toLowerCase().trim();
-    const status = searchParams.get('status') || 'all'; // 'all' | 'publie' | 'moderation' | 'brouillon' | 'archive'
-    const transaction = searchParams.get('transaction') || searchParams.get('mode') || 'all'; // 'all' | 'vente' | 'location'
+    const search = searchParams.get('search') || searchParams.get('q') || '';
+    const status = searchParams.get('status') || 'all';
+    const transaction = searchParams.get('transaction') || searchParams.get('mode') || 'all';
     const category = searchParams.get('category') || searchParams.get('type') || 'all';
     const wilaya = searchParams.get('wilaya') || 'all';
     const featured = searchParams.get('featured');
     const sort = searchParams.get('sort') || 'recent';
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = parseInt(searchParams.get('limit') || '50', 10);
 
-    let list = [...(database.properties || [])];
+    const result = await getProperties({
+      search,
+      status,
+      transaction,
+      category,
+      wilaya,
+      featured,
+      sort,
+      page,
+      limit
+    });
 
-    // Filter status
-    if (status && status !== 'all') {
-      list = list.filter((p) => p.publication_status === status);
-    }
-
-    // Filter transaction
-    if (transaction && transaction !== 'all') {
-      list = list.filter((p) => p.transaction_type === transaction);
-    }
-
-    // Filter category
-    if (category && category !== 'all') {
-      list = list.filter((p) => {
-        const cat = (p.category_name || '').toLowerCase();
-        const catId = (p.category_id || '').toLowerCase();
-        const qCat = category.toLowerCase();
-        return cat.includes(qCat) || catId.includes(qCat);
-      });
-    }
-
-    // Filter wilaya
-    if (wilaya && wilaya !== 'all') {
-      list = list.filter((p) => {
-        if (!isNaN(wilaya)) {
-          return Number(p.wilaya_code) === Number(wilaya);
-        }
-        return (p.wilaya_name || '').toLowerCase() === wilaya.toLowerCase();
-      });
-    }
-
-    // Filter featured
-    if (featured === 'true') {
-      list = list.filter((p) => Boolean(p.is_featured));
-    }
-
-    // Filter search text
-    if (search) {
-      list = list.filter((p) => {
-        const text = `${p.ref} ${p.title} ${p.wilaya_name} ${p.commune} ${p.owner_name || ''} ${p.address || ''}`.toLowerCase();
-        return text.includes(search);
-      });
-    }
-
-    // Sort
-    if (sort === 'price_desc') {
-      list.sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
-    } else if (sort === 'price_asc') {
-      list.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
-    } else if (sort === 'views') {
-      list.sort((a, b) => (Number(b.views_count) || 0) - (Number(a.views_count) || 0));
-    } else {
-      // Recent first
-      list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-    }
-
-    const allProps = database.properties || [];
-    const counts = {
-      all: allProps.length,
-      published: allProps.filter((p) => p.publication_status === 'publie').length,
-      moderation: allProps.filter((p) => p.publication_status === 'moderation').length,
-      drafts: allProps.filter((p) => p.publication_status === 'brouillon').length,
-      archived: allProps.filter((p) => p.publication_status === 'archive').length,
-      featured: allProps.filter((p) => Boolean(p.is_featured)).length,
-    };
-
-    return NextResponse.json(
-      {
-        success: true,
-        properties: list,
-        total: list.length,
-        counts,
-      },
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Cache-Control': 'no-store, max-age=0',
-        },
+    return NextResponse.json({
+      success: true,
+      properties: result.properties,
+      total: result.total,
+      page: result.page,
+      pageSize: result.pageSize,
+      counts: result.counts
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0'
       }
-    );
-  } catch (error) {
-    console.error('Error fetching properties:', error);
+    });
+  } catch (err) {
+    console.error('GET /api/properties error:', err);
     return NextResponse.json(
-      { success: false, error: 'Erreur lors du chargement des biens.', properties: [], total: 0 },
+      { success: false, error: err.message || 'Erreur lors de la récupération des propriétés.' },
       { status: 500 }
     );
   }
@@ -110,83 +52,84 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
+    // 1. Authorization check
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator', 'agent']);
+    if (!auth.authorized) return auth.response;
+
+    // 2. Parse & Validate input
     const body = await request.json();
-    if (!body.title || !body.price) {
-      return NextResponse.json(
-        { success: false, error: 'Le titre et le prix sont obligatoires.' },
-        { status: 400 }
-      );
+    if (!body.title || !body.title.trim()) {
+      return NextResponse.json({ success: false, error: 'Le titre de la propriété est requis.' }, { status: 400 });
+    }
+    if (!body.transaction_type || !['vente', 'location'].includes(body.transaction_type)) {
+      return NextResponse.json({ success: false, error: 'Type de transaction invalide (vente ou location).' }, { status: 400 });
+    }
+    if (body.price === undefined || isNaN(Number(body.price)) || Number(body.price) < 0) {
+      return NextResponse.json({ success: false, error: 'Le prix doit être un nombre positif.' }, { status: 400 });
     }
 
-    const newId = `prop-${Date.now()}`;
-    const newRef = body.ref || `PH-ALG-${Math.floor(100 + Math.random() * 900)}`;
+    const priceNum = Number(body.price);
+    const priceFormatted = `${priceNum.toLocaleString('fr-FR')} DA${body.transaction_type === 'location' ? '/mois' : ''}`;
 
-    const newProperty = {
-      id: newId,
-      ref: newRef,
-      title: body.title,
+    const newProperty = await createProperty({
+      title: body.title.trim(),
       title_ar: body.title_ar || '',
       tagline: body.tagline || '',
       description: body.description || '',
       description_ar: body.description_ar || '',
-      transaction_type: body.transaction_type || 'vente',
-      category_id: body.category_id || 'cat-01',
+      transaction_type: body.transaction_type,
+      category_id: body.category_id || null,
       category_name: body.category_name || 'Villa Contemporaine',
-      price: Number(body.price),
-      price_formatted: `${Number(body.price).toLocaleString('fr-FR')} DA`,
-      price_period: body.price_period || null,
+      price: priceNum,
+      price_formatted: body.price_formatted || priceFormatted,
+      price_period: body.price_period || (body.transaction_type === 'location' ? 'month' : null),
       price_negotiable: Boolean(body.price_negotiable),
-      wilaya_code: Number(body.wilaya_code) || 16,
+      currency: body.currency || 'DZD',
+      wilaya_code: body.wilaya_code ? Number(body.wilaya_code) : null,
       wilaya_name: body.wilaya_name || 'Alger',
       commune: body.commune || 'Hydra',
       address: body.address || '',
       cadastral_section: body.cadastral_section || '',
       cadastral_number: body.cadastral_number || '',
-      surface_habitable: Number(body.surface_habitable) || 0,
-      surface_terrain: Number(body.surface_terrain) || 0,
-      bedrooms: Number(body.bedrooms) || 0,
-      bathrooms: Number(body.bathrooms) || 0,
-      garage_spaces: Number(body.garage_spaces) || 0,
-      floors: Number(body.floors) || 1,
-      year_built: Number(body.year_built) || new Date().getFullYear(),
+      surface_habitable: Number(body.surface_habitable || body.surface || 0),
+      surface_terrain: Number(body.surface_terrain || body.landSurface || 0),
+      bedrooms: parseInt(body.bedrooms || 0, 10),
+      bathrooms: parseInt(body.bathrooms || 0, 10),
+      living_rooms: parseInt(body.living_rooms || body.livingRooms || 0, 10),
+      garage_spaces: parseInt(body.garage_spaces || body.garages || 0, 10),
+      floors: parseInt(body.floors || 1, 10),
+      year_built: body.year_built ? parseInt(body.year_built, 10) : null,
       amenities: Array.isArray(body.amenities) ? body.amenities : [],
-      legal_status: body.legal_status || 'Acte notarié & Livret foncier individuel',
+      legal_status: body.legal_status || body.legalStatus || 'Acte notarié & Livret foncier',
+      ownership_info: body.ownership_info || {},
       publication_status: body.publication_status || 'publie',
       is_featured: Boolean(body.is_featured),
-      featured_order: body.featured_order || null,
+      featured_order: body.featured_order ? parseInt(body.featured_order, 10) : null,
+      is_exclusive: Boolean(body.is_exclusive),
+      is_demo: false,
+      is_sold: Boolean(body.is_sold),
+      is_rented: Boolean(body.is_rented),
       owner_name: body.owner_name || 'Direction Prime House',
       owner_phone: body.owner_phone || '+213 23 45 67 89',
-      owner_email: body.owner_email || 'direction@primehouse-dz.com',
+      owner_email: body.owner_email || 'mandats@primehouse-dz.com',
       owner_type: body.owner_type || 'direction',
-      main_image: body.main_image || '/assets/logo-p-transparent.png',
-      images: Array.isArray(body.images) && body.images.length > 0 ? body.images : [body.main_image || '/assets/logo-p-transparent.png'],
-      views_count: 0,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      is_demo: false,
-    };
+      agent_id: body.agent_id || null,
+      main_image: body.main_image || (Array.isArray(body.images) && body.images.length > 0 ? body.images[0] : ''),
+      images: Array.isArray(body.images) ? body.images : [],
+      video_url: body.video_url || '',
+      virtual_tour_url: body.virtual_tour_url || '',
+      created_by: auth.user.id
+    }, auth.user);
 
-    database.properties = database.properties || [];
-    database.properties.unshift(newProperty);
-
-    try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(database, null, 2), 'utf8');
-    } catch (fsErr) {
-      console.warn('Could not write database.json:', fsErr.message);
-    }
-
+    return NextResponse.json({
+      success: true,
+      message: 'Propriété créée avec succès.',
+      property: newProperty
+    }, { status: 201 });
+  } catch (err) {
+    console.error('POST /api/properties error:', err);
     return NextResponse.json(
-      {
-        success: true,
-        message: 'Bien ajouté avec succès.',
-        property: newProperty,
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error('Error creating property:', error);
-    return NextResponse.json(
-      { success: false, error: "Erreur serveur lors de l'enregistrement du bien." },
+      { success: false, error: err.message || 'Erreur lors de la création de la propriété.' },
       { status: 500 }
     );
   }

@@ -8,8 +8,13 @@ export default function AdminSidebar() {
   const pathname = usePathname() || '/admin';
   const router = useRouter();
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // Ignore network errors on logout
+    }
     primeStorage.clearAdminUser();
     router.push('/admin/login');
   };

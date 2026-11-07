@@ -1,60 +1,29 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import database from '@/data/database.json';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'database.json');
+import { moderateProperty } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 
 export async function POST(request, { params }) {
   try {
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator']);
+    if (!auth.authorized) return auth.response;
+
     const { id } = params;
-    const properties = database.properties || [];
-    const property = properties.find((p) => p.id === id || p.ref === id);
+    const body = await request.json().catch(() => ({}));
+    const reason = body.reason || 'Conforme aux standards de prestige Prime House';
+    const notes = body.notes || '';
 
-    if (!property) {
-      return NextResponse.json(
-        { success: false, error: 'Propriété introuvable dans le flux de modération.' },
-        { status: 404 }
-      );
-    }
+    const property = await moderateProperty(id, 'approved', reason, notes, auth.user);
 
-    property.publication_status = 'publie';
-    property.updated_at = new Date().toISOString();
-
-    database.moderation_history = database.moderation_history || [];
-    database.moderation_history.unshift({
-      id: `mod-hist-${Date.now()}`,
-      property_id: property.id,
-      property_ref: property.ref,
-      action: 'approved',
-      reason: 'Conformité cadastrale et légale certifiée par la modération',
-      created_at: new Date().toISOString(),
+    return NextResponse.json({
+      success: true,
+      message: 'Annonce approuvée et publiée avec succès.',
+      property
     });
-
-    try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(database, null, 2), 'utf8');
-    } catch (fsErr) {
-      console.warn('Could not write to database.json (expected in read-only environment):', fsErr.message);
-    }
-
+  } catch (err) {
+    console.error('approve error:', err);
     return NextResponse.json(
-      {
-        success: true,
-        message: `Le bien ${property.ref} a été certifié et publié avec succès.`,
-        property,
-      },
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    );
-  } catch (error) {
-    console.error('Error approving moderation property:', error);
-    return NextResponse.json(
-      { success: false, error: "Erreur serveur lors de l'approbation du bien." },
+      { success: false, error: err.message || 'Erreur lors de l’approbation.' },
       { status: 500 }
     );
   }
 }
-

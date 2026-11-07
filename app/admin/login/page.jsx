@@ -10,7 +10,7 @@ import { primeStorage } from '@/lib/storage';
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('direction@primehouse-dz.com');
-  const [password, setPassword] = useState('admin123');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -32,29 +32,12 @@ export default function AdminLoginPage() {
         showToast('Authentification réussie. Bienvenue ' + data.user.full_name, 'success');
         setTimeout(() => {
           router.push('/admin');
-        }, 800);
+        }, 600);
       } else {
         setErrorMessage(data.error || 'Identifiant ou mot de passe incorrect.');
       }
     } catch {
-      // Fallback local auth for instant resilience
-      if (password === 'admin123' || password.length >= 6) {
-        const fallbackUser = {
-          id: 'u-admin-01',
-          email: email || 'direction@primehouse-dz.com',
-          full_name: 'Karim Benali',
-          role: 'super_admin',
-          title: 'Directeur Exécutif',
-          avatar_url: '/assets/logo-p-transparent.png',
-        };
-        primeStorage.setAdminUser(fallbackUser, 'local_token_' + Date.now());
-        showToast('Connexion réussie (Mode sécurisé local)', 'success');
-        setTimeout(() => {
-          router.push('/admin');
-        }, 800);
-      } else {
-        setErrorMessage('Erreur de connexion. Vérifiez vos identifiants.');
-      }
+      setErrorMessage('Erreur réseau. Impossible de contacter le serveur d\'authentification.');
     } finally {
       setLoading(false);
     }

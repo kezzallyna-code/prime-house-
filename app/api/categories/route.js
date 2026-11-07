@@ -1,16 +1,20 @@
 import { NextResponse } from 'next/server';
-import database from '@/data/database.json';
+import { getCategories } from '@/lib/db';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  return NextResponse.json(
-    {
-      categories: database.categories || [],
-    },
-    {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    }
-  );
+  try {
+    const categories = await getCategories();
+    return NextResponse.json({
+      success: true,
+      categories
+    });
+  } catch (err) {
+    console.error('GET /api/categories error:', err);
+    return NextResponse.json(
+      { success: false, error: 'Erreur récupération catégories.' },
+      { status: 500 }
+    );
+  }
 }
-

@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
-import database from '@/data/database.json';
+import { getModerationQueue, getProperties } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
   try {
+    const auth = await requireAdmin(request, ['super_admin', 'admin', 'moderator']);
+    if (!auth.authorized) return auth.response;
+
     const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type'); // 'particulier' | 'agence' | null
+    const type = searchParams.get('type');
     const search = (searchParams.get('q') || '').toLowerCase();
 
-    const properties = database.properties || [];
-    let pending = properties.filter((p) => p.publication_status === 'moderation');
+    let pending = await getModerationQueue();
 
     if (type && type !== 'all') {
       pending = pending.filter((p) => p.owner_type === type);
@@ -23,45 +26,29 @@ export async function GET(request) {
       });
     }
 
-    const particuliersCount = (database.properties || []).filter(
-      (p) => p.publication_status === 'moderation' && p.owner_type === 'particulier'
-    ).length;
+    const { properties: allProps } = await getProperties({ limit: 1000 });
+    const totalPending = allProps.filter(p => p.publication_status === 'moderation').length;
+    const particuliersCount = allProps.filter(p => p.publication_status === 'moderation' && p.owner_type === 'particulier').length;
+    const agencesCount = allProps.filter(p => p.publication_status === 'moderation' && p.owner_type === 'agence').length;
 
-    const agencesCount = (database.properties || []).filter(
-      (p) => p.publication_status === 'moderation' && p.owner_type === 'agence'
-    ).length;
-
-    return NextResponse.json(
-      {
-        success: true,
-        count: pending.length,
-        totalPending: (database.properties || []).filter((p) => p.publication_status === 'moderation').length,
-        particuliersCount,
-        agencesCount,
-        pending,
-        stats: {
-          pendingCount: (database.properties || []).filter((p) => p.publication_status === 'moderation').length,
-          approvedLast7Days: 14,
-          rejectedCount: 1,
-          avgReviewTimeHours: 14,
-        },
+    return NextResponse.json({
+      success: true,
+      count: pending.length,
+      totalPending,
+      particuliersCount,
+      agencesCount,
+      pending,
+      stats: {
+        pendingCount: totalPending,
+        approvedLast7Days: 14,
+        rejectedCount: 1,
+        avgReviewTimeHours: 14,
       },
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Cache-Control': 'no-store, max-age=0',
-        },
-      }
-    );
-  } catch (error) {
-    console.error('Error fetching moderation properties:', error);
+    });
+  } catch (err) {
+    console.error('GET /api/moderation error:', err);
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Erreur lors de la récupération des biens en modération.',
-        pending: [],
-        count: 0,
-      },
+      { success: false, error: 'Erreur récupération modération.' },
       { status: 500 }
     );
   }
