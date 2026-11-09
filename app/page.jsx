@@ -45,11 +45,6 @@ export default function HomePage() {
 {/*  Layered Gradient Scrim for Supreme Contrast  */}
 <div className="absolute inset-0 bg-gradient-to-b from-primary-container/85 via-primary-container/60 to-primary-container/95 backdrop-blur-[2px]"></div>
 <div className="relative max-w-[1440px] mx-auto px-margin md:px-margin-md lg:px-margin-lg pt-36 pb-24 lg:pt-44 lg:pb-32 flex flex-col items-center">
-{/*  Overline Prestige Badge  */}
-<div className="inline-flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container-lowest/10 backdrop-blur-md text-secondary-fixed shadow-sm mb-space-lg">
-<span className="material-symbols-outlined text-label-md">verified</span>
-<span className="font-label-sm text-label-sm uppercase tracking-widest font-semibold">L'Excellence Immobilière en Algérie</span>
-</div>
 {/*  Main Headline & Subtitle  */}
 <h1 className="font-display text-display-mobile md:text-display text-surface text-center max-w-4xl tracking-tight font-headline-xl">
         Trouvez le bien qui vous ressemble

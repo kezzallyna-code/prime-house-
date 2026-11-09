@@ -19,10 +19,6 @@ function PageContent() {
 
 <div className="relative max-w-[1440px] mx-auto px-margin md:px-margin-md lg:px-margin-lg py-20 md:py-28 lg:py-36">
 <div className="max-w-3xl flex flex-col gap-space-lg">
-<div className="inline-flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container-lowest/10 backdrop-blur-md w-fit">
-<span className="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
-<span className="font-label-sm text-label-sm uppercase tracking-widest text-secondary-fixed">Maison de confiance en Algérie</span>
-</div>
 <div className="space-y-space-sm">
 <h1 className="font-headline-xl text-headline-xl md:text-display font-semibold tracking-tight leading-tight text-on-primary">
             Prime House, votre partenaire immobilier en Algérie

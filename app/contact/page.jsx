@@ -97,12 +97,8 @@ function PageContent() {
 </nav>
 
 <div className="max-w-3xl mb-space-xl">
-<div className="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm uppercase tracking-widest mb-space-sm shadow-sm">
-<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-<span>Cellule Privée &amp; Mandats Exclusifs</span>
-</div>
 <h1 className="font-headline-xl text-headline-xl text-primary-container tracking-tight">
-          Contactez notre cellule privée
+          Contactez Prime House
         </h1>
 <p className="font-body-lg text-body-lg text-on-surface-variant mt-space-sm leading-relaxed">
           Acquéreurs, locataires ou propriétaires : nos conseillers dédiés vous accompagnent avec la plus haute discrétion à Alger, Oran et sur tout le littoral méditerranéen.

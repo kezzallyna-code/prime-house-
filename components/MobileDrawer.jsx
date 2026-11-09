@@ -112,19 +112,6 @@ export default function MobileDrawer({ isOpen, onClose, favCount }) {
           <span>Nos Biens (Tout le catalogue)</span>
         </Link>
         <Link
-          href="/favoris"
-          onClick={onClose}
-          className="flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-surface-container-lowest/10 transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-secondary-fixed">favorite</span>
-            <span>Mes Favoris</span>
-          </div>
-          <span className="favorites-count-badge bg-secondary-container text-on-secondary-container text-xs font-bold px-2 py-0.5 rounded-full">
-            {favCount}
-          </span>
-        </Link>
-        <Link
           href="/deposer-annonce"
           onClick={onClose}
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-secondary-container/20 text-secondary-fixed hover:bg-secondary-container/30 transition-colors font-semibold"

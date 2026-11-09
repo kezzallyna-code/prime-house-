@@ -206,19 +206,6 @@ function HeaderContent() {
               <span>Déposer une annonce</span>
             </Link>
 
-            <Link
-              className="relative flex items-center justify-center p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface"
-              href="/favoris"
-              title="Mes Favoris"
-            >
-              <span className="material-symbols-outlined text-[22px]">favorite_border</span>
-              {favCount > 0 && (
-                <span className="favorites-count-badge absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-secondary text-primary-container font-label-sm text-[10px] font-bold inline-flex items-center justify-center">
-                  {favCount}
-                </span>
-              )}
-            </Link>
-
             <button
               aria-label="Menu Principal"
               className="xl:hidden p-space-sm text-on-surface hover:bg-surface-container-low rounded transition-colors"

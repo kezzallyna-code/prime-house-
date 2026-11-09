@@ -64,10 +64,6 @@ function PageContent() {
 <span className="text-on-surface font-semibold">Recherche &amp; Catalogue</span>
 </nav>
 <div className="flex items-center gap-space-sm">
-<span className="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm shadow-sm">
-<span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
-          Offres vérifiées en temps réel
-        </span>
 <span className="font-body-sm text-body-sm text-on-surface-variant hidden lg:inline">Barème notarié &amp; Actes authentiques garantis</span>
 </div>
 </div>

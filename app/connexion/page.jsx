@@ -45,7 +45,7 @@ function PageContent() {
 <div className="relative z-10 my-auto py-space-xl">
 <span className="font-label-sm text-label-sm uppercase tracking-widest text-secondary-fixed font-semibold block mb-space-xs">L'Art de Vivre d'Exception</span>
 <h2 className="font-headline-xl text-headline-xl font-display text-surface tracking-tight mb-space-md leading-tight">
-            L'Excellence Immobilière en Algérie.
+            Prime House Immobilier de Prestige.
           </h2>
 <p className="font-body-md text-body-md text-surface-container-highest max-w-md leading-relaxed">
             Consultez en avant-première nos portefeuilles de résidences diplomatiques, penthouses sur front de mer et domaines confidentiels.
