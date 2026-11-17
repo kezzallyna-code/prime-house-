@@ -31,8 +31,8 @@ export default function AdminLoginPage() {
         primeStorage.setAdminUser(data.user, data.token);
         showToast('Authentification réussie. Bienvenue ' + data.user.full_name, 'success');
         setTimeout(() => {
-          router.push('/admin');
-        }, 600);
+          window.location.href = '/admin';
+        }, 500);
       } else {
         setErrorMessage(data.error || 'Identifiant ou mot de passe incorrect.');
       }

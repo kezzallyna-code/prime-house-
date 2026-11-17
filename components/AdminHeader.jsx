@@ -15,7 +15,7 @@ export default function AdminHeader() {
       // Ignore network errors on logout
     }
     primeStorage.clearAdminUser();
-    router.push('/admin/login');
+    window.location.href = '/admin/login';
   };
 
   return (

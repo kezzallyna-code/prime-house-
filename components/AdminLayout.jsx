@@ -9,22 +9,61 @@ import { primeStorage } from '@/lib/storage';
 export default function AdminLayout({ children }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Check if logged in
-    const user = primeStorage.getAdminUser();
-    if (!user) {
-      // In browser, check if token exists or redirect to login
-      const token = localStorage.getItem('prime_admin_token');
-      if (!token) {
-        router.push('/admin/login');
-        return;
+    let isMounted = true;
+
+    async function verifyAuth() {
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+
+        if (!res.ok) {
+          primeStorage.clearAdminUser();
+          if (isMounted) {
+            setAuthorized(false);
+            setChecking(false);
+            router.replace('/admin/login');
+          }
+          return;
+        }
+
+        const data = await res.json();
+        if (data.authenticated && data.user) {
+          primeStorage.setAdminUser(data.user);
+          if (isMounted) {
+            setAuthorized(true);
+            setChecking(false);
+          }
+        } else {
+          primeStorage.clearAdminUser();
+          if (isMounted) {
+            setAuthorized(false);
+            setChecking(false);
+            router.replace('/admin/login');
+          }
+        }
+      } catch (err) {
+        console.error('Session verification failed:', err);
+        primeStorage.clearAdminUser();
+        if (isMounted) {
+          setAuthorized(false);
+          setChecking(false);
+          router.replace('/admin/login');
+        }
       }
     }
-    setAuthorized(true);
+
+    verifyAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, [router]);
 
-  if (!authorized) {
+  if (checking || !authorized) {
     return (
       <div className="min-h-screen bg-primary-container flex items-center justify-center text-surface">
         <div className="flex flex-col items-center gap-3">
