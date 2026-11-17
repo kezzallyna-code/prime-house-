@@ -27,17 +27,55 @@ export async function POST(request) {
       );
     }
 
-    const supabase = getSupabaseAdmin();
+    let user = null;
+    let supabase = null;
 
-    // Query admin user from Supabase PostgreSQL
-    const { data: user, error } = await supabase
-      .from('admin_users')
-      .select('*')
-      .eq('email', cleanEmail)
-      .eq('is_active', true)
-      .single();
+    // 1. Try querying admin user from Supabase PostgreSQL
+    try {
+      supabase = getSupabaseAdmin();
+      const { data, error } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('email', cleanEmail)
+        .eq('is_active', true)
+        .single();
 
-    if (error || !user) {
+      if (!error && data) {
+        user = data;
+      }
+    } catch (e) {
+      console.warn('Supabase auth query failed, checking local database:', e.message);
+    }
+
+    // 2. Fallback to local database if Supabase is temporarily unreachable
+    if (!user) {
+      try {
+        const fs = await import('fs');
+        const path = await import('path');
+        const dbPath = path.join(process.cwd(), 'data', 'database.json');
+        if (fs.existsSync(dbPath)) {
+          const rawDb = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+          const found = (rawDb.admin_users || []).find(u => String(u.email || '').trim().toLowerCase() === cleanEmail);
+          if (found) {
+            user = {
+              id: found.id,
+              email: found.email,
+              password_hash: found.password_hash || found.passwordHash,
+              full_name: found.full_name,
+              role: found.role,
+              title: found.title,
+              matricule: found.matricule,
+              avatar_url: found.avatar_url,
+              phone: found.phone
+            };
+          }
+        }
+      } catch (err) {
+        console.error('Local database fallback error:', err);
+      }
+    }
+
+    if (!user) {
       return NextResponse.json(
         { success: false, error: 'Identifiants invalides ou compte inactif.' },
         { status: 401 }
@@ -50,8 +88,12 @@ export async function POST(request) {
     // Initial migration helper: if password_hash matches plain password during seed migration, upgrade to PBKDF2 hash
     if (!isPasswordValid && user.password_hash === cleanPassword) {
       isPasswordValid = true;
-      const newHash = hashPassword(cleanPassword);
-      await supabase.from('admin_users').update({ password_hash: newHash }).eq('id', user.id);
+      try {
+        if (supabase) {
+          const newHash = hashPassword(cleanPassword);
+          await supabase.from('admin_users').update({ password_hash: newHash }).eq('id', user.id);
+        }
+      } catch {}
     }
 
     if (!isPasswordValid) {
@@ -62,7 +104,11 @@ export async function POST(request) {
     }
 
     // Update last_login_at
-    await supabase.from('admin_users').update({ last_login_at: new Date().toISOString() }).eq('id', user.id);
+    try {
+      if (supabase) {
+        await supabase.from('admin_users').update({ last_login_at: new Date().toISOString() }).eq('id', user.id);
+      }
+    } catch {}
 
     // Create secure cryptographic session token
     const token = createSessionToken(user);
