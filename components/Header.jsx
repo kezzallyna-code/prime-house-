@@ -15,12 +15,20 @@ function HeaderContent() {
   const [scrolled, setScrolled] = useState(false);
   const [favCount, setFavCount] = useState(0);
   const [currentLang, setCurrentLang] = useState('fr');
+  const [theme, setTheme] = useState('light');
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     setFavCount(primeStorage.getFavorites().length);
     const initialLang = getCurrentLanguage();
     setCurrentLang(initialLang);
+
+    const checkTheme = () => {
+      const storedTheme = localStorage.getItem('prime_theme');
+      const isDark = storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      setTheme(isDark ? 'dark' : 'light');
+    };
+    checkTheme();
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -44,12 +52,43 @@ function HeaderContent() {
     };
     window.addEventListener('prime:language-changed', handleLangChange);
 
+    const handleThemeChange = (e) => {
+      if (e?.detail?.theme) {
+        setTheme(e.detail.theme);
+      } else {
+        checkTheme();
+      }
+    };
+    window.addEventListener('prime:theme-changed', handleThemeChange);
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleSystemThemeChange = (e) => {
+      if (!localStorage.getItem('prime_theme')) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        setTheme(newTheme);
+        if (e.matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+    };
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('prime:favorites-changed', handleFavChange);
       window.removeEventListener('prime:language-changed', handleLangChange);
+      window.removeEventListener('prime:theme-changed', handleThemeChange);
+      mediaQuery.removeEventListener('change', handleSystemThemeChange);
     };
   }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    primeStorage.setTheme(nextTheme);
+  };
 
   const switchLanguage = (lang) => {
     setCurrentLang(lang);
@@ -196,6 +235,18 @@ function HeaderContent() {
                 العربية
               </button>
             </div>
+
+            <button
+              aria-label={theme === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre'}
+              className="flex items-center justify-center w-8 h-8 rounded bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all"
+              onClick={toggleTheme}
+              title={theme === 'dark' ? (currentLang === 'ar' ? 'الوضع المضيء' : 'Mode clair') : (currentLang === 'ar' ? 'الوضع الليلي' : 'Mode sombre')}
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[19px]">
+                {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+              </span>
+            </button>
 
             <Link
               className="hidden sm:inline-flex items-center gap-space-sm px-space-lg py-space-sm bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-label-lg text-label-lg rounded transition-all duration-200 shadow-[0_2px_12px_rgba(121,89,0,0.18)] hover:-translate-y-0.5"

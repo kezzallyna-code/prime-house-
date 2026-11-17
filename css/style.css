@@ -9,6 +9,45 @@
   --color-champagne: #dfb758;
   --color-slate: #4a5568;
   --color-canvas: #f8f9fa;
+
+  /* Theme tokens - Light mode (default) */
+  --bg-page: #f8f9fa;
+  --bg-surface: #f9f9ff;
+  --bg-card: #ffffff;
+  --bg-input: #f0f3ff;
+  --bg-navbar: rgba(255, 255, 255, 0.90);
+  --bg-navbar-scrolled: rgba(255, 255, 255, 0.96);
+  --text-main: #111c2c;
+  --text-muted: #44474c;
+  --text-dim: #75777d;
+  --border-color: rgba(231, 238, 255, 0.8);
+  --border-subtle: #f0f3ff;
+  --gold-accent: #795900;
+  --gold-btn-bg: #fdce68;
+  --gold-btn-text: #765600;
+  --navy-pill-bg: #0f1c2e;
+  --navy-pill-text: #f9f9ff;
+}
+
+.dark {
+  /* Theme tokens - Dark mode */
+  --bg-page: #0a111c;
+  --bg-surface: #0a111c;
+  --bg-card: #111c2c;
+  --bg-input: #172437;
+  --bg-navbar: rgba(15, 25, 40, 0.92);
+  --bg-navbar-scrolled: rgba(15, 25, 40, 0.96);
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --gold-accent: #dfb758;
+  --gold-btn-bg: #c49a3a;
+  --gold-btn-text: #1a1200;
+  --navy-pill-bg: #1e3557;
+  --navy-pill-text: #ffffff;
+  color-scheme: dark;
 }
 
 html {
@@ -185,4 +224,153 @@ header.header-scrolled {
     color: #000 !important;
   }
 }
+
+/* ==========================================================================
+   Dark Theme Rules & Color Overrides
+   ========================================================================== */
+.dark body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
+.dark .bg-surface {
+  background-color: var(--bg-surface) !important;
+}
+
+.dark .bg-background {
+  background-color: var(--bg-page) !important;
+}
+
+.dark .bg-surface-container-lowest {
+  background-color: var(--bg-card) !important;
+}
+
+.dark .bg-surface-container-low {
+  background-color: var(--bg-input) !important;
+}
+
+.dark .bg-surface-container {
+  background-color: #1a2a40 !important;
+}
+
+.dark .bg-surface-container-high {
+  background-color: #223550 !important;
+}
+
+.dark .bg-surface-container-highest {
+  background-color: #2b4160 !important;
+}
+
+.dark .text-on-surface {
+  color: var(--text-main) !important;
+}
+
+.dark .text-on-surface-variant {
+  color: var(--text-muted) !important;
+}
+
+.dark .text-outline {
+  color: var(--text-dim) !important;
+}
+
+.dark .text-outline-variant {
+  color: #475569 !important;
+}
+
+.dark .text-primary-container {
+  color: var(--text-main) !important;
+}
+
+.dark .border-surface-container,
+.dark .border-surface-container-low,
+.dark .border-surface-container\/60 {
+  border-color: var(--border-color) !important;
+}
+
+.dark .border-outline-variant {
+  border-color: var(--border-color) !important;
+}
+
+/* Gold accent elements in dark mode */
+.dark .text-secondary {
+  color: var(--gold-accent) !important;
+}
+
+.dark .bg-secondary-container {
+  background-color: var(--gold-btn-bg) !important;
+  color: var(--gold-btn-text) !important;
+}
+
+.dark .text-on-secondary-container {
+  color: var(--gold-btn-text) !important;
+}
+
+/* Navbar in dark mode */
+.dark header {
+  background-color: var(--bg-navbar) !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dark header.header-scrolled {
+  background-color: var(--bg-navbar-scrolled) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-color) !important;
+}
+
+/* Active Navy "Acheter" Pill in Search Box & Catalogue */
+.dark .tab-btn.bg-primary-container,
+.dark [data-tab="acheter"].bg-primary-container,
+.dark a[href*="mode=vente"].bg-primary-container {
+  background-color: var(--navy-pill-bg) !important;
+  color: var(--navy-pill-text) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Form Inputs, Selects & Native Dropdowns in dark mode */
+.dark input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]),
+.dark select,
+.dark textarea {
+  color: var(--text-main);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-dim) !important;
+}
+
+.dark select option {
+  background-color: #172437 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Glass surface in dark mode */
+.dark .glass-surface {
+  background: rgba(17, 28, 44, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Active Nav Links */
+.dark .nav-link-active {
+  background-color: #1a2a40 !important;
+  color: var(--text-main) !important;
+}
+
+/* Card hover border in dark mode */
+.dark .card-transition:hover {
+  border-color: rgba(223, 183, 88, 0.4);
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Scrollbar in dark mode */
+.dark ::-webkit-scrollbar-track {
+  background: #0f1928;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2a3d56;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #c49a3a;
+}
+
 

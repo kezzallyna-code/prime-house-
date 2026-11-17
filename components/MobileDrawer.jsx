@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { primeStorage } from '@/lib/storage';
 import { applyLanguage, getCurrentLanguage } from '@/lib/i18n';
 
 export default function MobileDrawer({ isOpen, onClose, favCount }) {
   const [currentLang, setCurrentLang] = useState('fr');
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
     setCurrentLang(getCurrentLanguage());
@@ -13,8 +15,34 @@ export default function MobileDrawer({ isOpen, onClose, favCount }) {
       if (e?.detail?.lang) setCurrentLang(e.detail.lang);
     };
     window.addEventListener('prime:language-changed', handleLangChange);
-    return () => window.removeEventListener('prime:language-changed', handleLangChange);
+
+    const checkTheme = () => {
+      const storedTheme = localStorage.getItem('prime_theme');
+      const isDark = storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      setTheme(isDark ? 'dark' : 'light');
+    };
+    checkTheme();
+
+    const handleThemeChange = (e) => {
+      if (e?.detail?.theme) {
+        setTheme(e.detail.theme);
+      } else {
+        checkTheme();
+      }
+    };
+    window.addEventListener('prime:theme-changed', handleThemeChange);
+
+    return () => {
+      window.removeEventListener('prime:language-changed', handleLangChange);
+      window.removeEventListener('prime:theme-changed', handleThemeChange);
+    };
   }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    primeStorage.setTheme(nextTheme);
+  };
 
   if (!isOpen) return null;
 
@@ -76,6 +104,20 @@ export default function MobileDrawer({ isOpen, onClose, favCount }) {
             العربية
           </button>
         </div>
+      </div>
+
+      <div className="pt-3 flex items-center justify-between">
+        <span className="text-xs uppercase tracking-wider text-surface-variant font-medium">Thème / المظهر :</span>
+        <button
+          onClick={toggleTheme}
+          type="button"
+          className="flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-surface-container-lowest/10 border border-surface-container-highest/20 text-surface hover:text-secondary-fixed transition-all"
+        >
+          <span className="material-symbols-outlined text-[16px]">
+            {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+          </span>
+          <span>{theme === 'dark' ? (currentLang === 'ar' ? 'الوضع المضيء' : 'Mode clair') : (currentLang === 'ar' ? 'الوضع الليلي' : 'Mode sombre')}</span>
+        </button>
       </div>
 
       <nav className="flex flex-col gap-2 py-6 text-base font-medium">
